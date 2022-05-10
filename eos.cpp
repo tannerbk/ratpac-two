@@ -10,11 +10,15 @@ public:
   Eos(RAT::AnyParse* p, int argc, char** argv) 
     : Rat(p, argc, argv)
   {
+    // Append an additional data directory (for ratdb and geo)
     char* eosdata = getenv("EOSDATA");
     if( eosdata != NULL ){
       directories.insert(static_cast<std::string>(eosdata));
     }
+    // Initialize a geometry factory
     new RAT::GeoEosFactory();
+    // Include a new type of processor
+    // Add a unique component to the datastructure
   }
 };
 

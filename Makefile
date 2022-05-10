@@ -4,10 +4,11 @@ INC_DIR := include
 
 SRC := $(wildcard *.cpp)
 EXE := $(patsubst %.cpp, %, $(SRC))
+EOS := $(shell pwd)/data
 RAT := -L$(RATROOT)/lib -lRATPAC -I$(RATROOT)/include -I$(INC_DIR)
 ROOT := $(shell root-config --libs --cflags)
 G4 := $(shell geant4-config --libs --cflags)
-FLAGS := --std=c++17
+FLAGS := --std=c++17 -w
 GCC := g++
 
 _OBJS := $(patsubst $(SRC_DIR)/%.cc, %.o, $(wildcard $(SRC_DIR)/*.cc))
@@ -17,6 +18,7 @@ all: $(SRC) $(EXE) $(OBJS)
 
 %: %.cpp $(OBJS)
 	$(GCC) $(FLAGS) $(ROOT) $(G4) $(RAT) $(OBJS) $@.cpp -o $@
+	printf "export EOSDATA=$(EOS)\n" > env.sh
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	$(GCC) $(FLAGS) $(ROOT) $(G4) $(RAT) -shared -c -fPIC $(SRC_DIR)/$*.cc -o $(OBJ_DIR)/$*.o
