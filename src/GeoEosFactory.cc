@@ -1,5 +1,5 @@
-#include <RAT/GeoEosFactory.hh>
 #include <RAT/GeoTubeFactory.hh>
+#include <GeoEosFactory.hh>
 
 #include <G4VSolid.hh>
 #include <G4VPhysicalVolume.hh>
@@ -14,9 +14,9 @@
 
 #include <CLHEP/Units/SystemOfUnits.h>
 
-namespace RAT {
+namespace EOS {
 
-G4VSolid *GeoEosFactory::ConstructSolid(DBLinkPtr table)
+G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table)
 {
   // Inner radius of cylindrical part of Eos
   G4double r_min = table->GetD("r_min");
@@ -63,4 +63,4 @@ G4VSolid *GeoEosFactory::ConstructSolid(DBLinkPtr table)
   return EosVolume;
 }
 
-} // namespace RAT
+} // namespace EOS

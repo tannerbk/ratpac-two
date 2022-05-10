@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdlib.h>
 
+namespace EOS {
 class Eos : public RAT::Rat {
 public:
   Eos(RAT::AnyParse* p, int argc, char** argv) 
@@ -16,15 +17,16 @@ public:
       directories.insert(static_cast<std::string>(eosdata));
     }
     // Initialize a geometry factory
-    new RAT::GeoEosFactory();
+    new GeoEosFactory();
     // Include a new type of processor
     // Add a unique component to the datastructure
   }
 };
+}
 
 int main(int argc, char** argv) {
   auto parser = new RAT::AnyParse(argc, argv);
-  auto eos = Eos( parser, argc, argv );
+  auto eos = EOS::Eos( parser, argc, argv );
   eos.Begin();
   eos.Report();
 }

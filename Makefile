@@ -5,7 +5,7 @@ INC_DIR := include
 SRC := $(wildcard *.cpp)
 EXE := $(patsubst %.cpp, %, $(SRC))
 EOS := $(shell pwd)/data
-RAT := -L$(RATROOT)/lib -lRATPAC -I$(RATROOT)/include -I$(INC_DIR)
+RAT := -L$(RATROOT)/lib -lRATPAC -I$(INC_DIR) -I$(RATROOT)/include
 ROOT := $(shell root-config --libs --cflags)
 G4 := $(shell geant4-config --libs --cflags)
 FLAGS := --std=c++17 -w
