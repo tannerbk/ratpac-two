@@ -1,5 +1,5 @@
-#include <RAT/GeoTubeFactory.hh>
 #include <GeoEosFactory.hh>
+#include <RAT/GeoTubeFactory.hh>
 
 #include <G4VSolid.hh>
 #include <G4VPhysicalVolume.hh>
@@ -28,6 +28,8 @@ G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table)
   G4double top_radius = table->GetD("top_radius");
   // Height of ellipical bottom/top cap
   G4double top_height = table->GetD("top_height");
+  // Offset for cap
+  G4double offset = table->GetD("offset");
 
   // Solids for the cylindrical body and ellipical caps
   G4Tubs *body = new G4Tubs("body", r_min * CLHEP::mm,
@@ -46,7 +48,7 @@ G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table)
                                             -top_height * CLHEP::mm, 0.0);
 
   // Location and rotation of the top cap
-  G4ThreeVector *trans = new G4ThreeVector(0., 0., size_z * CLHEP::mm);
+  G4ThreeVector *trans = new G4ThreeVector(0., 0., (size_z - offset) * CLHEP::mm);
   G4RotationMatrix *rotation = new G4RotationMatrix();
   G4Transform3D *transf = new G4Transform3D(*rotation, *trans);
 
@@ -54,7 +56,7 @@ G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table)
   G4VSolid* EosVolumeP1 = new G4UnionSolid("eos_v1", body, head, *transf);
 
   // Location of the bottom cap (same rotation as the top)
-  G4ThreeVector *neg_trans = new G4ThreeVector(0., 0., -size_z * CLHEP::mm);
+  G4ThreeVector *neg_trans = new G4ThreeVector(0., 0., -(size_z - offset) * CLHEP::mm);
   G4Transform3D *neg_transf = new G4Transform3D(*rotation, *neg_trans);
 
   // Add the bottom cap to the (top cap + cylinder) for both the vessel and cavity

@@ -2,3 +2,4 @@
 *.log
 eos
 *.o
+env.sh
