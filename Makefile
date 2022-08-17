@@ -22,7 +22,7 @@ UTILITIES := $(patsubst %.cpp, $(BIN_DIR)/%, $(_UTILITIES))
 all: $(SRC) $(EXE) $(OBJS) $(UTILITIES)
 
 %: %.cpp $(OBJS)
-	$(GCC) $(FLAGS) $(ROOT) $(G4) $(RAT) $(OBJS) $@.cpp -o $(BIN_DIR)/$@
+	$(GCC) $(FLAGS) $(ROOT) $@.cpp -o $(BIN_DIR)/$@ $(G4) $(RAT) $(OBJS) 
 	printf "export EOSDATA=$(EOS)/data\nexport PATH=$(EOS)/$(BIN_DIR):$$""PATH\n" > env.sh
 
 %: $(UTL_DIR)/%.cpp $(OBJS)
