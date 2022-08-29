@@ -14,7 +14,8 @@ public:
     // Append an additional data directory (for ratdb and geo)
     char* eosdata = getenv("EOSDATA");
     if( eosdata != NULL ){
-      directories.insert(static_cast<std::string>(eosdata));
+      ratdb_directories.insert(static_cast<std::string>(eosdata)+"/ratdb");
+      model_directories.insert(static_cast<std::string>(eosdata)+"/models");
     }
     // Initialize a geometry factory
     new GeoEosFactory();

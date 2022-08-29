@@ -23,7 +23,7 @@ all: $(SRC) $(EXE) $(OBJS) $(UTILITIES)
 
 %: %.cpp $(OBJS)
 	$(GCC) $(FLAGS) $(OBJS) $@.cpp -o $(BIN_DIR)/$@ $(ROOT) $(G4) $(RAT) 
-	printf "export EOSDATA=$(EOS)/data\nexport PATH=$(EOS)/$(BIN_DIR):$$""PATH\n" > env.sh
+	printf "export EOSDATA=$(EOS)\nexport PATH=$(EOS)/$(BIN_DIR):$$""PATH\n" > env.sh
 
 %: $(UTL_DIR)/%.cpp $(OBJS)
 	$(GCC) $(FLAGS) $(ROOT) $(G4) $(RAT) $(OBJS) $(UTL_DIR)/$@.cpp -o $(BIN_DIR)/$@
