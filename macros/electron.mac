@@ -1,0 +1,34 @@
+/glg4debug/glg4param omit_muon_processes  0.0
+/glg4debug/glg4param omit_hadronic_processes  0.0
+
+#set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "water"
+#/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
+
+
+/run/initialize
+#/rat/physics/scintillation/off
+#/tracking/storeTrajectory 1
+
+# BEGIN EVENT LOOP
+/rat/proc simpledaq
+/rat/proc count
+/rat/procset update 100
+
+/rat/proc outntuple
+/rat/procset file "electrons.ntuple.root"
+/rat/procset include_pmthits 1
+
+#/rat/proclast outroot
+
+#END EVENT LOOP
+
+##### GENERATORS #################
+/generator/add combo gun2:fill:poisson
+/generator/vtx/set e- 0.0 0.0 0.0  0.0 5.0 0.0
+/generator/pos/set 0.0 0.0 0.0
+
+##### RUN ###########
+/run/beamOn 100000
