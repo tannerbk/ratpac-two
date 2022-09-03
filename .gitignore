@@ -1,5 +1,5 @@
+bin/*
 *.root
 *.log
-eos
 *.o
 env.sh
