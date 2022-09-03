@@ -7,7 +7,7 @@
 /rat/db/set GEO[eos_inner] material "water"
 #/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
 
-/rat/db/set Fitter[FitTensor] directory "/fitters/tensorfit/water"
+/rat/db/set Fitter[FitTensor] directory "/fitters/tensorfit/eos/water"
 
 /run/initialize
 #/rat/physics/scintillation/off
@@ -33,4 +33,4 @@
 /generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########
-/run/beamOn 100
+/run/beamOn 10000
