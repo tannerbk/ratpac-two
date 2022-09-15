@@ -7,21 +7,18 @@
 /rat/db/set GEO[eos_inner] material "water"
 #/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
 
-/rat/db/set Fitter[FitTensor] directory "/fitters/tensorfit/eos/water"
-
 /run/initialize
 #/rat/physics/scintillation/off
 #/tracking/storeTrajectory 1
 
 # BEGIN EVENT LOOP
-/rat/proc simpledaq
-#/rat/proc splitevdaq
+/rat/proc splitevdaq
 /rat/proc count
 /rat/procset update 100
 #/rat/proc fittensor
 
 /rat/proc outntuple
-/rat/procset file "fit.ntuple.root"
+/rat/procset file "training.ntuple.root"
 /rat/procset include_pmthits 1
 
 /rat/proclast outroot
@@ -34,4 +31,4 @@
 /generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########
-/run/beamOn 1000
+/run/beamOn 100000
