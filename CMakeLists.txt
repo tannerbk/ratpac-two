@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11...3.14)
-project(eos VERSION 1.0.1
+project(eos VERSION 1.0.0
   DESCRIPTION "Eos Simulations"
   LANGUAGES C CXX)
 
@@ -44,7 +44,6 @@ else()
   set(TENSORFLOW_LIBRARIES "")
 endif()
 
-
 ###########################################################
 # Options
 set(EOS_BINARY_DIR ${PROJECT_BINARY_DIR}/bin CACHE PATH "Where to output executables")
@@ -52,15 +51,6 @@ set(EOS_LIBRARY_DIR ${PROJECT_BINARY_DIR}/lib CACHE PATH "Where to output librar
 set(EOS_INCLUDE_DIR ${PROJECT_BINARY_DIR}/include CACHE PATH "Where to collect headers")
 set(EOS_CMAKE_DIR ${PROJECT_BINARY_DIR}/cmake CACHE PATH "Where to cmake configuration")
 option(EOS_RAT "build rat executable" ON)
-
-### TEST
-set( RATCMAKE $ENV{RATSHARE})
-#find_package(Ratpac REQUIRED PATHS ${RATCMAKE} )
-set(CMAKE_FIND_DEBUG_MODE ON)
-find_package(Ratpac REQUIRED)
-message(STATUS "RAT-dir: " ${RATCMAKE})
-message(STATUS "Rat: " ${RATROOT} " " ${RATSHARE})
-set(CMAKE_FIND_DEBUG_MODE OFF)
 
 ###########################################################
 # Set up third party libraries
@@ -75,14 +65,10 @@ find_package(Geant4 REQUIRED COMPONENTS qt)
 include(${Geant4_USE_FILE})
 
 find_package(Threads REQUIRED)
-
-
+find_package(Ratpac REQUIRED)
 
 ###########################################################
 # Configure header with our version information
-# configure_file(${CMAKE_SOURCE_DIR}/config/Config.hh.in
-#   ${CMAKE_SOURCE_DIR}/src/core/include/RAT/Config.hh
-#   @ONLY NEWLINE_STYLE UNIX)
 
 # Configure local scripts
 set(EOSROOT ${CMAKE_INSTALL_PREFIX})
