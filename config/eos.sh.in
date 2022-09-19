@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export EOSDATA=@EOSSHARE@
+export PATH=@EOSROOT@/bin:$PATH
