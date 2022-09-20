@@ -1,5 +1,6 @@
 add_library( eosobj OBJECT
   GeoEosFactory.cc
+  HitmanProc.cc
 )
 
 target_include_directories( eosobj PUBLIC

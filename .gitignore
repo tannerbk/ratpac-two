@@ -5,3 +5,4 @@ bin/*
 eos.sh
 install/*
 build/*
+Config.hh
