@@ -1,0 +1,3 @@
+#pragma once
+#define CRY_Enabled @CRY_Enabled@
+#define TENSORFLOW_Enabled @TENSORFLOW_Enabled@

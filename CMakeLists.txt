@@ -36,11 +36,12 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ###########################################################
 # External libraries and dependencies
 set(TENSORFLOW_Enabled 0)
-find_library(TENSORFLOW_LIBRARIES tensorflow NO_DEFAULT_PATH)
+find_library(TENSORFLOW_LIBRARIES tensorflow)
 if(TENSORFLOW_LIBRARIES)
   message(STATUS "Compiling with Tensorflow")
   set(TENSORFLOW_Enabled 1)
 else()
+  message(WARNING "Tensorflow Not Found")
   set(TENSORFLOW_LIBRARIES "")
 endif()
 
@@ -69,6 +70,9 @@ find_package(Ratpac REQUIRED)
 
 ###########################################################
 # Configure header with our version information
+configure_file(${CMAKE_SOURCE_DIR}/config/Config.hh.in
+  ${CMAKE_SOURCE_DIR}/src/include/Config.hh
+  @ONLY NEWLINE_STYLE UNIX)
 
 # Configure local scripts
 set(EOSROOT ${CMAKE_INSTALL_PREFIX})

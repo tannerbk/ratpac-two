@@ -1,6 +1,10 @@
 #include <RAT/Rat.hh>
 #include <RAT/AnyParse.hh>
+#include <RAT/ProcBlockManager.hh>
+#include <RAT/ProcAllocator.hh>
 #include <GeoEosFactory.hh>
+#include <HitmanProc.hh>
+#include <Config.hh>
 #include <string>
 #include <iostream>
 #include <stdlib.h>
@@ -19,6 +23,9 @@ public:
     }
     // Initialize a geometry factory
     new GeoEosFactory();
+#if TENSORFLOW_Enabled
+    RAT::ProcBlockManager::AppendProcessor<HitmanProc>();
+#endif
     // Include a new type of processor
     // Add a unique component to the datastructure
   }
