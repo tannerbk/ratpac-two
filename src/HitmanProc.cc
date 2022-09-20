@@ -52,6 +52,8 @@ RAT::Processor::Result HitmanProc::Event(RAT::DS::Root *ds, RAT::DS::EV *ev) {
   fit->SetEnergy(fitEnergy);
   fit->SetTime(fitTime);
 
+  ev->AddFitResult(fit);
+
   return RAT::Processor::OK;
 }
 
