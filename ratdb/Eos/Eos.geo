@@ -40,14 +40,28 @@
 
 {
   name: "GEO",
-  index: "neck",
+  index: "outer_neck",
   valid_begin: [0, 0],
   valid_end: [0, 0],
   mother: "inner_tank",
   type: "tube",
-  r_max: 111.76,
-  size_z: 181.7,
-  position: [0.0, 0.0, 1189.8],
+  r_max: 304.8,
+  size_z: 57.2,
+  position: [0.0, 0.0, 995.67],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "inner_neck",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_max: 75.3,
+  size_z: 55.88,
+  position: [0.0, 0.0, 1108.75],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -63,10 +77,10 @@
   // Cylindrical part
   r_min: 0.0,
   r_max: 914.4,
-  size_z: 533.0,
+  size_z: 676.9,
   // Elliptical top/bottom
   top_radius: 914.4,
-  top_height: 475.0,
+  top_height: 261.62,
   offset: 0.1,
   position: [0.0, 0.0, 0.0],
   rotation: [0.0, 0.0, 0.0],
@@ -82,30 +96,16 @@
   type: "eos",
   // Cylindrical part
   r_min: 0.0,
+  // 1-inch thick
   r_max: 888.8,
-  size_z: 533.0,
+  size_z: 676.9,
   // Elliptical top/bottom
   top_radius: 888.8,
-  top_height: 449.4,
+  top_height: 261.6,
   offset: 0.1,
   rotation:  [0.0, 0.0, 0.0],
   position: [0.0, 0.0, 0.0],
-  material: "wbls_5pct_WM_0820",
-}
-
-{
-  name: "GEO",
-  index: "port",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 304.8,
-  r_max: 355.6,
-  size_z: 5.1,
-  position: [0.0, 0.0, 975.7],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
+  material: "water",
 }
 
 // Acrylic legs dimensions are from docDB-29
@@ -120,8 +120,8 @@
   r_max: 914.4,
   phi_start: -20.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, -952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, -756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -137,8 +137,8 @@
   r_max: 914.4,
   phi_start: 70.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, -952.3],
+  size_z: 80.0
+  position: [0.0, 0.0, -756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -154,8 +154,8 @@
   r_max: 914.4,
   phi_start: 160.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, -952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, -756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -171,8 +171,8 @@
   r_max: 914.4,
   phi_start: 250.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, -952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, -756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -188,8 +188,8 @@
   r_max: 914.4,
   phi_start: -20.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, 952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, 756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -205,8 +205,8 @@
   r_max: 914.4,
   phi_start: 70.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, 952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, 756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -222,8 +222,8 @@
   r_max: 914.4,
   phi_start: 160.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, 952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, 756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -239,8 +239,8 @@
   r_max: 914.4,
   phi_start: 250.0,
   phi_delta: 40.0,
-  size_z: 419.3,
-  position: [0.0, 0.0, 952.3],
+  size_z: 80.0,
+  position: [0.0, 0.0, 756.9],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -249,9 +249,10 @@
 // PMTS
 //////////////////
 //
+
 {
   name: "GEO",
-  index: "pmts_side",
+  index: "pmts_sides",
   valid_begin: [0, 0],
   valid_end: [0, 0],
   mother: "inner_tank",
@@ -259,7 +260,7 @@
   pmt_model: "r14688",
   pmt_detector_type: "idpmt",
   sensitive_detector: "/mydet/pmt/inner",
-  pos_table: "PMTINFO_side_grid_27_columns",
+  pos_table: "PMTINFO_sides",
   orientation: "manual",
 }
 
@@ -273,7 +274,7 @@
   pmt_model: "r14688",
   pmt_detector_type: "idpmt",
   sensitive_detector: "/mydet/pmt/inner",
-  pos_table: "PMTINFO_bottom_dense_grid_52",
+  pos_table: "PMTINFO_bottom",
   orientation: "manual",
 }
 
@@ -287,7 +288,7 @@
   pmt_model: "r11780_hqe",
   pmt_detector_type: "idpmt",
   sensitive_detector: "/mydet/pmt/inner",
-  pos_table: "PMTINFO_hqe_top_ring",
+  pos_table: "PMTINFO_hqe_top",
   orientation: "manual",
 }
 
