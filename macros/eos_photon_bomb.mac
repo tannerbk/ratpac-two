@@ -1,4 +1,3 @@
-# Run macro as: 'eos eos_electrons.mac -o filename.ntuple.root'
 /glg4debug/glg4param omit_muon_processes  1.0
 /glg4debug/glg4param omit_hadronic_processes  1.0
 
@@ -6,8 +5,7 @@
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 
-/rat/db/set GEO[eos_inner] material "wbls_1pct"
-/rat/db/set NOISEPROC noise_flag 1
+/rat/db/set GEO[eos_inner] material "water"
 
 /run/initialize
 
@@ -20,9 +18,8 @@
 #END EVENT LOOP
 
 ##### GENERATORS #################
-#/generator/add combo gun:point:uniform
-/generator/add combo gun:fill:poisson
-/generator/vtx/set e- 0.0 0.0 0.0 2.5
+/generator/add combo pbomb:point:poisson
+/generator/vtx/set 1000 400 # 1000 photons, 400nm
 /generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########

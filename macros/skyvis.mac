@@ -4,7 +4,6 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
 
 # Set cry variables for eos
 /rat/db/set CRY latitude 37.8715

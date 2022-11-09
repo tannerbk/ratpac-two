@@ -5,7 +5,6 @@
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 /rat/db/set GEO[eos_inner] material "water"
-#/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
 
 /rat/db/set Fitter[FitTensor] directory "/fitters/tensorfit/eos/water"
 
