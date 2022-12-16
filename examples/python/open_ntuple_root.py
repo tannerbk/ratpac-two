@@ -26,10 +26,16 @@ def open_ntuple(filename):
 
     f = ROOT.TFile.Open(filename) # Input the ntuple file
     tree = f.Get("output")
+    meta = f.Get("meta")
 
     for i in range(tree.GetEntries()):
 
-        tree.GetEntry(i)
+        try:
+            tree.GetEntry(i)
+            meta.GetEntry(i)
+        except AttributeError:
+            print "Error with opening file!"
+            sys.exit(1)
 
         pmtid = list(tree.hitPMTID)
         # Hit time of first PE for each PMT
@@ -39,12 +45,23 @@ def open_ntuple(filename):
         pmtcharge = list(tree.hitPMTCharge)
         pmtdigitcharge = list(tree.hitPMTDigitizedCharge)
 
+        pmtx = list(meta.pmtX)
+        pmty = list(meta.pmtY)
+        pmtz = list(meta.pmtZ)
+
         # Loop over the PMT hits
         for i in range(len(pmtid)):
             ht1.Fill(pmttime[i])
-            ht2.Fill(pmtdigittime[i] - OFFSET)
             hq1.Fill(pmtcharge[i])
+            # Information from the processed waveforms
+            ht2.Fill(pmtdigittime[i] - OFFSET)
             hq2.Fill(pmtdigitcharge[i])
+
+            # How to get the PMT positions
+            pid = pmtid[i]
+            pmt_x = pmtx[pid]
+            pmt_y = pmty[pid]
+            pmt_z = pmtz[pid]
 
 
     return ht1, ht2, hq1, hq2

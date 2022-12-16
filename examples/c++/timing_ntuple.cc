@@ -20,6 +20,7 @@ void process(const char* filename){
 
     TFile *f = TFile::Open(filename);
     TTree *t = (TTree*)f->Get("output"); 
+    TTree *meta = (TTree*)f->Get("meta"); 
 
     const double OFFSET = 67.7;
 
@@ -30,6 +31,12 @@ void process(const char* filename){
     std::vector<double> *mcPETime = new std::vector<double>();
     std::vector<int>  *mcPEProcess = new std::vector<int>();
 
+    std::vector<int> *hitPMTID = new std::vector<int>();
+    std::vector<double> *pmtX = new std::vector<double>();
+    std::vector<double> *pmtY = new std::vector<double>();
+    std::vector<double> *pmtZ = new std::vector<double>();
+
+    t->SetBranchAddress("hitPMTID", &hitPMTID);
     t->SetBranchAddress("mcNPE", &mcNPE);
     t->SetBranchAddress("mcNhits", &mcNhits);  
     t->SetBranchAddress("hitPMTTime", &hitPMTTime);
@@ -37,14 +44,24 @@ void process(const char* filename){
     t->SetBranchAddress("mcPEProcess", &mcPEProcess);
     t->SetBranchAddress("hitPMTDigitizedTime", &hitPMTDigitizedTime);
 
+    meta->SetBranchAddress("pmtX", &pmtX);
+    meta->SetBranchAddress("pmtY", &pmtY);
+    meta->SetBranchAddress("pmtZ", &pmtZ);
+
     for(int iEV = 0; iEV < t->GetEntries(); iEV++){
 
         t->GetEntry(iEV);
+        meta->GetEntry(iEV);
 
         // Loop over the hit PMTs (triggered events)
         for(size_t i = 0; i < hitPMTTime->size(); i++){
             double time = (*hitPMTTime)[i];
             double digitized_time = (*hitPMTDigitizedTime)[i];
+            // Example of how to grab the PMT position
+            int id = (*hitPMTID)[i];
+            double x = (*pmtX)[id];
+            double y = (*pmtY)[id];
+            double z = (*pmtZ)[id];
             ht->Fill(time);
             ht_digit->Fill(digitized_time - OFFSET);
         }
