@@ -1,6 +1,6 @@
 CPPFLAGS=-g -I$(ROOTSYS)/include -std=c++14 -I $(RATROOT)/include
 LDFLAGS=-g -L$(ROOTSYS)/lib -L $(RATROOT)/lib
-LDLIBS=-lRATEvent `root-config --libs --cflags` -lpq -lcurl -pthread
+LDLIBS=-lRATEvent `root-config --libs --cflags` -lcurl -pthread
 
 all: timing_ntuple timing_root
 
