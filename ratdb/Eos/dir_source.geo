@@ -1,29 +1,15 @@
 // Downward facing directional electron source
 // Shaved conical top, fully encased in a sealant material
 
-{
-  name: "GEO",
-  index: "world",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "",
-  type: "sphere",
-  r_max: 100.0,
-  // material: "cryostat_vacuum",
-  material: "wbls_1pct"
-  invisible: 1
-}
-
 
 /// REGION 1: sealed point, lead point, vacuum borehole (1/3)
-
 
 {
     name: "GEO",
     index: "sealed_point",
     valid_begin: [0, 0],
     valid_end: [0, 0],
-    mother: "world",
+    mother: "eos_inner",
     type: "revolve",
     r_min: [0.0, 0.0],
     r_max: [10.1, 20.1],
@@ -89,7 +75,7 @@
   index: "sealed_middle",
   valid_begin: [0, 0],
   valid_end: [0, 0],
-  mother: "world",
+  mother: "eos_inner",
   type: "tube",
   r_max: 20.1,
   size_z: 0.625,
@@ -137,7 +123,7 @@
   index: "sealed_bottom",
   valid_begin: [0, 0],
   valid_end: [0, 0],
-  mother: "world",
+  mother: "eos_inner",
   type: "tube",
   r_max: 20.1,
   size_z: 16.425,
