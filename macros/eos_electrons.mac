@@ -11,20 +11,18 @@
 
 /run/initialize
 
-# BEGIN EVENT LOOP
 /rat/proc splitevdaq
 /rat/proc count
-/rat/procset update 1
+/rat/procset update 10
 
 /rat/proclast outntuple
-#END EVENT LOOP
+#/rat/proclast outroot
 
-##### GENERATORS #################
-#/generator/add combo gun:point:uniform
 /generator/add combo gun:fill:poisson
+#/generator/add combo gun:point:uniform
 /generator/vtx/set e- 0.0 0.0 0.0 2.5
 /generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########
-/run/beamOn 1
+/run/beamOn 500
 

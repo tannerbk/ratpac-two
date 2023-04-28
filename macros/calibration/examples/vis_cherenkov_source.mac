@@ -4,7 +4,6 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
 
 /rat/db/set GEO[outer_tank] invisible 0
 /rat/db/set GEO[inner_tank] invisible 0
@@ -12,7 +11,7 @@
 /rat/db/set GEO[eos_vessel] invisible 0
 /rat/db/set GEO[eos_inner] invisible 0
 
-/rat/db/load Eos/CherenkovSource.geo
+/rat/db/load cal/examples/CherenkovSource.geo
 # Visualize the calibration source
 
 /run/initialize
