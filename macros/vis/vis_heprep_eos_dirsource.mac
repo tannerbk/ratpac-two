@@ -37,8 +37,12 @@
 #/generator/vtx/set e- 0.0 0.0 -1.0 1.0
 #/generator/pos/set dir_source
 
-/generator/add decaychain 90Y:regexfill:poisson
+/generator/add combo gun2:regexfill:poisson
+/generator/vtx/set e- 0.0 0.0 -1.0 20.0 1.0 2.5
 /generator/pos/set dir_source
+
+#/generator/add decaychain 90Y:regexfill:poisson
+#/generator/pos/set dir_source
 
 ##### RUN ###########
 /run/beamOn 10
