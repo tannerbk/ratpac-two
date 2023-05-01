@@ -4,7 +4,10 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[eos_inner] material "water"
+
+/rat/db/load cal/examples/CalibrationSphere.geo
+/rat/db/set GEO[SphereShield] r_max 50.0
+/rat/db/set GEO[SphereModerator] r_max 20.0
 
 /run/initialize
 
@@ -12,25 +15,17 @@
 
 ##### Visualization ##########################
 
-###HEPREP
-/tracking/FillPointCont true
-/vis/open HepRepFile
-# Change this output location
-#/vis/heprep/setFileDir /path/to/dir/
-/vis/scene/create
-/vis/scene/add/volume
-/vis/sceneHandler/attach
-/vis/viewer/set/style s
-/vis/scene/add/trajectories
-
+/tracking/storeTrajectory 1
 /rat/proc count
-/rat/procset update 1
+/rat/procset update 100
+/rat/proc prune
+/rat/procset prune "mc.track:opticalphoton"
+/rat/proc outroot
 
 ##### GENERATORS #################
 /generator/add combo gun:point:poisson
-/generator/vtx/set e- 0.0 0.0 0.0 2.5
+/generator/vtx/set e- 0.0 0.0 0.0 2.8
 /generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########
-/run/beamOn 1
-
+/run/beamOn 10000
