@@ -2,6 +2,7 @@ add_library( EOS SHARED
   Eos.cc
   GeoEosFactory.cc
   HitmanProc.cc
+  NtupleProc.cc
 )
 
 target_include_directories( EOS PUBLIC
