@@ -1,6 +1,6 @@
 {
   name: "GEO",
-  index: "source_housing",
+  index: "source_mother",
   valid_begin: [0, 0],
   valid_end: [0, 0],
   mother: "eos_inner",
@@ -16,7 +16,7 @@
   index: "active_source_element",
   valid_begin: [0, 0],
   valid_end: [0, 0],
-  mother: "source_housing",
+  mother: "source_mother",
   type: "tube",
   r_max: 1,
   size_z: 1.75,

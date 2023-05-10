@@ -25,9 +25,9 @@
 /rat/proc count
 /rat/procset update 1
 
-/rat/proclast outntuple
-# Alternatively can write to the full ROOT DS file
-#/rat/proclast outroot
+#/rat/proc outroot
+#/rat/proc outntuple
+/rat/proclast eosntuple
 
 #/generator/add combo gun:fill:poisson
 /generator/add combo gun:point:uniform
@@ -37,5 +37,5 @@
 
 ##### RUN ###########
 # Run one event
-/run/beamOn 1
+/run/beamOn 10
 
