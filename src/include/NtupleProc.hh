@@ -23,15 +23,15 @@ class NtupleProc : public RAT::OutNtupleProc {
     void FillMeta() override;
   protected:
 
-  double geo_index;
-  std::string geo_file;
-  std::string experiment;
-  double source_pos_x;
-  double source_pos_y;
-  double source_pos_z;
-  double source_rot_x;
-  double source_rot_y;
-  double source_rot_z;
+    double geo_index;
+    std::string geo_file;
+    std::string experiment;
+    double source_pos_x;
+    double source_pos_y;
+    double source_pos_z;
+    double source_rot_x;
+    double source_rot_y;
+    double source_rot_z;
 };
 
 }
