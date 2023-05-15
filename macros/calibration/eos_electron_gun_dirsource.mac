@@ -23,7 +23,7 @@
 /rat/proc count
 /rat/procset update 100
 
-/rat/proclast outntuple
+/rat/proclast eosntuple
 #END EVENT LOOP
 
 ##### GENERATORS #################
