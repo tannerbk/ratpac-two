@@ -98,6 +98,7 @@ namespace EOS {
         //
         auto input_1 = cppflow::fill({10, 5}, 1.0f);
         auto input_2 = cppflow::fill({10, 7}, -1.0f);
+        std::cout << "Just before the crash" <<std::endl;
         auto output = (*this->hitnet)(
           {
             { "serving_default_input_1:0", input_1 },
@@ -105,7 +106,6 @@ namespace EOS {
           },
           { "StatefulPartitionedCall:0" }
         );
-
         std::cout << "Hitnet output:" << std::endl;
         std::cout << output << std::endl;
         //
