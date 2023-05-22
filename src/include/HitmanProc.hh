@@ -4,7 +4,7 @@
 #include <Config.hh>
 #if TENSORFLOW_Enabled
 #include <cppflow/cppflow.h>
-
+#include <cppflow/model.h>
 #include <RAT/Processor.hh>
 #include <RAT/DS/Root.hh>
 #include <RAT/DS/EV.hh>
