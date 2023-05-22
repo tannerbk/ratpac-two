@@ -92,7 +92,7 @@ namespace EOS {
 
         std::cout << "hypothesis:" << std::endl;
         std::cout << cppflow::to_string(hyp) << std::endl;
-        */
+
         //
         // Testing network evaluation with dummy data
         //
@@ -134,10 +134,10 @@ namespace EOS {
         std::string directory = table->GetS("directory");
         std::cout<<directory<<std::endl;
 
-        RAT::Log::info("Trying to access HITMAN model at " + directory);
-        cppflow::model* hitnet = new cppflow::model(path + "/hitnet/");
-        cppflow::model* chargenet = new cppflow::model(path + "/chargenet/");
-        RAT::Log::info("HITMAN model found at " + directory);
+        //load HITMAN models
+        cppflow::model* hitnet = new cppflow::model(directory + "/hitnet/");
+        cppflow::model* chargenet = new cppflow::model(directory + "/chargenet/");
+        //std::<<cout<<"Model found at directory: "<<directory<<std::endl;
 
         //get map from PMT ID to PMT positions
         run_pmtinfo = run->GetPMTInfo();
