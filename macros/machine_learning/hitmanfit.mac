@@ -4,7 +4,7 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[eos_inner] material "wbls_1pct"
+/rat/db/set GEO[eos_inner] material "water"
 
 /rat/db/set Fitter[HITMAN] directory "/home/garrett/Downloads/anetwork"
 
@@ -20,7 +20,7 @@
 /rat/proc hitman
 
 /rat/proc outntuple
-/rat/procset file "fit.ntuple.root"
+/rat/procset file "fit5.ntuple.root"
 /rat/procset include_pmthits 1
 
 /rat/proclast outroot
@@ -28,9 +28,10 @@
 #END EVENT LOOP
 
 ##### GENERATORS #################
+#/generator/add combo gun:point:uniform
 /generator/add combo gun2:fill:poisson
-/generator/vtx/set e- 0.0 0.0 0.0  19.0 20.0 0.0
+/generator/vtx/set e- 0.0 0.0 0.0  1.7 2.3 0.0
 /generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########
-/run/beamOn 1
+/run/beamOn 10000
