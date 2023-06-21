@@ -4,21 +4,24 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "wbls_1pct"
+
+/rat/db/load cal/cs137_source.geo
 
 /run/initialize
-/tracking/storeTrajectory 1
 
 # BEGIN EVENT LOOP
 /rat/proc splitevdaq
 /rat/proc count
-/rat/procset update 1
+/rat/procset update 100
 
-/rat/proclast outroot
+/rat/proclast eosntuple
 #END EVENT LOOP
 
 ##### GENERATORS #################
-/generator/add decaychain 90Y:point:poisson
-/generator/pos/set 0.0 0.0 0.0
+/generator/add combo decay0:regexfill:poisson
+/generator/vtx/set backg Cs137
+/generator/pos/set active_source_element
 
 ##### RUN ###########
-/run/beamOn 1
+/run/beamOn 50000

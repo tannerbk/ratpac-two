@@ -8,6 +8,7 @@
 #include <RAT/ProcAllocator.hh>
 #include <GeoEosFactory.hh>
 #include <HitmanProc.hh>
+#include <NtupleProc.hh>
 #include <string>
 
 namespace EOS {

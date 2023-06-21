@@ -1,0 +1,39 @@
+/glg4debug/glg4param omit_muon_processes  0.0
+/glg4debug/glg4param omit_hadronic_processes  0.0
+
+#set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "wbls_1pct"
+/rat/db/set NOISEPROC noise_flag 1
+
+/rat/db/load cal/dir_source.geo
+
+# This *must* be the same material as eos_inner
+/rat/db/set GEO[source_mother] material "wbls_1pct"
+
+/rat/db/set GEO[source_mother] position [0.0,0.0,0.0] 
+/rat/db/set GEO[source_mother] rotation [0.0,0.0,0.0]
+
+/run/initialize
+
+# BEGIN EVENT LOOP
+/rat/proc splitevdaq
+/rat/proc noise
+/rat/proc count
+/rat/procset update 100
+
+/rat/proclast eosntuple
+#END EVENT LOOP
+
+##### GENERATORS #################
+# Generate downward going electrons with an 
+# opening angle of 10 degrees inside the 
+# directional source. The energy distribution
+# is flat 1 - 3 MeV. 
+/generator/add combo gun2:regexfill:poisson
+/generator/vtx/set e- 0.0 0.0 -1.0 10.0 1.0 3.0
+/generator/pos/set dir_source
+
+##### RUN ###########
+/run/beamOn 5000

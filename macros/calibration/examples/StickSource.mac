@@ -4,10 +4,9 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-#/rat/db/set GEO[pmts_side] pos_table "PMTINFO_side_1cm_176"
 
 # Properties of the stick
-/rat/db/load Eos/CalibrationStick.geo
+/rat/db/load cal/examples/CalibrationStick.geo
 /rat/db/set GEO[CalibrationStick] source_position 5.0
 /rat/db/set GEO[CalibrationStick] outer_diameter 15.0
 /rat/db/set GEO[CalibrationStick] position [0.0,0.0,0.0]

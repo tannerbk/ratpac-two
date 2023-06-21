@@ -13,8 +13,9 @@ Eos::Eos(RAT::AnyParse* parser, int argc, char** argv)
   // Initialize a geometry factory
   new GeoEosFactory();
 #if TENSORFLOW_Enabled
-    RAT::ProcBlockManager::AppendProcessor<HitmanProc>();
+  RAT::ProcBlockManager::AppendProcessor<HitmanProc>();
 #endif
+  RAT::ProcBlockManager::AppendProcessor<NtupleProc>();
   // Include a new type of processor
   // Add a unique component to the datastructure
 }

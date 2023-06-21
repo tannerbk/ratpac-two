@@ -5,7 +5,7 @@
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 
-/rat/db/load Eos/CalibrationSphere.geo
+/rat/db/load cal/examples/CalibrationSphere.geo
 /rat/db/set GEO[SphereModerator] r_max 5.0
 
 /run/initialize
