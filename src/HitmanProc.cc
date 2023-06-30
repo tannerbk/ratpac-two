@@ -25,13 +25,20 @@
 namespace EOS {
 
     double dispatch_function(const std::vector<double> &hypothesis, std::vector<double> &grad, void* hitman){
+        //Used to pass the function to be evaluated (NLLH) to NLopt as it requires a global function
         return((HitmanProc*)hitman)->NLLH(hypothesis);
     };
+
     HitmanProc::HitmanProc() : RAT::Processor("hitman") {    }
 
     RAT::Processor::Result HitmanProc::Event(RAT::DS::Root* ds, RAT::DS::EV* ev) {
+        //Run HITMAN reconstruction in line with simulation on an event by event basis
         RAT::DS::FitResult* fit = new RAT::DS::FitResult("hitman");
 
+
+        //First we must acquire the observational information from our event
+        //The observation is comprised of each PMT hit
+        //the x,y,z postion of the PMT hit, the measured photon time, and p.e. pulse integral
         RAT::DS::MC* mc = ds->GetMC();
 
         int totalhits = 0;
@@ -55,16 +62,10 @@ namespace EOS {
         }
         hitman_charge.push_back(static_cast<double>(totalhits));
         hitman_charge.push_back(static_cast<double>(totalhits)); //one day this will be total detector charge
-        int numCols = 5; // Number of columns
 
 
-        //std::cout << "hits:" << std::endl;
-        //std::cout << cppflow::to_string(hits) << std::endl;
-
-        //std::cout << "charge:" << std::endl;
-        //std::cout << cppflow::to_string(charge) << std::endl;
-
-        // Set the seed
+        // Set the particle kinematics hypothesis seed for the optimization routine
+        // Right now this is hard coded, Ideally we would replace these lines with a fast algorithm like quadfit
         double x_seed = 0.0;
         double y_seed = 0.0;
         double z_seed = 0.0;
@@ -73,14 +74,10 @@ namespace EOS {
         double t_seed = 0.0;
         double E_seed = 1.7;
 
-        std::vector<double> hyp_data {x_seed, y_seed, z_seed, ze_seed, az_seed, t_seed, E_seed};
+        std::vector<double> hyp_seed {x_seed, y_seed, z_seed, ze_seed, az_seed, t_seed, E_seed};
 
-        //
-        // Testing network evaluation with dummy data
-        //
-        //std::cout << "NLLH Value: " << NLLH(hyp_data) << std::endl;
-
-        Optimize(hyp_data, fit);
+        //Run the optimization routine
+        Optimize(hyp_seed, fit);
 
 
 
@@ -125,8 +122,8 @@ namespace EOS {
         double nllh = 0.0;
         bool fitsuccess = false;
         int dimensions = 7;
-        std::vector<double> lowerbounds {-850, -850, -850, 0.006, 0, -5, 0.5}; //avoid poles
-        std::vector<double> upperbounds {850, 850, 850, 3.138, 6.2832, 5, 3};         //avoid poles
+        std::vector<double> lowerbounds {-950, -950, -950, 0.006, 0, -5, 0.5}; //avoid poles
+        std::vector<double> upperbounds {950, 950, 950, 3.138, 6.2832, 5, 6};         //avoid poles
 
         nlopt::opt opt(nlopt::LN_SBPLX, dimensions);
         opt.set_lower_bounds(lowerbounds);
@@ -158,15 +155,20 @@ namespace EOS {
 
 
     double HitmanProc::NLLH(const std::vector<double> &hypothesis){
-        //calculate the total Negative Logarithm of the Likelihood (NLLH) by summing hitnet and chargenet terms
-        //with a predefined:
-        //hitman_hits (cppflow::tensor dim (number of p.e.,5) with [x,y,z,t,q])
-        //hitman_charge (cppflow::tensor dim (1,2) with [nhit,total_q])
-        //User specified:
-        //hypothesis which contains particle inference parameters {x,y,z,ze,az,t,E} of particle
+        /* calculate a quantity proportiaonal to the
+         * Negative Logarithm of the Likelihood (NLLH) by summing hitnet and chargenet terms
+         * with a predefined:
+         * hitman_hits flattened std::vector dim (number of p.e. * 5) [x, y, z, t, q, x, y, z, ...])
+         * hitman_charge std::vector dim (2) with [nhit,total_q])
+         * User specified:
+         * hypothesis which contains particle inference parameters {x,y,z,ze,az,t,E} of particle
+         * ouptut:
+         * scalar, the negative logarithm of the likelihood to evidence ratio
+         */
+
         double sum = 0;
 
-        //copy the hypothesis so its first dimension matches the hit vector
+        //copy the hypothesis so its first dimension matches the first dimension of the hit vector
         int totalhits = static_cast<int>(hitman_charge[0]);
         std::vector<double> temp_hyp(totalhits * 7, 0.0);
 
@@ -182,9 +184,10 @@ namespace EOS {
           temp_hyp[index + 6] = hypothesis[6];
         }
 
-        //prepare input tensors for hitnet
+        //prepare input tensors for hitnet by converting them to a cppflow tensors
         cppflow::tensor tensor_hyp(temp_hyp, { totalhits, 7 });
         cppflow::tensor tensor_hits(hitman_hits, { totalhits, 5 });
+
         //evaluate hitnet and sum the values produced over each hit
         tensor_hits = cppflow::cast(tensor_hits,TF_DOUBLE,TF_FLOAT);
         tensor_hyp = cppflow::cast(tensor_hyp,TF_DOUBLE,TF_FLOAT);
@@ -195,6 +198,7 @@ namespace EOS {
         //prepare input tensors for chargenet
         cppflow::tensor tensor_chyp(hypothesis, {1,7});
         cppflow::tensor tensor_charge(hitman_charge, {1,2});
+
         //evaluate chargenet and add it's value to the total llh
         tensor_charge = cppflow::cast(tensor_charge,TF_DOUBLE,TF_FLOAT);
         tensor_chyp = cppflow::cast(tensor_chyp,TF_DOUBLE,TF_FLOAT);
