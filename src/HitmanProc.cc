@@ -13,7 +13,7 @@
 #include <RAT/Rat.hh>
 #include <RAT/Processor.hh>
 #include <RAT/Log.hh>
-//#include <Minuit2/Minuit2Minimizer.h>
+#include <Eos.hh>
 
 #include <RAT/DS/Run.hh>
 #include <RAT/DS/PMT.hh>
@@ -90,16 +90,34 @@ namespace EOS {
     void HitmanProc::BeginOfRun(RAT::DS::Run* run) {
         RAT::DB* db = RAT::DB::Get();
         // Hitman variables stored in ratdb
-        RAT::DBLinkPtr table = db->GetLink("Fitter","HITMAN");
+        RAT::DBLinkPtr table = db->GetLink("Fitter", "HITMAN");
         std::string directory = table->GetS("directory");
-        std::cout<<directory<<std::endl;
 
-        //load HITMAN models
-        this->hitnet = new cppflow::model(directory + "/hitnet/");
-        this->chargenet = new cppflow::model(directory + "/chargenet/");
-        //std::<<cout<<"Model found at directory: "<<directory<<std::endl;
+        //Set up relative reference EosSimulations/models
+        std::string path = "";
+        for (auto dir : Eos::model_directories) {
+          std::string fullpath = dir + directory;
+          if (std::filesystem::exists(fullpath)) {
+            path = fullpath;
+            break;
+          }
+        }
 
-        //get map from PMT ID to PMT positions
+        // Check to see if model exists as an 'approved' EosSimulations model, otherwise use absolute path
+        if (!std::filesystem::exists(path)) {
+          RAT::warn << "Could not find HITMAN model at EosSimulations/models"+directory << newline;
+          RAT::warn << "Attempting to use 'unapproved' network at absolute path "+directory << newline;
+          path = directory;
+          if (!std::filesystem::exists(path)){
+            RAT::Log::Die("Could not find HITMAN model at: " + path);
+          }
+        }
+
+        //load HITMAN models in cppflow, note HITMAN requires both a hitnet and a chargenet to function
+        this->hitnet = new cppflow::model(path + "/hitnet/");
+        this->chargenet = new cppflow::model(path + "/chargenet/");
+
+        //get map from PMT ID to PMT positions for input to HITMAN
         run_pmtinfo = run->GetPMTInfo();
         int npmt = run_pmtinfo->GetPMTCount();
 
@@ -122,7 +140,7 @@ namespace EOS {
         double nllh = 0.0;
         bool fitsuccess = false;
         int dimensions = 7;
-        std::vector<double> lowerbounds {-950, -950, -950, 0.006, 0, -5, 0.5}; //avoid poles
+        std::vector<double> lowerbounds {-950, -950, -950, 0.006, 0, -5, 0.5};        //avoid poles
         std::vector<double> upperbounds {950, 950, 950, 3.138, 6.2832, 5, 6};         //avoid poles
 
         nlopt::opt opt(nlopt::LN_SBPLX, dimensions);
