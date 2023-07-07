@@ -6,7 +6,8 @@
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 /rat/db/set GEO[eos_inner] material "water"
 
-/rat/db/set Fitter[HITMAN] directory "/home/garrett/Downloads/anetwork"
+#Specify a path to HITMAN model either in the EosSimulations/models folder or an absolute path
+#/rat/db/set Fitter[HITMAN] directory "/fitters/HITMAN/water_Y90_example"
 
 /run/initialize
 #/rat/physics/scintillation/off
@@ -20,7 +21,7 @@
 /rat/proc hitman
 
 /rat/proc outntuple
-/rat/procset file "fit5.ntuple.root"
+/rat/procset file "HITMAN_fit.ntuple.root"
 /rat/procset include_pmthits 1
 
 /rat/proclast outroot
@@ -28,10 +29,10 @@
 #END EVENT LOOP
 
 ##### GENERATORS #################
-#/generator/add combo gun:point:uniform
-/generator/add combo gun2:fill:poisson
-/generator/vtx/set e- 0.0 0.0 0.0  1.7 2.3 0.0
-/generator/pos/set 0.0 0.0 0.0
+/generator/add combo gun2:fill:uniform
+
+/generator/vtx/set e- 0.0 0.0 0.0 0 1.75 2.25
+/generator/pos/set 0.0 0.0 -500.0
 
 ##### RUN ###########
-/run/beamOn 10000
+/run/beamOn 200
