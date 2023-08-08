@@ -265,6 +265,26 @@
 }
 
 {
+name: "GEO",
+index: "dichroicons",
+valid_begin: [0, 0],
+valid_end: [0, 0],
+mother: "inner_tank",
+type: "DichroiconArray",
+gdml_file: "gdml/dichroicon_tessellated.gdml",
+filter_material: "air",
+base_material:   "acrylic_black",
+surface: "longpass_dichroic",
+filter_color: [1.0, 0.0, 1.0, 0.8],
+base_color: [0.4, 0.4, 0.4, 1.0],
+base_volumes: ["DICHROICON_BASE"],
+
+pos_table: "DICHROICON_bottom",
+orientation: "manual",
+offset: -0,
+}
+
+{
   name: "GEO",
   index: "pmts_bottom",
   valid_begin: [0, 0],
