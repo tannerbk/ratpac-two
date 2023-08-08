@@ -1,6 +1,7 @@
 add_library( EOS SHARED
   Eos.cc
   GeoEosFactory.cc
+  DichroiconArrayFactory.cc
   HitmanProc.cc
   NtupleProc.cc
 )
