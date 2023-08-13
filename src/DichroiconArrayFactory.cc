@@ -9,6 +9,7 @@
 #include <G4PVPlacement.hh>
 #include <DichroiconArrayFactory.hh>
 #include <RAT/Log.hh>
+#include <RAT/GLG4TorusStack.hh>
 #include <RAT/Materials.hh>
 
 namespace EOS {
@@ -79,6 +80,7 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
   const std::string motherName = table->GetS("mother");
   G4Material *filter_material = G4Material::GetMaterial(table->GetS("filter_material"));
   G4Material *base_material = G4Material::GetMaterial(table->GetS("base_material"));
+  G4Material *absorbing_filter_material = G4Material::GetMaterial(table->GetS("absorbing_filter_material"));
   const std::string surface_name = table->GetS("surface");
   G4VPhysicalVolume *motherPhys = FindPhysMother(motherName);
   if (motherPhys == nullptr) RAT::Log::Die("Dichroicon mother physical volume not found: " + motherName);
@@ -88,6 +90,43 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
   parser.Read(gdml_file);
   G4LogicalVolume *gdml_worldLV = parser.GetWorldVolume()->GetLogicalVolume();
   const size_t n_gdml_daughters = gdml_worldLV->GetNoDaughters();
+  // absorbing filter
+  int build_absorbing_filter = 0;
+  try {
+  build_absorbing_filter = table->GetI("build_absorbing_filter");
+  } catch (RAT::DBNotFoundError &e) {}
+  G4LogicalVolume * absorbing_filter_lv = nullptr;
+  if (build_absorbing_filter){
+    std::vector<double> zOrigin = table->GetDArray("absorbing_filter_zOrigin");
+    std::vector<double> zEdge = table->GetDArray("absorbing_filter_zEdge");
+    std::vector<double> rhoEdge = table->GetDArray("absorbing_filter_rhoEdge");
+    RAT::Log::Assert(zEdge.size() == rhoEdge.size(), "Dichroicon absorbing filter zEdge and rhoEdge arrays must be the same length");
+    RAT::Log::Assert(zEdge.size() == zOrigin.size() + 1, "Dichroicon absorbing filter zEdge length must be one greater than zOrigin length");
+    std::vector<double> zOrigin_inner(zOrigin.size());
+    std::vector<double> zEdge_inner(zEdge.size());
+    std::vector<double> zOrigin_outer(zOrigin.size());
+    std::vector<double> zEdge_outer(zEdge.size());
+    double filter_offset = table->GetD("absorbing_filter_offset");
+    double filter_thickness = table->GetD("absorbing_filter_thickness");
+    for (int i = 0; i < zOrigin.size(); i++){
+      zOrigin_inner[i] = zOrigin[i] + filter_offset;
+      zOrigin_outer[i] = zOrigin[i] + filter_thickness + filter_offset;
+    }
+    for (int i = 0; i < zEdge.size(); i++){
+      zEdge_inner[i] = zEdge[i] + filter_offset;
+      zEdge_outer[i] = zEdge[i] + filter_thickness + filter_offset;
+    }
+    auto absorbing_filter = new GLG4TorusStack("absorbing_filter");
+    auto absorbing_filter_inner = new GLG4TorusStack("absorbing_filter_inner");
+    absorbing_filter_inner->SetAllParameters((int)zOrigin_inner.size(),
+                                             zEdge_inner.data(), rhoEdge.data(), zOrigin_inner.data());
+    absorbing_filter->SetAllParameters((int)zOrigin_outer.size(),
+                                       zEdge_outer.data(), rhoEdge.data(), zOrigin_outer.data(),
+                                       absorbing_filter_inner);
+    absorbing_filter_lv = new G4LogicalVolume(absorbing_filter, absorbing_filter_material, "absorbing_filter_log");
+    SetVis(absorbing_filter_lv, table->GetDArray("absorbing_filter_color"));
+  }
+
   // loop through pos and dir
   for (int i_dichroicon = 0; i_dichroicon < pos.size(); i_dichroicon++) {
     // compute required rotation
@@ -121,6 +160,10 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
       }
       G4VPhysicalVolume *daughterPhys =
           new G4PVPlacement(rotation, current_pmt_pos, placed_name, daughter_lv, motherPhys, false, 0);
+    }
+    if (build_absorbing_filter){
+      G4VPhysicalVolume *absorbing_filter_phys =
+          new G4PVPlacement(rotation, current_pmt_pos, "absorbing_filter", absorbing_filter_lv, motherPhys, false, 0);
     }
   }
 }
