@@ -104,24 +104,42 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
     RAT::Log::Assert(zEdge.size() == zOrigin.size() + 1, "Dichroicon absorbing filter zEdge length must be one greater than zOrigin length");
     std::vector<double> zOrigin_inner(zOrigin.size());
     std::vector<double> zEdge_inner(zEdge.size());
+    std::vector<double> rhoEdge_inner(rhoEdge.size());
     std::vector<double> zOrigin_outer(zOrigin.size());
+    std::vector<double> rhoEdge_outer(rhoEdge.size());
     std::vector<double> zEdge_outer(zEdge.size());
     double filter_offset = table->GetD("absorbing_filter_offset");
     double filter_thickness = table->GetD("absorbing_filter_thickness");
+    // the inner surface of the filter has the same shape as the PMT glass, just shifted by `filter_offset` in the z direction.
+    // The outer surface is constructed based on the inner surface, such that the thickness normal to the inner surface
+    // equals `absorbing_filter_thickness`
+    // Algorithm for cosntructing the outer surface: https://github.com/rat-pac/ratpac-two/blob/b8121abe14601ac842f09be978804af42b4ecb26/src/geo/src/pmt/ToroidalPMTConstruction.cc#L378-L398
+    if (zEdge[zEdge.size()-1] != 0.0)
+      RAT::warn << "Absorbing filter construction implicitly assumes the z coordinate of the last point is 0. Shape of the filter (especially towards the edge) may be bad!" << newline;
     for (int i = 0; i < zOrigin.size(); i++){
       zOrigin_inner[i] = zOrigin[i] + filter_offset;
-      zOrigin_outer[i] = zOrigin[i] + filter_thickness + filter_offset;
     }
     for (int i = 0; i < zEdge.size(); i++){
       zEdge_inner[i] = zEdge[i] + filter_offset;
-      zEdge_outer[i] = zEdge[i] + filter_thickness + filter_offset;
+      rhoEdge_inner[i] = rhoEdge[i];
     }
-    auto absorbing_filter = new GLG4TorusStack("absorbing_filter");
     auto absorbing_filter_inner = new GLG4TorusStack("absorbing_filter_inner");
     absorbing_filter_inner->SetAllParameters((int)zOrigin_inner.size(),
-                                             zEdge_inner.data(), rhoEdge.data(), zOrigin_inner.data());
+                                             zEdge_inner.data(), rhoEdge_inner.data(), zOrigin_inner.data());
+    G4ThreeVector norm;
+    zEdge_outer[0] = zEdge_inner[0] + filter_thickness;
+    rhoEdge_outer[0] = 0.0;
+    for(int i = 1; i < zEdge.size() - 1; i++){
+      norm = absorbing_filter_inner->SurfaceNormal(G4ThreeVector(0.0, rhoEdge_inner[i], zEdge_inner[i]));
+      zEdge_outer[i] = zEdge_inner[i] + filter_thickness * norm.z();
+      rhoEdge_outer[i] = rhoEdge_inner[i] + filter_thickness * norm.y();
+    }
+    rhoEdge_outer[rhoEdge.size()-1] = rhoEdge_inner[rhoEdge.size()-1] + filter_thickness;
+    zEdge_outer[zEdge.size()-1] = zEdge_inner[rhoEdge.size()-1];
+
+    auto absorbing_filter = new GLG4TorusStack("absorbing_filter");
     absorbing_filter->SetAllParameters((int)zOrigin_outer.size(),
-                                       zEdge_outer.data(), rhoEdge.data(), zOrigin_outer.data(),
+                                       zEdge_outer.data(), rhoEdge_outer.data(), zOrigin_outer.data(),
                                        absorbing_filter_inner);
     absorbing_filter_lv = new G4LogicalVolume(absorbing_filter, absorbing_filter_material, "absorbing_filter_log");
     SetVis(absorbing_filter_lv, table->GetDArray("absorbing_filter_color"));
