@@ -1,0 +1,296 @@
+/glg4debug/glg4param omit_muon_processes 1.0
+/glg4debug/glg4param omit_hadronic_processes 1.0
+
+#set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "wbls_1pct"
+
+# Colors
+/rat/db/set GEO[world] invisible 1
+#/rat/db/set GEO[outer_tank] color [0.42,0.47,0.57,0.95]
+/rat/db/set GEO[outer_tank] color [1.0,1.0,1.0,0.5]
+#/rat/db/set GEO[inner_tank] color [0.2,0.2,0.9,0.2]
+/rat/db/set GEO[inner_tank] color [1.0,1.0,1.0,0.2]
+/rat/db/set GEO[eos_vessel] color [0.6,0.2,0.2,0.1]
+# Acrylic
+/rat/db/set GEO[eos_inner]   color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[bottom_leg1] color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[bottom_leg2] color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[bottom_leg3] color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[bottom_leg4] color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[top_leg1]    color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[top_leg2]    color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[top_leg3]    color [1.0,1.0,1.0,0.6]
+/rat/db/set GEO[top_leg4]    color [1.0,1.0,1.0,0.6]
+
+/rat/db/set LED[default] intensity 1000
+# Multiple LEDs are cycled through in order
+/rat/db/set LED[default] x [200,200,200,200,200]
+/rat/db/set LED[default] y [0,0,0,0,0]
+/rat/db/set LED[default] z [-200,-100,0,100,200]
+
+/rat/db/set LED[default] angle_mode "dist"
+/rat/db/set LED[default] dist_angle [0.0,0.05]
+
+# Where to shoot the leds
+# Option 1: Aim at targets
+/rat/db/set LED[default] fire_at_target true
+/rat/db/set LED[default] target_x [0,0,0,0,0]
+/rat/db/set LED[default] target_y [0,0,0,0,0]
+/rat/db/set LED[default] target_z [0,0,0,0,0]
+# Option 2: Fire along a given direction vector
+/rat/db/set LED[default] fire_at_target false
+/rat/db/set LED[default] dir_x [-1,-1,-1,-1,-1]
+/rat/db/set LED[default] dir_y [0,0,0,0,0]
+/rat/db/set LED[default] dir_z [0,0,0,0,0]
+
+# Wavelength options
+/rat/db/set LED[default] wl_mode "dist"
+/rat/db/set LED[default] dist_wl [390,400,410]
+/rat/db/set LED[default] dist_wl_intensity [0.5,1,0.5]
+
+# Wavelength for vis
+/rat/db/set LED[eos_calibration_multi_mode] intensity 1000
+/rat/db/set LED[eos_calibration_multi_mode] wl_mode "dist"
+/rat/db/set LED[eos_calibration_multi_mode] dist_wl [400,450,500]
+/rat/db/set LED[eos_calibration_multi_mode] dist_wl_intensity [0.5,1,0.5]
+
+/rat/db/set LED[eos_calibration_single_mode] intensity 1000
+/rat/db/set LED[eos_calibration_single_mode] wl_mode "dist"
+/rat/db/set LED[eos_calibration_single_mode] dist_wl [600,50,700]
+/rat/db/set LED[eos_calibration_single_mode] dist_wl_intensity [0.5,1,0.5]
+
+/run/initialize
+
+/vis/open OGLSQt
+/vis/scene/create
+/vis/scene/add/trajectories rich smooth
+/tracking/storeTrajectory 1
+/tracking/FillPointCont 1
+/vis/scene/add/volume
+/vis/sceneHandler/attach
+/vis/viewer/set/upVector 0.0 0.0 1.0
+/vis/viewer/set/viewpointThetaPhi -90 135 
+/vis/viewer/set/style s
+#/vis/viewer/flush
+/vis/scene/endOfEventAction accumulate
+
+#/vis/filtering/trajectories/create/attributeFilter ledfilter
+#/vis/filtering/trajectories/ledfilter/setAttribute IMag
+#/vis/filtering/trajectories/ledfilter/addInterval 1.5 eV 4.0 GeV
+/vis/modeling/trajectories/create/drawByAttribute ledcolor
+/vis/modeling/trajectories/ledcolor/setAttribute IMag
+
+/vis/modeling/trajectories/ledcolor/addInterval interval0 1.67 eV 1.68 eV
+/vis/modeling/trajectories/ledcolor/interval0/setLineColourRGBA 0.09 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval1 1.68 eV 1.70 eV
+/vis/modeling/trajectories/ledcolor/interval1/setLineColourRGBA 0.18 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval2 1.70 eV 1.71 eV
+/vis/modeling/trajectories/ledcolor/interval2/setLineColourRGBA 0.26 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval3 1.71 eV 1.73 eV
+/vis/modeling/trajectories/ledcolor/interval3/setLineColourRGBA 0.33 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval4 1.73 eV 1.75 eV
+/vis/modeling/trajectories/ledcolor/interval4/setLineColourRGBA 0.39 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval5 1.75 eV 1.76 eV
+/vis/modeling/trajectories/ledcolor/interval5/setLineColourRGBA 0.46 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval6 1.76 eV 1.78 eV
+/vis/modeling/trajectories/ledcolor/interval6/setLineColourRGBA 0.52 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval7 1.78 eV 1.79 eV
+/vis/modeling/trajectories/ledcolor/interval7/setLineColourRGBA 0.57 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval8 1.79 eV 1.81 eV
+/vis/modeling/trajectories/ledcolor/interval8/setLineColourRGBA 0.63 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval9 1.81 eV 1.83 eV
+/vis/modeling/trajectories/ledcolor/interval9/setLineColourRGBA 0.68 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval10 1.83 eV 1.84 eV
+/vis/modeling/trajectories/ledcolor/interval10/setLineColourRGBA 0.73 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval11 1.84 eV 1.86 eV
+/vis/modeling/trajectories/ledcolor/interval11/setLineColourRGBA 0.78 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval12 1.86 eV 1.88 eV
+/vis/modeling/trajectories/ledcolor/interval12/setLineColourRGBA 0.83 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval13 1.88 eV 1.89 eV
+/vis/modeling/trajectories/ledcolor/interval13/setLineColourRGBA 0.87 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval14 1.89 eV 1.91 eV
+/vis/modeling/trajectories/ledcolor/interval14/setLineColourRGBA 0.92 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval15 1.91 eV 1.92 eV
+/vis/modeling/trajectories/ledcolor/interval15/setLineColourRGBA 0.96 0.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval16 1.92 eV 1.94 eV
+/vis/modeling/trajectories/ledcolor/interval16/setLineColourRGBA 1.00 0.01 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval17 1.94 eV 1.96 eV
+/vis/modeling/trajectories/ledcolor/interval17/setLineColourRGBA 1.00 0.14 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval18 1.96 eV 1.97 eV
+/vis/modeling/trajectories/ledcolor/interval18/setLineColourRGBA 1.00 0.24 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval19 1.97 eV 1.99 eV
+/vis/modeling/trajectories/ledcolor/interval19/setLineColourRGBA 1.00 0.33 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval20 1.99 eV 2.00 eV
+/vis/modeling/trajectories/ledcolor/interval20/setLineColourRGBA 1.00 0.41 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval21 2.00 eV 2.02 eV
+/vis/modeling/trajectories/ledcolor/interval21/setLineColourRGBA 1.00 0.48 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval22 2.02 eV 2.04 eV
+/vis/modeling/trajectories/ledcolor/interval22/setLineColourRGBA 1.00 0.55 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval23 2.04 eV 2.05 eV
+/vis/modeling/trajectories/ledcolor/interval23/setLineColourRGBA 1.00 0.62 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval24 2.05 eV 2.07 eV
+/vis/modeling/trajectories/ledcolor/interval24/setLineColourRGBA 1.00 0.69 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval25 2.07 eV 2.09 eV
+/vis/modeling/trajectories/ledcolor/interval25/setLineColourRGBA 1.00 0.75 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval26 2.09 eV 2.10 eV
+/vis/modeling/trajectories/ledcolor/interval26/setLineColourRGBA 1.00 0.81 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval27 2.10 eV 2.12 eV
+/vis/modeling/trajectories/ledcolor/interval27/setLineColourRGBA 1.00 0.87 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval28 2.12 eV 2.13 eV
+/vis/modeling/trajectories/ledcolor/interval28/setLineColourRGBA 1.00 0.93 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval29 2.13 eV 2.15 eV
+/vis/modeling/trajectories/ledcolor/interval29/setLineColourRGBA 1.00 0.98 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval30 2.15 eV 2.17 eV
+/vis/modeling/trajectories/ledcolor/interval30/setLineColourRGBA 0.97 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval31 2.17 eV 2.18 eV
+/vis/modeling/trajectories/ledcolor/interval31/setLineColourRGBA 0.92 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval32 2.18 eV 2.20 eV
+/vis/modeling/trajectories/ledcolor/interval32/setLineColourRGBA 0.87 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval33 2.20 eV 2.21 eV
+/vis/modeling/trajectories/ledcolor/interval33/setLineColourRGBA 0.82 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval34 2.21 eV 2.23 eV
+/vis/modeling/trajectories/ledcolor/interval34/setLineColourRGBA 0.77 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval35 2.23 eV 2.25 eV
+/vis/modeling/trajectories/ledcolor/interval35/setLineColourRGBA 0.72 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval36 2.25 eV 2.26 eV
+/vis/modeling/trajectories/ledcolor/interval36/setLineColourRGBA 0.67 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval37 2.26 eV 2.28 eV
+/vis/modeling/trajectories/ledcolor/interval37/setLineColourRGBA 0.62 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval38 2.28 eV 2.30 eV
+/vis/modeling/trajectories/ledcolor/interval38/setLineColourRGBA 0.57 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval39 2.30 eV 2.31 eV
+/vis/modeling/trajectories/ledcolor/interval39/setLineColourRGBA 0.51 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval40 2.31 eV 2.33 eV
+/vis/modeling/trajectories/ledcolor/interval40/setLineColourRGBA 0.46 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval41 2.33 eV 2.34 eV
+/vis/modeling/trajectories/ledcolor/interval41/setLineColourRGBA 0.41 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval42 2.34 eV 2.36 eV
+/vis/modeling/trajectories/ledcolor/interval42/setLineColourRGBA 0.36 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval43 2.36 eV 2.38 eV
+/vis/modeling/trajectories/ledcolor/interval43/setLineColourRGBA 0.30 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval44 2.38 eV 2.39 eV
+/vis/modeling/trajectories/ledcolor/interval44/setLineColourRGBA 0.25 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval45 2.39 eV 2.41 eV
+/vis/modeling/trajectories/ledcolor/interval45/setLineColourRGBA 0.19 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval46 2.41 eV 2.42 eV
+/vis/modeling/trajectories/ledcolor/interval46/setLineColourRGBA 0.12 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval47 2.42 eV 2.44 eV
+/vis/modeling/trajectories/ledcolor/interval47/setLineColourRGBA 0.05 1.00 0.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval48 2.44 eV 2.46 eV
+/vis/modeling/trajectories/ledcolor/interval48/setLineColourRGBA 0.00 1.00 0.14 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval49 2.46 eV 2.47 eV
+/vis/modeling/trajectories/ledcolor/interval49/setLineColourRGBA 0.00 1.00 0.33 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval50 2.47 eV 2.49 eV
+/vis/modeling/trajectories/ledcolor/interval50/setLineColourRGBA 0.00 1.00 0.50 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval51 2.49 eV 2.51 eV
+/vis/modeling/trajectories/ledcolor/interval51/setLineColourRGBA 0.00 1.00 0.65 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval52 2.51 eV 2.52 eV
+/vis/modeling/trajectories/ledcolor/interval52/setLineColourRGBA 0.00 1.00 0.79 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval53 2.52 eV 2.54 eV
+/vis/modeling/trajectories/ledcolor/interval53/setLineColourRGBA 0.00 1.00 0.92 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval54 2.54 eV 2.55 eV
+/vis/modeling/trajectories/ledcolor/interval54/setLineColourRGBA 0.00 0.98 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval55 2.55 eV 2.57 eV
+/vis/modeling/trajectories/ledcolor/interval55/setLineColourRGBA 0.00 0.93 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval56 2.57 eV 2.59 eV
+/vis/modeling/trajectories/ledcolor/interval56/setLineColourRGBA 0.00 0.88 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval57 2.59 eV 2.60 eV
+/vis/modeling/trajectories/ledcolor/interval57/setLineColourRGBA 0.00 0.83 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval58 2.60 eV 2.62 eV
+/vis/modeling/trajectories/ledcolor/interval58/setLineColourRGBA 0.00 0.78 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval59 2.62 eV 2.63 eV
+/vis/modeling/trajectories/ledcolor/interval59/setLineColourRGBA 0.00 0.73 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval60 2.63 eV 2.65 eV
+/vis/modeling/trajectories/ledcolor/interval60/setLineColourRGBA 0.00 0.68 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval61 2.65 eV 2.67 eV
+/vis/modeling/trajectories/ledcolor/interval61/setLineColourRGBA 0.00 0.63 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval62 2.67 eV 2.68 eV
+/vis/modeling/trajectories/ledcolor/interval62/setLineColourRGBA 0.00 0.58 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval63 2.68 eV 2.70 eV
+/vis/modeling/trajectories/ledcolor/interval63/setLineColourRGBA 0.00 0.53 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval64 2.70 eV 2.72 eV
+/vis/modeling/trajectories/ledcolor/interval64/setLineColourRGBA 0.00 0.47 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval65 2.72 eV 2.73 eV
+/vis/modeling/trajectories/ledcolor/interval65/setLineColourRGBA 0.00 0.42 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval66 2.73 eV 2.75 eV
+/vis/modeling/trajectories/ledcolor/interval66/setLineColourRGBA 0.00 0.36 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval67 2.75 eV 2.76 eV
+/vis/modeling/trajectories/ledcolor/interval67/setLineColourRGBA 0.00 0.31 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval68 2.76 eV 2.78 eV
+/vis/modeling/trajectories/ledcolor/interval68/setLineColourRGBA 0.00 0.25 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval69 2.78 eV 2.80 eV
+/vis/modeling/trajectories/ledcolor/interval69/setLineColourRGBA 0.00 0.19 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval70 2.80 eV 2.81 eV
+/vis/modeling/trajectories/ledcolor/interval70/setLineColourRGBA 0.00 0.12 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval71 2.81 eV 2.83 eV
+/vis/modeling/trajectories/ledcolor/interval71/setLineColourRGBA 0.00 0.05 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval72 2.83 eV 2.84 eV
+/vis/modeling/trajectories/ledcolor/interval72/setLineColourRGBA 0.05 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval73 2.84 eV 2.86 eV
+/vis/modeling/trajectories/ledcolor/interval73/setLineColourRGBA 0.11 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval74 2.86 eV 2.88 eV
+/vis/modeling/trajectories/ledcolor/interval74/setLineColourRGBA 0.17 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval75 2.88 eV 2.89 eV
+/vis/modeling/trajectories/ledcolor/interval75/setLineColourRGBA 0.21 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval76 2.89 eV 2.91 eV
+/vis/modeling/trajectories/ledcolor/interval76/setLineColourRGBA 0.26 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval77 2.91 eV 2.93 eV
+/vis/modeling/trajectories/ledcolor/interval77/setLineColourRGBA 0.30 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval78 2.93 eV 2.94 eV
+/vis/modeling/trajectories/ledcolor/interval78/setLineColourRGBA 0.35 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval79 2.94 eV 2.96 eV
+/vis/modeling/trajectories/ledcolor/interval79/setLineColourRGBA 0.39 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval80 2.96 eV 2.97 eV
+/vis/modeling/trajectories/ledcolor/interval80/setLineColourRGBA 0.42 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval81 2.97 eV 2.99 eV
+/vis/modeling/trajectories/ledcolor/interval81/setLineColourRGBA 0.46 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval82 2.99 eV 3.01 eV
+/vis/modeling/trajectories/ledcolor/interval82/setLineColourRGBA 0.50 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval83 3.01 eV 3.02 eV
+/vis/modeling/trajectories/ledcolor/interval83/setLineColourRGBA 0.53 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval84 3.02 eV 3.04 eV
+/vis/modeling/trajectories/ledcolor/interval84/setLineColourRGBA 0.57 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval85 3.04 eV 3.05 eV
+/vis/modeling/trajectories/ledcolor/interval85/setLineColourRGBA 0.60 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval86 3.05 eV 3.07 eV
+/vis/modeling/trajectories/ledcolor/interval86/setLineColourRGBA 0.63 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval87 3.07 eV 3.09 eV
+/vis/modeling/trajectories/ledcolor/interval87/setLineColourRGBA 0.66 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval88 3.09 eV 3.10 eV
+/vis/modeling/trajectories/ledcolor/interval88/setLineColourRGBA 0.70 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval89 3.10 eV 3.12 eV
+/vis/modeling/trajectories/ledcolor/interval89/setLineColourRGBA 0.73 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval90 3.12 eV 3.14 eV
+/vis/modeling/trajectories/ledcolor/interval90/setLineColourRGBA 0.76 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval91 3.14 eV 3.15 eV
+/vis/modeling/trajectories/ledcolor/interval91/setLineColourRGBA 0.79 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval92 3.15 eV 3.17 eV
+/vis/modeling/trajectories/ledcolor/interval92/setLineColourRGBA 0.81 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval93 3.17 eV 3.18 eV
+/vis/modeling/trajectories/ledcolor/interval93/setLineColourRGBA 0.84 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval94 3.18 eV 3.20 eV
+/vis/modeling/trajectories/ledcolor/interval94/setLineColourRGBA 0.87 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval95 3.20 eV 3.22 eV
+/vis/modeling/trajectories/ledcolor/interval95/setLineColourRGBA 0.90 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval96 3.22 eV 3.23 eV
+/vis/modeling/trajectories/ledcolor/interval96/setLineColourRGBA 0.92 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval97 3.23 eV 3.25 eV
+/vis/modeling/trajectories/ledcolor/interval97/setLineColourRGBA 0.95 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval98 3.25 eV 3.26 eV
+/vis/modeling/trajectories/ledcolor/interval98/setLineColourRGBA 0.97 0.00 1.00 0.01
+/vis/modeling/trajectories/ledcolor/addInterval interval99 3.26 eV 1.67 eV
+/vis/modeling/trajectories/ledcolor/interval99/setLineColourRGBA 1.00 0.00 1.00 0.01
+
+## Cut a plane through the detector
+/vis/viewer/addCutawayPlane -10.0 0.0 0.0 cm 1.0 0.0 0.0
+#/vis/viewer/addCutawayPlane 0 -100 0 cm 0 1 0
+#/vis/viewer/set/viewpointThetaPhi -90 0
+#/vis/viewer/zoomTo 10
+#/vis/viewer/panTo 10 0
+
+/generator/add led eos_calibration_multi_mode
+/generator/add led eos_calibration_single_mode
+
+/run/beamOn 20
