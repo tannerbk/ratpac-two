@@ -1,0 +1,50 @@
+/glg4debug/glg4param omit_muon_processes 1.0
+/glg4debug/glg4param omit_hadronic_processes 1.0
+
+#set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "wbls_1pct"
+
+/rat/db/set LED[default] intensity 1000
+# Multiple LEDs are cycled through in order
+/rat/db/set LED[default] x [2000,2000,2000,2000,2000]
+/rat/db/set LED[default] y [0,0,0,0,0]
+/rat/db/set LED[default] z [-2000,-1000,0,1000,2000]
+
+/rat/db/set LED[default] angle_mode "dist"
+/rat/db/set LED[default] dist_angle [0.0,0.05]
+
+# Where to shoot the leds
+# Option 1: Aim at targets
+/rat/db/set LED[default] fire_at_target true
+/rat/db/set LED[default] target_x [0,0,0,0,0]
+/rat/db/set LED[default] target_y [0,0,0,0,0]
+/rat/db/set LED[default] target_z [0,0,0,0,0]
+# Option 2: Fire along a given direction vector
+/rat/db/set LED[default] fire_at_target false
+/rat/db/set LED[default] dir_x [-1,-1,-1,-1,-1]
+/rat/db/set LED[default] dir_y [0,0,0,0,0]
+/rat/db/set LED[default] dir_z [0,0,0,0,0]
+
+# Wavelength options
+/rat/db/set LED[default] wl_mode "dist"
+/rat/db/set LED[default] dist_wl [350,355,360,365,370,375,380,385,390,395,400,405,410,415,420,425,430,435,440,445,450]
+/rat/db/set LED[default] dist_wl_intensity [0.,0.02,0.1,0.21,0.35,0.5,0.65,0.79,0.9,0.98,1.,0.98,0.9,0.79,0.65,0.5,0.35,0.21,0.1,0.02,0.]
+
+# Time options
+/rat/db/set LED[default] time_mode "dist"
+/rat/db/set LED[default] dist_time [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100]
+/rat/db/set LED[default] dist_time_intensity [1.,0.607,0.368,0.223,0.135,0.082,0.05,0.03,0.018,0.011,0.007,0.004,0.002,0.002,0.001,0.001,0.,0.,0.,0.,0.]
+
+/run/initialize
+/tracking/storeTrajectory 1
+/rat/proc splitevdaq
+/rat/proc count
+/rat/procset update 100
+/rat/proclast outntuple
+/rat/procset include_tracking 1
+
+/generator/add led default
+
+/run/beamOn 10000
