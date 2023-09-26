@@ -1,0 +1,38 @@
+/glg4debug/glg4param omit_muon_processes  0.0
+/glg4debug/glg4param omit_hadronic_processes  0.0
+
+#set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "water"
+
+#Specify a path to HITMAN model either in the EosSimulations/models folder or an absolute path
+#/rat/db/set Fitter[HITMAN] directory "/fitters/HITMAN/water_Y90_example"
+
+/run/initialize
+#/rat/physics/scintillation/off
+#/tracking/storeTrajectory 1
+
+# BEGIN EVENT LOOP
+/rat/proc simpledaq
+#/rat/proc splitevdaq
+/rat/proc count
+/rat/procset update 100
+/rat/proc hitman
+
+/rat/proc outntuple
+/rat/procset file "HITMAN_fit.ntuple.root"
+/rat/procset include_pmthits 1
+
+/rat/proclast outroot
+
+#END EVENT LOOP
+
+##### GENERATORS #################
+/generator/add combo gun2:fill:uniform
+
+/generator/vtx/set e- 0.0 0.0 0.0 0 1.75 2.25
+/generator/pos/set 0.0 0.0 -500.0
+
+##### RUN ###########
+/run/beamOn 200
