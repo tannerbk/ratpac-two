@@ -3,13 +3,13 @@
  * Author:     James Shen <jierans@sas.upenn.edu>
  * Date:       8/8/23 1:51 PM
  **********************************************************************/
+#include <DichroiconArrayFactory.hh>
 #include <G4GDMLParser.hh>
 #include <G4LogicalSkinSurface.hh>
 #include <G4Material.hh>
 #include <G4PVPlacement.hh>
-#include <DichroiconArrayFactory.hh>
-#include <RAT/Log.hh>
 #include <RAT/GLG4TorusStack.hh>
+#include <RAT/Log.hh>
 #include <RAT/Materials.hh>
 
 namespace EOS {
@@ -51,9 +51,9 @@ G4VPhysicalVolume *DichroiconArrayFactory::Construct(RAT::DBLinkPtr table) {
     const std::vector<double> &dir_y = pos_table->GetDArray("dir_y");
     const std::vector<double> &dir_z = pos_table->GetDArray("dir_z");
     RAT::Log::Assert(pos_x.size() == pos_y.size() && pos_x.size() == pos_z.size(),
-                "Dichroicon position arrays must be the same length");
+                     "Dichroicon position arrays must be the same length");
     RAT::Log::Assert(pos.size() == dir_x.size() && pos.size() == dir_y.size() && pos.size() == dir_z.size(),
-                "Dichroicon direction arrays must be the same length");
+                     "Dichroicon direction arrays must be the same length");
     for (int i = 0; i < pos_x.size(); i++) {
       dir[i] = G4ThreeVector(dir_x[i], dir_y[i], dir_z[i]).unit();
     }
@@ -93,15 +93,18 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
   // absorbing filter
   int build_absorbing_filter = 0;
   try {
-  build_absorbing_filter = table->GetI("build_absorbing_filter");
-  } catch (RAT::DBNotFoundError &e) {}
-  G4LogicalVolume * absorbing_filter_lv = nullptr;
-  if (build_absorbing_filter){
+    build_absorbing_filter = table->GetI("build_absorbing_filter");
+  } catch (RAT::DBNotFoundError &e) {
+  }
+  G4LogicalVolume *absorbing_filter_lv = nullptr;
+  if (build_absorbing_filter) {
     std::vector<double> zOrigin = table->GetDArray("absorbing_filter_zOrigin");
     std::vector<double> zEdge = table->GetDArray("absorbing_filter_zEdge");
     std::vector<double> rhoEdge = table->GetDArray("absorbing_filter_rhoEdge");
-    RAT::Log::Assert(zEdge.size() == rhoEdge.size(), "Dichroicon absorbing filter zEdge and rhoEdge arrays must be the same length");
-    RAT::Log::Assert(zEdge.size() == zOrigin.size() + 1, "Dichroicon absorbing filter zEdge length must be one greater than zOrigin length");
+    RAT::Log::Assert(zEdge.size() == rhoEdge.size(),
+                     "Dichroicon absorbing filter zEdge and rhoEdge arrays must be the same length");
+    RAT::Log::Assert(zEdge.size() == zOrigin.size() + 1,
+                     "Dichroicon absorbing filter zEdge length must be one greater than zOrigin length");
     std::vector<double> zOrigin_inner(zOrigin.size());
     std::vector<double> zEdge_inner(zEdge.size());
     std::vector<double> rhoEdge_inner(rhoEdge.size());
@@ -110,37 +113,38 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
     std::vector<double> zEdge_outer(zEdge.size());
     double filter_offset = table->GetD("absorbing_filter_offset");
     double filter_thickness = table->GetD("absorbing_filter_thickness");
-    // the inner surface of the filter has the same shape as the PMT glass, just shifted by `filter_offset` in the z direction.
-    // The outer surface is constructed based on the inner surface, such that the thickness normal to the inner surface
-    // equals `absorbing_filter_thickness`
-    // Algorithm for cosntructing the outer surface: https://github.com/rat-pac/ratpac-two/blob/b8121abe14601ac842f09be978804af42b4ecb26/src/geo/src/pmt/ToroidalPMTConstruction.cc#L378-L398
-    if (zEdge[zEdge.size()-1] != 0.0)
-      RAT::warn << "Absorbing filter construction implicitly assumes the z coordinate of the last point is 0. Shape of the filter (especially towards the edge) may be bad!" << newline;
-    for (int i = 0; i < zOrigin.size(); i++){
+    // the inner surface of the filter has the same shape as the PMT glass, just shifted by `filter_offset` in the z
+    // direction. The outer surface is constructed based on the inner surface, such that the thickness normal to the
+    // inner surface equals `absorbing_filter_thickness` Algorithm for cosntructing the outer surface:
+    // https://github.com/rat-pac/ratpac-two/blob/b8121abe14601ac842f09be978804af42b4ecb26/src/geo/src/pmt/ToroidalPMTConstruction.cc#L378-L398
+    if (zEdge[zEdge.size() - 1] != 0.0)
+      RAT::warn << "Absorbing filter construction implicitly assumes the z coordinate of the last point is 0. Shape of "
+                   "the filter (especially towards the edge) may be bad!"
+                << newline;
+    for (int i = 0; i < zOrigin.size(); i++) {
       zOrigin_inner[i] = zOrigin[i] + filter_offset;
     }
-    for (int i = 0; i < zEdge.size(); i++){
+    for (int i = 0; i < zEdge.size(); i++) {
       zEdge_inner[i] = zEdge[i] + filter_offset;
       rhoEdge_inner[i] = rhoEdge[i];
     }
     auto absorbing_filter_inner = new GLG4TorusStack("absorbing_filter_inner");
-    absorbing_filter_inner->SetAllParameters((int)zOrigin_inner.size(),
-                                             zEdge_inner.data(), rhoEdge_inner.data(), zOrigin_inner.data());
+    absorbing_filter_inner->SetAllParameters((int)zOrigin_inner.size(), zEdge_inner.data(), rhoEdge_inner.data(),
+                                             zOrigin_inner.data());
     G4ThreeVector norm;
     zEdge_outer[0] = zEdge_inner[0] + filter_thickness;
     rhoEdge_outer[0] = 0.0;
-    for(int i = 1; i < zEdge.size() - 1; i++){
+    for (int i = 1; i < zEdge.size() - 1; i++) {
       norm = absorbing_filter_inner->SurfaceNormal(G4ThreeVector(0.0, rhoEdge_inner[i], zEdge_inner[i]));
       zEdge_outer[i] = zEdge_inner[i] + filter_thickness * norm.z();
       rhoEdge_outer[i] = rhoEdge_inner[i] + filter_thickness * norm.y();
     }
-    rhoEdge_outer[rhoEdge.size()-1] = rhoEdge_inner[rhoEdge.size()-1] + filter_thickness;
-    zEdge_outer[zEdge.size()-1] = zEdge_inner[rhoEdge.size()-1];
+    rhoEdge_outer[rhoEdge.size() - 1] = rhoEdge_inner[rhoEdge.size() - 1] + filter_thickness;
+    zEdge_outer[zEdge.size() - 1] = zEdge_inner[rhoEdge.size() - 1];
 
     auto absorbing_filter = new GLG4TorusStack("absorbing_filter");
-    absorbing_filter->SetAllParameters((int)zOrigin_outer.size(),
-                                       zEdge_outer.data(), rhoEdge_outer.data(), zOrigin_outer.data(),
-                                       absorbing_filter_inner);
+    absorbing_filter->SetAllParameters((int)zOrigin_outer.size(), zEdge_outer.data(), rhoEdge_outer.data(),
+                                       zOrigin_outer.data(), absorbing_filter_inner);
     absorbing_filter_lv = new G4LogicalVolume(absorbing_filter, absorbing_filter_material, "absorbing_filter_log");
     SetVis(absorbing_filter_lv, table->GetDArray("absorbing_filter_color"));
   }
@@ -179,14 +183,14 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
       G4VPhysicalVolume *daughterPhys =
           new G4PVPlacement(rotation, current_pmt_pos, placed_name, daughter_lv, motherPhys, false, 0);
     }
-    if (build_absorbing_filter){
+    if (build_absorbing_filter) {
       G4VPhysicalVolume *absorbing_filter_phys =
           new G4PVPlacement(rotation, current_pmt_pos, "absorbing_filter", absorbing_filter_lv, motherPhys, false, 0);
     }
   }
 }
 
-void DichroiconArrayFactory::SetVis(G4LogicalVolume *volume, const std::vector<double>& color) {
+void DichroiconArrayFactory::SetVis(G4LogicalVolume *volume, const std::vector<double> &color) {
   G4VisAttributes *att = GetColor(color);
   //  att->SetForceSolid(true);
   volume->SetVisAttributes(att);
@@ -204,4 +208,3 @@ G4VisAttributes *DichroiconArrayFactory::GetColor(const std::vector<double> &col
 }
 
 }  // namespace EOS
-
