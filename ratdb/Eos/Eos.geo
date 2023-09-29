@@ -269,28 +269,13 @@ name: "GEO",
 index: "dichroicons",
 valid_begin: [0, 0],
 valid_end: [0, 0],
-mother: "inner_tank",
 type: "DichroiconArray",
-gdml_file: "gdml/dichroicon_tessellated.gdml",
-filter_material: "glass",
-base_material:   "acrylic_black",
-surface: "shortpass_dichroic_450nm",
-filter_color: [1.0, 0.0, 1.0, 0.8],
-base_color: [0.4, 0.4, 0.4, 1.0],
-base_volumes: ["DICHROICON_BASE"],
-
-pos_table: "DICHROICON_bottom",
+mother: "inner_tank",
+dichroicon_model: "eos_dichroicon",
+pos_table: "PMTINFO_bottom",
 orientation: "manual",
-offset: -0,
-build_absorbing_filter: 1,
-// defines the boarder of the PMT
-absorbing_filter_zEdge: [ 75.00, 53.06,   0.00, ],
-absorbing_filter_rhoEdge: [  0.00, 72.58, 101.00,  ],
-absorbing_filter_zOrigin: [-56.00,  0.00,   ],
-absorbing_filter_offset: 1.0, // distance from filter to PMT
-absorbing_filter_thickness: 1.0,
-absorbing_filter_material: "absorbing_longpass_450nm",
-absorbing_filter_color: [0.0, 0.187, 0.53, 1.0],
+pmt_type: 1, // build on top of all PMTs if this is not specified.
+offset: 0.0,
 }
 
 {
