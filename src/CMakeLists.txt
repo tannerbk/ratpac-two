@@ -1,6 +1,7 @@
 add_library( EOS SHARED
   Eos.cc
   GeoEosFactory.cc
+  DichroiconArrayFactory.cc
   HitmanProc.cc
   NtupleProc.cc
 )
@@ -13,7 +14,7 @@ file(COPY include/ DESTINATION ${EOS_INCLUDE_DIR})
 
 add_executable(eos eos.cpp)
 target_link_libraries(eos PUBLIC 
-  EOS ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Ratpac_LIBRARIES})
+  EOS ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Ratpac_LIBRARIES} ${NLOPT_LIBRARIES})
 
 set_target_properties(EOS eos
   PROPERTIES

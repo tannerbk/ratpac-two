@@ -37,6 +37,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # External libraries and dependencies
 set(TENSORFLOW_Enabled 0)
 find_library(TENSORFLOW_LIBRARIES tensorflow)
+find_library(NLOPT_LIBRARIES nlopt)
 if(TENSORFLOW_LIBRARIES)
   message(STATUS "Compiling with Tensorflow")
   set(TENSORFLOW_Enabled 1)

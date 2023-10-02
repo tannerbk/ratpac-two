@@ -7,6 +7,7 @@
 #include <RAT/ProcBlockManager.hh>
 #include <RAT/ProcAllocator.hh>
 #include <GeoEosFactory.hh>
+#include <DichroiconArrayFactory.hh>
 #include <HitmanProc.hh>
 #include <NtupleProc.hh>
 #include <string>
