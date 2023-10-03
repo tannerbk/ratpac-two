@@ -9,7 +9,6 @@
   material: "air",
 }
 
-// Tank dimensions are from docDB-29
 {
   name: "GEO",
   index: "outer_tank",
@@ -17,9 +16,10 @@
   valid_end: [0, 0],
   mother: "world",
   type: "tube",
-  r_max: 1397.2,
-  size_z: 1397.2,
-  position: [0.0, 0.0, 0.0],
+  r_max: 1377.95,
+  size_z: 1652.65,
+  // Offset to keep AV center at origin (0, 0, 0)
+  position: [0.0, 0.0, -169.2],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -32,7 +32,7 @@
   mother: "outer_tank",
   type: "tube",
   r_max: 1371.6,
-  size_z: 1371.6,
+  size_z: 1646.3,
   position: [0.0, 0.0, 0.0],
   rotation: [0.0, 0.0, 0.0],
   material: "water",
@@ -47,7 +47,7 @@
   type: "tube",
   r_max: 304.8,
   size_z: 57.2,
-  position: [0.0, 0.0, 995.67],
+  position: [0.0, 0.0, 1164.87],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -61,12 +61,12 @@
   type: "tube",
   r_max: 75.3,
   size_z: 55.88,
-  position: [0.0, 0.0, 1108.75],
+  position: [0.0, 0.0, 1277.95],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
 
-// Eos dimensions are from docDB-29
+// Acrylic vessel dimensions are from docDB-29
 {
   name: "GEO",
   index: "eos_vessel",
@@ -82,7 +82,8 @@
   top_radius: 914.4,
   top_height: 261.62,
   offset: 0.1,
-  position: [0.0, 0.0, 0.0],
+  // Offset to keep AV center at origin (0, 0, 0)
+  position: [0.0, 0.0, 169.2],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -103,8 +104,8 @@
   top_radius: 888.8,
   top_height: 261.6,
   offset: 0.1,
-  rotation:  [0.0, 0.0, 0.0],
   position: [0.0, 0.0, 0.0],
+  rotation:  [0.0, 0.0, 0.0],
   material: "water",
 }
 
@@ -121,7 +122,7 @@
   phi_start: -20.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, -756.9],
+  position: [0.0, 0.0, -587.7],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -138,7 +139,7 @@
   phi_start: 70.0,
   phi_delta: 40.0,
   size_z: 80.0
-  position: [0.0, 0.0, -756.9],
+  position: [0.0, 0.0, -587.7],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -155,7 +156,7 @@
   phi_start: 160.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, -756.9],
+  position: [0.0, 0.0, -587.7],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -172,7 +173,7 @@
   phi_start: 250.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, -756.9],
+  position: [0.0, 0.0, -587.7],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -189,7 +190,7 @@
   phi_start: -20.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, 756.9],
+  position: [0.0, 0.0, 926.1],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -206,7 +207,7 @@
   phi_start: 70.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, 756.9],
+  position: [0.0, 0.0, 926.1],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -223,7 +224,7 @@
   phi_start: 160.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, 756.9],
+  position: [0.0, 0.0, 926.1],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -240,7 +241,7 @@
   phi_start: 250.0,
   phi_delta: 40.0,
   size_z: 80.0,
-  position: [0.0, 0.0, 756.9],
+  position: [0.0, 0.0, 926.1],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
@@ -265,17 +266,17 @@
 }
 
 {
-name: "GEO",
-index: "dichroicons",
-valid_begin: [0, 0],
-valid_end: [0, 0],
-type: "DichroiconArray",
-mother: "inner_tank",
-dichroicon_model: "eos_dichroicon",
-pos_table: "PMTINFO_bottom",
-orientation: "manual",
-pmt_type: 1, // build on top of all PMTs if this is not specified.
-offset: 0.0,
+  name: "GEO",
+  index: "dichroicons",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  type: "DichroiconArray",
+  mother: "inner_tank",
+  dichroicon_model: "eos_dichroicon",
+  pos_table: "PMTINFO_bottom",
+  orientation: "manual",
+  pmt_type: 1, // build on top of all PMTs if this is not specified.
+  offset: 169.2,
 }
 
 {
