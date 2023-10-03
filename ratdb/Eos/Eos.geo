@@ -19,6 +19,7 @@
   type: "tube",
   r_max: 1377.95,
   size_z: 1652.65,
+  // Offset to keep AV center at origin
   position: [0.0, 0.0, -162.85],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
