@@ -10,7 +10,10 @@
 /rat/db/set GEO[outer_tank] color [0.42,0.47,0.57,0.95]
 /rat/db/set GEO[inner_tank] color [0.2,0.2,0.9,0.2]
 /rat/db/set GEO[eos_vessel] color [0.6,0.2,0.2,0.1]
+
 # Acrylic
+/rat/db/set GEO[outer_neck] color [0.2,0.8,0.9,0.6]
+/rat/db/set GEO[inner_neck] color [0.2,0.8,0.9,0.6]
 /rat/db/set GEO[eos_inner] color [0.2,0.8,0.9,0.6]
 /rat/db/set GEO[bottom_leg1] color [0.2,0.8,0.9,0.6]
 /rat/db/set GEO[bottom_leg2] color [0.2,0.8,0.9,0.6]
