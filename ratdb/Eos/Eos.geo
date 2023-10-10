@@ -281,6 +281,20 @@
 
 {
   name: "GEO",
+  index: "pmts_bottom_back",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "pmtarray",
+  pmt_model: "r7081_hqe",
+  pmt_detector_type: "idpmt",
+  sensitive_detector: "/mydet/pmt/inner",
+  pos_table: "PMTINFO_bottom_back",
+  orientation: "manual",
+}
+
+{
+  name: "GEO",
   index: "pmts_top",
   valid_begin: [0, 0],
   valid_end: [0, 0],
