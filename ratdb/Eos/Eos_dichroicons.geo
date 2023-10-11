@@ -276,7 +276,7 @@
   pos_table: "PMTINFO_bottom",
   orientation: "manual",
   pmt_type: 1, // build on top of all PMTs if this is not specified.
-  offset: 169.2,
+  offset: 0,
 }
 
 {
