@@ -166,6 +166,8 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
     auto absorbing_filter_inner = new GLG4TorusStack("absorbing_filter_inner");
     absorbing_filter_inner->SetAllParameters((int)zOrigin_inner.size(), zEdge_inner.data(), rhoEdge_inner.data(),
                                              zOrigin_inner.data());
+    // outer surface parameters
+    zOrigin_outer = zOrigin_inner;
     G4ThreeVector norm;
     zEdge_outer[0] = zEdge_inner[0] + filter_thickness;
     rhoEdge_outer[0] = 0.0;
@@ -212,7 +214,10 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
       } else {
         daughter_lv->SetMaterial(filter_material);
         SetVis(daughter_lv, dichroicon_model_table->GetDArray("dichroic_filter_color"));
-        new G4LogicalSkinSurface(name + "_surface", daughter_lv, RAT::Materials::optical_surface[surface_name]);
+        if (RAT::Materials::optical_surface.count(surface_name) == 0)
+          RAT::warn << "DichroiconArrayFactory error: " << surface_name << " is not a valid surface. No surface will be added!!" << newline;
+        else
+          new G4LogicalSkinSurface(name + "_surface", daughter_lv, RAT::Materials::optical_surface[surface_name]);
         placed_name = "dichroic_filter";
       }
       G4VPhysicalVolume *daughterPhys =
