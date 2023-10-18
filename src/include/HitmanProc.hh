@@ -2,7 +2,7 @@
 #define __EOS_HitmanProc__
 
 #include <Config.hh>
-#if TENSORFLOW_Enabled
+#if TENSORFLOW_Enabled && NLOPT_Enabled
 #include <cppflow/cppflow.h>
 #include <cppflow/model.h>
 #include <RAT/Processor.hh>

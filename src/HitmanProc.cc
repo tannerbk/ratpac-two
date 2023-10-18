@@ -1,6 +1,6 @@
 #include <HitmanProc.hh>
 
-#if TENSORFLOW_Enabled
+#if TENSORFLOW_Enabled && NLOPT_Enabled
 #include <cppflow/cppflow.h>
 #include <cppflow/model.h>
 #include <filesystem>
