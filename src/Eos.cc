@@ -13,7 +13,7 @@ Eos::Eos(RAT::AnyParse* parser, int argc, char** argv)
   // Initialize a geometry factory
   new GeoEosFactory();
   new DichroiconArrayFactory();
-#if TENSORFLOW_Enabled
+#if TENSORFLOW_Enabled && NLOPT_Enabled
   RAT::ProcBlockManager::AppendProcessor<HitmanProc>();
 #endif
   RAT::ProcBlockManager::AppendProcessor<NtupleProc>();
