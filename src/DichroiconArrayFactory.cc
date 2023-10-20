@@ -52,8 +52,9 @@ G4VPhysicalVolume *DichroiconArrayFactory::Construct(RAT::DBLinkPtr table) {
     const std::vector<double> &dir_z = pos_table->GetDArray("dir_z");
     RAT::Log::Assert(pos_x.size() == pos_y.size() && pos_x.size() == pos_z.size(),
                      "Dichroicon position arrays must be the same length");
-    RAT::Log::Assert(pos_x.size() == dir_x.size() && pmt_positions.size() == dir_y.size() && pmt_positions.size() == dir_z.size(),
-                     "Dichroicon direction arrays must be the same length");
+    RAT::Log::Assert(
+        pos_x.size() == dir_x.size() && pmt_positions.size() == dir_y.size() && pmt_positions.size() == dir_z.size(),
+        "Dichroicon direction arrays must be the same length");
     for (int i = 0; i < pos_x.size(); i++) {
       pmt_directions[i] = G4ThreeVector(dir_x[i], dir_y[i], dir_z[i]).unit();
     }
@@ -62,11 +63,11 @@ G4VPhysicalVolume *DichroiconArrayFactory::Construct(RAT::DBLinkPtr table) {
   std::vector<G4ThreeVector> dichroicon_positions;
   std::vector<G4ThreeVector> dichroicon_directions;
   bool type_specified = false;
-  try{ // if pmt_type is specified
+  try {  // if pmt_type is specified
     int pmt_type_to_build = table->GetI("pmt_type");
     type_specified = true;
     std::vector<int> pmt_type;
-    try{
+    try {
       pmt_type = pos_table->GetIArray("type");
     } catch (RAT::DBNotFoundError &e) {
       RAT::Log::Die("Dichroicon Factory Error: pmt_type specified but not found in pos_table");
@@ -82,7 +83,6 @@ G4VPhysicalVolume *DichroiconArrayFactory::Construct(RAT::DBLinkPtr table) {
     dichroicon_positions = pmt_positions;
     dichroicon_directions = pmt_directions;
   }
-
 
   // compute positional offset
   double offset = 0;
@@ -113,14 +113,16 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
   }
   G4Material *filter_material = G4Material::GetMaterial(dichroicon_model_table->GetS("dichroic_filter_material"));
   G4Material *base_material = G4Material::GetMaterial(dichroicon_model_table->GetS("base_material"));
-  G4Material *absorbing_filter_material = G4Material::GetMaterial(dichroicon_model_table->GetS("absorbing_filter_material"));
+  G4Material *absorbing_filter_material =
+      G4Material::GetMaterial(dichroicon_model_table->GetS("absorbing_filter_material"));
   const std::string surface_name = dichroicon_model_table->GetS("dichroic_surface");
   const std::vector<std::string> base_volumes = dichroicon_model_table->GetSArray("base_volumes");
 
   G4VPhysicalVolume *motherPhys = FindPhysMother(motherName);
   if (motherPhys == nullptr) RAT::Log::Die("Dichroicon mother physical volume not found: " + motherName);
   G4GDMLParser parser;
-  const G4String gdml_file = std::getenv("EOSDATA") + std::string("/ratdb/") + dichroicon_model_table->GetS("gdml_file");
+  const G4String gdml_file =
+      std::getenv("EOSDATA") + std::string("/ratdb/") + dichroicon_model_table->GetS("gdml_file");
   //  parser.SetOverlapCheck(true);
   parser.Read(gdml_file);
   G4LogicalVolume *gdml_worldLV = parser.GetWorldVolume()->GetLogicalVolume();
@@ -166,6 +168,8 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
     auto absorbing_filter_inner = new GLG4TorusStack("absorbing_filter_inner");
     absorbing_filter_inner->SetAllParameters((int)zOrigin_inner.size(), zEdge_inner.data(), rhoEdge_inner.data(),
                                              zOrigin_inner.data());
+    // outer surface parameters
+    zOrigin_outer = zOrigin_inner;
     G4ThreeVector norm;
     zEdge_outer[0] = zEdge_inner[0] + filter_thickness;
     rhoEdge_outer[0] = 0.0;
@@ -212,7 +216,11 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
       } else {
         daughter_lv->SetMaterial(filter_material);
         SetVis(daughter_lv, dichroicon_model_table->GetDArray("dichroic_filter_color"));
-        new G4LogicalSkinSurface(name + "_surface", daughter_lv, RAT::Materials::optical_surface[surface_name]);
+        if (RAT::Materials::optical_surface.count(surface_name) == 0)
+          RAT::warn << "DichroiconArrayFactory error: " << surface_name
+                    << " is not a valid surface. No surface will be added!!" << newline;
+        else
+          new G4LogicalSkinSurface(name + "_surface", daughter_lv, RAT::Materials::optical_surface[surface_name]);
         placed_name = "dichroic_filter";
       }
       G4VPhysicalVolume *daughterPhys =
