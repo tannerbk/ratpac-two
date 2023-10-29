@@ -32,6 +32,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
 ###########################################################
 # External libraries and dependencies
@@ -45,6 +46,15 @@ else()
   message(WARNING "Tensorflow Not Found")
   set(TENSORFLOW_LIBRARIES "")
 endif()
+set(NLOPT_Enabled 0)
+if(NLOPT_LIBRARIES)
+    message(STATUS "Compiling with NLOPT")
+    set(NLOPT_Enabled 1)
+else()
+    message(WARNING "NLOPT Not Found")
+    set(NLOPT_LIBRARIES "")
+endif()
+
 
 ###########################################################
 # Options

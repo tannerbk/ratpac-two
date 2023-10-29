@@ -4,12 +4,12 @@
 #include <RAT/GeoSolidFactory.hh>
 
 namespace EOS {
- class GeoEosFactory : public RAT::GeoSolidFactory {
+class GeoEosFactory : public RAT::GeoSolidFactory {
  public:
-   GeoEosFactory() : GeoSolidFactory("eos") {};
-   virtual G4VSolid *ConstructSolid(RAT::DBLinkPtr table);
- };
-  
-} // namespace EOS
+  GeoEosFactory() : GeoSolidFactory("eos"){};
+  virtual G4VSolid *ConstructSolid(RAT::DBLinkPtr table);
+};
+
+}  // namespace EOS
 
 #endif

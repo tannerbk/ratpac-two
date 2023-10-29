@@ -6,8 +6,8 @@
 #ifndef __EOS_DichroiconArrayFactory__
 #define __EOS_DichroiconArrayFactory__
 
-#include <RAT/GeoFactory.hh>
 #include <G4VisAttributes.hh>
+#include <RAT/GeoFactory.hh>
 
 namespace EOS {
 class DichroiconArrayFactory : public RAT::GeoFactory {
