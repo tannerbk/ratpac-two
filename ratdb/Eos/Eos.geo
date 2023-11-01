@@ -40,6 +40,20 @@
 
 {
   name: "GEO",
+  index: "upper_neck",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_max: 75.3,
+  size_z: 159.41,
+  position: [0.0, 0.0, 1483.24],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
   index: "outer_neck",
   valid_begin: [0, 0],
   valid_end: [0, 0],
@@ -49,7 +63,8 @@
   size_z: 57.2,
   position: [0.0, 0.0, 1164.87],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  // Cloudy acrylic, assume total absorbing
+  material: "acrylic_black",
 }
 
 {
@@ -63,7 +78,7 @@
   size_z: 55.88,
   position: [0.0, 0.0, 1277.95],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "acrylic_sno",
 }
 
 // Acrylic vessel dimensions are from docDB-29
@@ -773,7 +788,6 @@
 //////////////////
 //
 
-/*
 {
   name: "GEO",
   index: "pmts_sides",
@@ -787,7 +801,6 @@
   pos_table: "PMTINFO_sides",
   orientation: "manual",
 }
-*/
 
 {
   name: "GEO",
