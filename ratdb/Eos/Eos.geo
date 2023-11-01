@@ -109,6 +109,528 @@
   material: "water",
 }
 
+{
+  name: "GEO",
+  index: "top_purple_ring",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 888.8,
+  r_max: 1041.0
+  size_z: 6.35,
+  position: [0.0, 0.0, 1006.1],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "bottom_purple_ring",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 888.8,
+  r_max: 1041.0,
+  size_z: 6.35,
+  position: [0.0, 0.0, -667.7],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut0",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-1104.40, 0.00, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut1",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-1066.77, 285.84, 169.2],
+  rotation: [0.0, 0.0, 15.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut2",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-956.44, 552.20, 169.2],
+  rotation: [0.0, 0.0, 30.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut3",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-780.93, 780.93, 169.2],
+  rotation: [0.0, 0.0, 45.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut4",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-552.20, 956.44, 169.2],
+  rotation: [0.0, 0.0, 60.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut5",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-285.84, 1066.77, 169.2],
+  rotation: [0.0, 0.0, 75.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut6",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-0.00, 1104.40, 169.2],
+  rotation: [0.0, 0.0, 90.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut7",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [285.84, 1066.77, 169.2],
+  rotation: [0.0, 0.0, 105.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut8",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [552.20, 956.44, 169.2],
+  rotation: [0.0, 0.0, 120.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut9",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [780.93, 780.93, 169.2],
+  rotation: [0.0, 0.0, 135.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut10",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [956.44, 552.20, 169.2],
+  rotation: [0.0, 0.0, 150.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut11",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [1066.77, 285.84, 169.2],
+  rotation: [0.0, 0.0, 165.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut12",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [1104.40, 0.00, 169.2],
+  rotation: [0.0, 0.0, 180.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut13",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [1066.77, -285.84, 169.2],
+  rotation: [0.0, 0.0, 195.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut14",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [956.44, -552.20, 169.2],
+  rotation: [0.0, 0.0, 210.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut15",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [780.93, -780.93, 169.2],
+  rotation: [0.0, 0.0, 225.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut16",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [552.20, -956.44, 169.2],
+  rotation: [0.0, 0.0, 240.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut17",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [285.84, -1066.77, 169.2],
+  rotation: [0.0, 0.0, 255.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut18",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [0.00, -1104.40, 169.2],
+  rotation: [0.0, 0.0, 270.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut19",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-285.84, -1066.77, 169.2],
+  rotation: [0.0, 0.0, 285.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut20",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-552.20, -956.44, 169.2],
+  rotation: [0.0, 0.0, 300.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut21",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-780.93, -780.93, 169.2],
+  rotation: [0.0, 0.0, 315.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut22",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-956.44, -552.20, 169.2],
+  rotation: [0.0, 0.0, 330.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "unistrut23",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "box",
+  size: [20.0, 20.0, 1483.45],
+  position: [-1066.77, -285.84, 169.2],
+  rotation: [0.0, 0.0, 345.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod0",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [-1009.40, 0.00, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod1",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [-874.17, 504.70, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod2",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [-504.70, 874.17, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod3",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [-0.00, 1009.40, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod4",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [504.70, 874.17, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod5",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [874.17, 504.70, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod6",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [1009.40, 0.00, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod7",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [874.17, -504.70, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod8",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [504.70, -874.17, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod9",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [0.00, -1009.40, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod10",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [-504.70, -874.17, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
+{
+  name: "GEO",
+  index: "tierod11",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_min: 0.0,
+  r_max: 10.0
+  size_z: 836.9,
+  position: [-874.17, -504.70, 169.2],
+  rotation: [0.0, 0.0, 0.0],
+  material: "stainless_steel",
+}
+
 // Acrylic legs dimensions are from docDB-29
 {
   name: "GEO",
@@ -251,6 +773,7 @@
 //////////////////
 //
 
+/*
 {
   name: "GEO",
   index: "pmts_sides",
@@ -264,6 +787,7 @@
   pos_table: "PMTINFO_sides",
   orientation: "manual",
 }
+*/
 
 {
   name: "GEO",
