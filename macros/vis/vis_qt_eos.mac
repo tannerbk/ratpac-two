@@ -1,3 +1,4 @@
+# Run as 'eos vis_gt_eos.mac --vis'
 /glg4debug/glg4param omit_muon_processes  1.0
 /glg4debug/glg4param omit_hadronic_processes  1.0
 
@@ -7,19 +8,23 @@
 
 # Colors
 /rat/db/set GEO[world] invisible 1
+#/rat/db/set GEO[eos_inner] invisible 1
 /rat/db/set GEO[outer_tank] color [0.42,0.47,0.57,0.95]
 /rat/db/set GEO[inner_tank] color [0.2,0.2,0.9,0.2]
-/rat/db/set GEO[eos_vessel] color [0.6,0.2,0.2,0.1]
-# Acrylic
+/rat/db/set GEO[eos_vessel] color [0.8,0.8,0.9,0.9]
 /rat/db/set GEO[eos_inner] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[bottom_leg1] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[bottom_leg2] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[bottom_leg3] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[bottom_leg4] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[top_leg1] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[top_leg2] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[top_leg3] color [0.2,0.8,0.9,0.6]
-/rat/db/set GEO[top_leg4] color [0.2,0.8,0.9,0.6]
+
+# Acrylic
+/rat/db/set GEO[outer_neck] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[inner_neck] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[bottom_leg1] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[bottom_leg2] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[bottom_leg3] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[bottom_leg4] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[top_leg1] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[top_leg2] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[top_leg3] color [0.8,0.8,0.9,0.4]
+/rat/db/set GEO[top_leg4] color [0.8,0.8,0.9,0.4]
 
 /run/initialize
 
@@ -52,8 +57,8 @@
 
 ##### GENERATORS #################
 /generator/add combo gun:point:poisson
-/generator/vtx/set e- 0.0 0.0 0.0 5.0
-/generator/pos/set 1.0 1.0 1.0
+/generator/vtx/set e- 0.0 0.0 0.0 1.0
+/generator/pos/set 0.0 0.0 0.0
 
 ##### RUN ###########
-#/run/beamOn 1
+/run/beamOn 1

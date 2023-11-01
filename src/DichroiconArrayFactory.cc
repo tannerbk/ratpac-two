@@ -120,6 +120,13 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
 
   G4VPhysicalVolume *motherPhys = FindPhysMother(motherName);
   if (motherPhys == nullptr) RAT::Log::Die("Dichroicon mother physical volume not found: " + motherName);
+  G4ThreeVector local_offset(0.0, 0.0, 0.0);
+  for (std::string parent_name = motherName; parent_name != "";) {
+    G4VPhysicalVolume *parent_phys = FindPhysMother(parent_name);
+    local_offset -= parent_phys->GetFrameTranslation();
+    RAT::DBLinkPtr parent_table = RAT::DB::Get()->GetLink("GEO", parent_name);
+    parent_name = parent_table->GetS("mother");
+  }
   G4GDMLParser parser;
   const G4String gdml_file =
       std::getenv("EOSDATA") + std::string("/ratdb/") + dichroicon_model_table->GetS("gdml_file");
@@ -191,7 +198,7 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
   // loop through pos and dir
   for (int i_dichroicon = 0; i_dichroicon < pos.size(); i_dichroicon++) {
     // compute required rotation
-    const G4ThreeVector &current_pmt_pos = pos[i_dichroicon];
+    const G4ThreeVector &current_pmt_pos = pos[i_dichroicon] - local_offset;
     const G4ThreeVector &current_pmt_dir = dir[i_dichroicon];
     double angle_y = (-1.0) * atan2(current_pmt_dir.x(), current_pmt_dir.z());
     double angle_x = atan2(current_pmt_dir.y(),
