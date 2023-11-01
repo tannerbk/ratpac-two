@@ -804,6 +804,20 @@
 
 {
   name: "GEO",
+  index: "dichroicons",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  type: "DichroiconArray",
+  mother: "inner_tank",
+  dichroicon_model: "eos_dichroicon",
+  pos_table: "PMTINFO_bottom",
+  orientation: "manual",
+  pmt_type: 1, // build on top of all PMTs if this is not specified.
+  offset: 0,
+}
+
+{
+  name: "GEO",
   index: "pmts_bottom",
   valid_begin: [0, 0],
   valid_end: [0, 0],
