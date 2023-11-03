@@ -6,6 +6,10 @@
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 /rat/db/set GEO[eos_inner] material "wbls_1pct"
 
+/rat/db/set LASERBALL[eos] z_position 0.0
+/rat/db/set LASERBALL[eos] intensity 100
+/rat/db/set LASERBALL[eos] sphere_radius 1.0
+
 /run/initialize
 
 /vis/open OGLSQt
@@ -28,6 +32,8 @@
 #/vis/viewer/zoomTo 10
 #/vis/viewer/panTo 10 0
 
-/generator/add led eos_laserball
+#/generator/add led eos_laserball
+# laserball generator is a subset of the led generator
+/generator/add laserball
 
-/run/beamOn 10
+/run/beamOn 1

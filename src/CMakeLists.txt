@@ -4,6 +4,7 @@ add_library( EOS SHARED
   DichroiconArrayFactory.cc
   HitmanProc.cc
   NtupleProc.cc
+  LaserballGenerator.cc
 )
 
 target_include_directories( EOS PUBLIC

@@ -3,6 +3,7 @@ bin/*
 *.log
 *.o
 eos.sh
+.jukit
 install/*
 build/*
 Config.hh

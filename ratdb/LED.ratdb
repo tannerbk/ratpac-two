@@ -99,12 +99,12 @@
     valid_end: [0,0],
     
     intensity: 1000,
-    x: [0, 0, 0],
-    y: [0, 0, 0],
-    z: [0, 500, -500],
-    dir_x: [1, 1, 1],
-    dir_y: [0, 0, 0],
-    dir_z: [0, 0, 0],
+    x: [0],
+    y: [0],
+    z: [0],
+    dir_x: [0],
+    dir_y: [0],
+    dir_z: [-1],
     
     // Overrides any given direction vector and aims the led instead at a target position.
     fire_at_target: false,
@@ -112,13 +112,13 @@
     target_y: [0.0],
     target_z: [0.0],
     
-    wavelength: [400.0, 400.0, 400.0],
+    wavelength: [400.0],
     // intensity_mode: {"single", "chain"}
     intensity_mode: "single",
     // time_mode: {"unif", "dist"}
     time_mode: "unif",
     // angle_mode: {"iso", "dist", "multidist"}
-    angle_mode: "iso",
+    angle_mode: "dist",
     // wl_mode: {"mono", "dist"}
     wl_mode: "mono",
     

@@ -1,0 +1,19 @@
+/glg4debug/glg4param omit_muon_processes 1.0
+/glg4debug/glg4param omit_hadronic_processes 1.0
+
+#set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "wbls_1pct"
+
+/rat/db/set LASERBALL[eos] z_position 0.0
+/rat/db/set LASERBALL[eos] intensity 1000
+
+/run/initialize
+/rat/proc splitevdaq
+/rat/proc count
+/rat/procset update 100
+/rat/proclast outntuple
+
+/generator/add laserball
+/run/beamOn 1000

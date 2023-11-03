@@ -17,5 +17,7 @@ Eos::Eos(RAT::AnyParse* parser, int argc, char** argv) : Rat(parser, argc, argv)
   RAT::ProcBlockManager::AppendProcessor<NtupleProc>();
   // Include a new type of processor
   // Add a unique component to the datastructure
+  // Register generators
+  RAT::GlobalFactory<GLG4Gen>::Register("laserball", new RAT::Alloc<GLG4Gen, LaserballGenerator>);
 }
 }  // namespace EOS
