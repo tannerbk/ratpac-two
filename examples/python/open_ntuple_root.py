@@ -34,7 +34,7 @@ def open_ntuple(filename):
             tree.GetEntry(i)
             meta.GetEntry(i)
         except AttributeError:
-            print "Error with opening file!"
+            print ("Error with opening file!")
             sys.exit(1)
 
         pmtid = list(tree.hitPMTID)
