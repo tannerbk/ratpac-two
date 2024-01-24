@@ -46,7 +46,7 @@
   mother: "inner_tank",
   type: "tube",
   r_max: 75.3,
-  size_z: 159.41,
+  size_z: 149.41,
   position: [0.0, 0.0, 1483.24],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
@@ -101,6 +101,14 @@
   position: [0.0, 0.0, 169.2],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
+  build_legs: true,
+  // Acrylic legs dimensions are from docDB-29
+  leg_height: 160.0,
+  leg_n: 4,
+  leg_rmin: 888.8,
+  leg_phi_start: 0.0,
+  leg_phi_delta: 40.0,
+
 }
 
 {
@@ -132,9 +140,9 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 888.8,
-  r_max: 1041.0
+  r_max: 1041.0,
   size_z: 6.35,
-  position: [0.0, 0.0, 1006.1],
+  position: [0.0, 0.0, 1012.45],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -149,7 +157,7 @@
   r_min: 888.8,
   r_max: 1041.0,
   size_z: 6.35,
-  position: [0.0, 0.0, -667.7],
+  position: [0.0, 0.0, -674.05],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -162,7 +170,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-1104.40, 0.00, 169.2],
+  position: [-1104.40, 0.00, 0],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -175,7 +183,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-1066.77, 285.84, 169.2],
+  position: [-1066.77, 285.84, 0],
   rotation: [0.0, 0.0, 15.0],
   material: "stainless_steel",
 }
@@ -188,7 +196,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-956.44, 552.20, 169.2],
+  position: [-956.44, 552.20, 0],
   rotation: [0.0, 0.0, 30.0],
   material: "stainless_steel",
 }
@@ -201,7 +209,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-780.93, 780.93, 169.2],
+  position: [-780.93, 780.93, 0],
   rotation: [0.0, 0.0, 45.0],
   material: "stainless_steel",
 }
@@ -214,7 +222,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-552.20, 956.44, 169.2],
+  position: [-552.20, 956.44, 0],
   rotation: [0.0, 0.0, 60.0],
   material: "stainless_steel",
 }
@@ -227,7 +235,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-285.84, 1066.77, 169.2],
+  position: [-285.84, 1066.77, 0],
   rotation: [0.0, 0.0, 75.0],
   material: "stainless_steel",
 }
@@ -240,7 +248,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-0.00, 1104.40, 169.2],
+  position: [-0.00, 1104.40, 0],
   rotation: [0.0, 0.0, 90.0],
   material: "stainless_steel",
 }
@@ -253,7 +261,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [285.84, 1066.77, 169.2],
+  position: [285.84, 1066.77, 0],
   rotation: [0.0, 0.0, 105.0],
   material: "stainless_steel",
 }
@@ -266,7 +274,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [552.20, 956.44, 169.2],
+  position: [552.20, 956.44, 0],
   rotation: [0.0, 0.0, 120.0],
   material: "stainless_steel",
 }
@@ -279,7 +287,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [780.93, 780.93, 169.2],
+  position: [780.93, 780.93, 0],
   rotation: [0.0, 0.0, 135.0],
   material: "stainless_steel",
 }
@@ -292,7 +300,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [956.44, 552.20, 169.2],
+  position: [956.44, 552.20, 0],
   rotation: [0.0, 0.0, 150.0],
   material: "stainless_steel",
 }
@@ -305,7 +313,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [1066.77, 285.84, 169.2],
+  position: [1066.77, 285.84, 0],
   rotation: [0.0, 0.0, 165.0],
   material: "stainless_steel",
 }
@@ -318,7 +326,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [1104.40, 0.00, 169.2],
+  position: [1104.40, 0.00, 0],
   rotation: [0.0, 0.0, 180.0],
   material: "stainless_steel",
 }
@@ -331,7 +339,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [1066.77, -285.84, 169.2],
+  position: [1066.77, -285.84, 0],
   rotation: [0.0, 0.0, 195.0],
   material: "stainless_steel",
 }
@@ -344,7 +352,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [956.44, -552.20, 169.2],
+  position: [956.44, -552.20, 0],
   rotation: [0.0, 0.0, 210.0],
   material: "stainless_steel",
 }
@@ -357,7 +365,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [780.93, -780.93, 169.2],
+  position: [780.93, -780.93, 0],
   rotation: [0.0, 0.0, 225.0],
   material: "stainless_steel",
 }
@@ -370,7 +378,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [552.20, -956.44, 169.2],
+  position: [552.20, -956.44, 0],
   rotation: [0.0, 0.0, 240.0],
   material: "stainless_steel",
 }
@@ -383,7 +391,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [285.84, -1066.77, 169.2],
+  position: [285.84, -1066.77, 0],
   rotation: [0.0, 0.0, 255.0],
   material: "stainless_steel",
 }
@@ -396,7 +404,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [0.00, -1104.40, 169.2],
+  position: [0.00, -1104.40, 0],
   rotation: [0.0, 0.0, 270.0],
   material: "stainless_steel",
 }
@@ -409,7 +417,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-285.84, -1066.77, 169.2],
+  position: [-285.84, -1066.77, 0],
   rotation: [0.0, 0.0, 285.0],
   material: "stainless_steel",
 }
@@ -422,7 +430,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-552.20, -956.44, 169.2],
+  position: [-552.20, -956.44, 0],
   rotation: [0.0, 0.0, 300.0],
   material: "stainless_steel",
 }
@@ -435,7 +443,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-780.93, -780.93, 169.2],
+  position: [-780.93, -780.93, 0],
   rotation: [0.0, 0.0, 315.0],
   material: "stainless_steel",
 }
@@ -448,7 +456,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-956.44, -552.20, 169.2],
+  position: [-956.44, -552.20, 0],
   rotation: [0.0, 0.0, 330.0],
   material: "stainless_steel",
 }
@@ -461,7 +469,7 @@
   mother: "inner_tank",
   type: "box",
   size: [20.0, 20.0, 1483.45],
-  position: [-1066.77, -285.84, 169.2],
+  position: [-1066.77, -285.84, 0],
   rotation: [0.0, 0.0, 345.0],
   material: "stainless_steel",
 }
@@ -474,7 +482,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [-1009.40, 0.00, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -489,7 +497,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [-874.17, 504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -504,7 +512,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [-504.70, 874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -519,7 +527,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [-0.00, 1009.40, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -534,7 +542,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [504.70, 874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -549,7 +557,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [874.17, 504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -564,7 +572,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [1009.40, 0.00, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -579,7 +587,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [874.17, -504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -594,7 +602,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [504.70, -874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -609,7 +617,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [0.00, -1009.40, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -624,7 +632,7 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [-504.70, -874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -639,149 +647,15 @@
   mother: "inner_tank",
   type: "tube",
   r_min: 0.0,
-  r_max: 10.0
+  r_max: 10.0,
   size_z: 836.9,
   position: [-874.17, -504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
 
-// Acrylic legs dimensions are from docDB-29
-{
-  name: "GEO",
-  index: "bottom_leg1",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: -20.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, -587.7],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
 
-{
-  name: "GEO",
-  index: "bottom_leg2",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: 70.0,
-  phi_delta: 40.0,
-  size_z: 80.0
-  position: [0.0, 0.0, -587.7],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
 
-{
-  name: "GEO",
-  index: "bottom_leg3",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: 160.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, -587.7],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
-
-{
-  name: "GEO",
-  index: "bottom_leg4",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: 250.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, -587.7],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
-
-{
-  name: "GEO",
-  index: "top_leg1",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: -20.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, 926.1],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
-
-{
-  name: "GEO",
-  index: "top_leg2",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: 70.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, 926.1],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
-
-{
-  name: "GEO",
-  index: "top_leg3",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: 160.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, 926.1],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
-
-{
-  name: "GEO",
-  index: "top_leg4",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_min: 888.8,
-  r_max: 914.4,
-  phi_start: 250.0,
-  phi_delta: 40.0,
-  size_z: 80.0,
-  position: [0.0, 0.0, 926.1],
-  rotation: [0.0, 0.0, 0.0],
-  material: "acrylic_sno",
-}
 
 //////////////////
 // PMTS
