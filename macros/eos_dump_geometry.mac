@@ -1,0 +1,18 @@
+# Run macro as: 'eos eos_electrons.mac -o filename.ntuple.root'
+/glg4debug/glg4param omit_muon_processes  1.0
+/glg4debug/glg4param omit_hadronic_processes  1.0
+
+# Load the Eos geometry
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+
+/rat/db/set DETECTOR dump_geometry true
+/rat/db/set DETECTOR gdml_dump "Eos.gdml"
+/rat/db/set DETECTOR ratdb_dump "Eos_ratdb.json"
+# Change the material inside Eos to 1% WbLS
+/rat/db/set GEO[eos_inner] material "wbls_10pct"
+# Set per PMT model noise rates
+/rat/db/set NOISEPROC noise_flag 1
+
+/run/initialize
+
