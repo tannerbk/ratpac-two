@@ -16,15 +16,13 @@
 namespace EOS {
 
 G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table) {
-  // Inner radius of cylindrical part of Eos
-  G4double r_min = table->GetD("r_min");
   // Outer radius of cylindrical part of Eos
   G4double r_max = table->GetD("r_max");
   // Half-height of cylindrical part of Eos
   G4double size_z = table->GetD("size_z");
-  // Radius of ellipical bottom/top cap
+  // Radius of spherical bottom/top cap
   G4double top_radius = table->GetD("top_radius");
-  // Height of ellipical bottom/top cap
+  // Cutoff height for the spherical top cap, where the neck begins
   G4double top_height = table->GetD("top_height");
   // Offset for cap
   G4double offset = table->GetD("offset");
@@ -45,13 +43,15 @@ G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table) {
     leg_phi_start = table->GetD("leg_phi_start");
   }
   // Solids for the cylindrical body and ellipical caps
-  G4Tubs *body = new G4Tubs("body", r_min * CLHEP::mm, r_max * CLHEP::mm, size_z * CLHEP::mm, 0., CLHEP::twopi);
-  G4Ellipsoid *head = new G4Ellipsoid("head", top_radius * CLHEP::mm, top_radius * CLHEP::mm, top_height * CLHEP::mm,
-                                      0., top_height * CLHEP::mm);
+  G4Tubs *body = new G4Tubs("body", 0., r_max * CLHEP::mm, size_z * CLHEP::mm, 0., CLHEP::twopi);
+  G4double cap_zcut = sqrt(top_radius * top_radius - r_max * r_max);
+  // Use ellipsoid for spherical caps to allow z-plane cuts
+  G4Ellipsoid *head = new G4Ellipsoid("head", top_radius * CLHEP::mm, top_radius * CLHEP::mm, top_radius * CLHEP::mm,
+                                      cap_zcut * CLHEP::mm, (cap_zcut + top_height) * CLHEP::mm);
 
-  G4Ellipsoid *bot = new G4Ellipsoid("bot", top_radius * CLHEP::mm, top_radius * CLHEP::mm, top_height * CLHEP::mm,
-                                     -top_height * CLHEP::mm, 0.0);
-  G4double vessel_corner_height = size_z - offset;
+  G4Ellipsoid *bot = new G4Ellipsoid("bot", top_radius * CLHEP::mm, top_radius * CLHEP::mm, top_radius * CLHEP::mm,
+                                     -top_radius * CLHEP::mm, -cap_zcut * CLHEP::mm);
+  G4double vessel_corner_height = size_z - cap_zcut - offset;
   // Location and rotation of the top cap
   G4ThreeVector *trans = new G4ThreeVector(0., 0., vessel_corner_height * CLHEP::mm);
   G4RotationMatrix *zero_rotation = new G4RotationMatrix();
@@ -68,7 +68,7 @@ G4VSolid *GeoEosFactory::ConstructSolid(RAT::DBLinkPtr table) {
   G4UnionSolid *EosVolume = new G4UnionSolid("eos_vessel", EosVolumeBodyTop, bot, *neg_transf);
 
   // Add legs
-  G4UnionSolid *EosVolumeWithLegs = EosVolume;
+  G4VSolid *EosVolumeWithLegs = EosVolume;
   if (build_legs) {
     for (int i_leg = 0; i_leg < leg_n; i_leg++) {
       auto *leg = new G4Tubs(

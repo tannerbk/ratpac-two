@@ -90,7 +90,6 @@
   mother: "inner_tank",
   type: "eos",
   // Cylindrical part
-  r_min: 0.0,
   r_max: 914.4,
   size_z: 676.91,
   // Spherical top/bottom
@@ -119,7 +118,6 @@
   mother: "eos_vessel",
   type: "eos",
   // Cylindrical part
-  r_min: 0.0,
   // 1-inch thick
   r_max: 888.8,
   size_z: 676.91,
