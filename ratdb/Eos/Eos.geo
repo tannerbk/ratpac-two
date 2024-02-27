@@ -47,24 +47,9 @@
   type: "tube",
   r_max: 75.3,
   size_z: 149.41,
-  position: [0.0, 0.0, 1483.24],
+  position: [0.0, 0.0, 1456.75],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
-}
-
-{
-  name: "GEO",
-  index: "outer_neck",
-  valid_begin: [0, 0],
-  valid_end: [0, 0],
-  mother: "inner_tank",
-  type: "tube",
-  r_max: 304.8,
-  size_z: 57.2,
-  position: [0.0, 0.0, 1164.87],
-  rotation: [0.0, 0.0, 0.0],
-  // Cloudy acrylic, assume total absorbing
-  material: "acrylic_black",
 }
 
 {
@@ -76,12 +61,27 @@
   type: "tube",
   r_max: 75.3,
   size_z: 55.88,
-  position: [0.0, 0.0, 1277.95],
+  position: [0.0, 0.0, 1251.46],
   rotation: [0.0, 0.0, 0.0],
   material: "acrylic_sno",
 }
 
-// Acrylic vessel dimensions are from docDB-29
+{
+  name: "GEO",
+  index: "outer_neck",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "inner_tank",
+  type: "tube",
+  r_max: 304.8,
+  size_z: 57.15,
+  position: [0.0, 0.0, 1138.43],
+  rotation: [0.0, 0.0, 0.0],
+  // Cloudy acrylic, assume total absorbing
+  material: "acrylic_black",
+}
+
+// Acrylic vessel dimensions are from docDB-29-v6
 {
   name: "GEO",
   index: "eos_vessel",
@@ -92,11 +92,11 @@
   // Cylindrical part
   r_min: 0.0,
   r_max: 914.4,
-  size_z: 676.9,
-  // Elliptical top/bottom
-  top_radius: 914.4,
-  top_height: 261.62,
-  offset: 0.1,
+  size_z: 676.91,
+  // Spherical top/bottom
+  top_radius: 1724.91,
+  top_height: 235.17,
+  offset: 0.0,
   // Offset to keep AV center at origin (0, 0, 0)
   position: [0.0, 0.0, 169.2],
   rotation: [0.0, 0.0, 0.0],
@@ -122,11 +122,11 @@
   r_min: 0.0,
   // 1-inch thick
   r_max: 888.8,
-  size_z: 676.9,
+  size_z: 676.91,
   // Elliptical top/bottom
-  top_radius: 888.8,
-  top_height: 261.6,
-  offset: 0.1,
+  top_radius: 1699.51,
+  top_height: 209.77,
+  offset: 0.0,
   position: [0.0, 0.0, 0.0],
   rotation:  [0.0, 0.0, 0.0],
   material: "water",
@@ -142,7 +142,7 @@
   r_min: 888.8,
   r_max: 1041.0,
   size_z: 6.35,
-  position: [0.0, 0.0, 1012.45],
+  position: [0.0, 0.0, 1012.46],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -157,7 +157,7 @@
   r_min: 888.8,
   r_max: 1041.0,
   size_z: 6.35,
-  position: [0.0, 0.0, -674.05],
+  position: [0.0, 0.0, -674.06],
   rotation: [0.0, 0.0, 0.0],
   material: "stainless_steel",
 }
@@ -657,10 +657,10 @@
 
 
 
-//////////////////
+////////////////
 // PMTS
-//////////////////
-//
+////////////////
+
 
 {
   name: "GEO",
@@ -725,7 +725,7 @@
   valid_end: [0, 0],
   mother: "inner_tank",
   type: "pmtarray",
-  pmt_model: "r11780_hqe",
+  pmt_model: "r11780_hqe_rev",
   pmt_detector_type: "idpmt",
   sensitive_detector: "/mydet/pmt/inner",
   pos_table: "PMTINFO_hqe_top",
