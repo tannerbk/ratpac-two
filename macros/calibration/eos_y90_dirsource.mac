@@ -11,9 +11,6 @@
 
 /rat/db/load cal/dir_source.geo
 
-# This *must* be the same material as eos_inner
-/rat/db/set GEO[source_mother] material "wbls_1pct"
-
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0] 
 /rat/db/set GEO[source_mother] rotation [0.0,0.0,0.0]
 
@@ -25,7 +22,7 @@
 /rat/proc count
 /rat/procset update 10000
 
-/rat/proclast outntuple
+/rat/proclast eosntuple
 #END EVENT LOOP
 
 ##### GENERATORS #################
