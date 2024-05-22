@@ -40,7 +40,7 @@ void process(const char* filename){
     t->SetBranchAddress("mcNPE", &mcNPE);
     t->SetBranchAddress("mcNhits", &mcNhits);  
     t->SetBranchAddress("hitPMTTime", &hitPMTTime);
-    t->SetBranchAddress("mcPETime", &mcPETime);
+    t->SetBranchAddress("mcPEFrontEndTime", &mcPETime);
     t->SetBranchAddress("mcPEProcess", &mcPEProcess);
     t->SetBranchAddress("hitPMTDigitizedTime", &hitPMTDigitizedTime);
 
