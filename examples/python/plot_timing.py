@@ -26,7 +26,7 @@ def open_ntuple(filename):
         mcz = tree.mcz
 
         # Here we look at truth information
-        mcpetime = list(tree.mcPETime)
+        mcpetime = list(tree.mcPEFrontEndTimeTime)
         mcpeprocess = list(tree.mcPEProcess)
         mcpex = list(tree.mcPEx)
         mcpey = list(tree.mcPEy)
