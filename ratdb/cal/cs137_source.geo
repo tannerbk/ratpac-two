@@ -9,8 +9,8 @@
   valid_end: [0, 0],
   mother: "eos_inner",
   type: "tube",
-  r_max: 1.51,
-  size_z: 5.56,
+  r_max: 2.06,
+  size_z: 6.90,
   position: [0.0, 0.0, 0.0], // The cs137 is centered at [0,0,0] in source_mother
   rotation: [0.0, 0.0, 0.0],
   material: "water",
@@ -18,14 +18,27 @@
 
 {
   name: "GEO",
-  index: "cs_steel",
+  index: "cs_acrylic", // Weld-On 40 coating
   valid_begin: [0, 0],
   valid_end: [0, 0],
   mother: "source_mother",
   type: "tube",
+  r_max: 2.05,
+  size_z: 4.39,
+  position: [0.0, 0.0, 2.50],
+  material: "acrylic_sno",
+}
+
+{
+  name: "GEO",
+  index: "cs_steel",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+  mother: "cs_acrylic",
+  type: "tube",
   r_max: 1.5,
   size_z: 3.05,
-  position: [0.0, 0.0, 2.50],
+  position: [0.0, 0.0, 0.0],
   material: "stainless_steel_316L",
 }
 
