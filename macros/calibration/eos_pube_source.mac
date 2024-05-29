@@ -8,9 +8,8 @@
 #/rat/db/set NOISEPROC noise_flag 1
 
 # set the source parameters
-/rat/db/load cal/cs137_source.geo
-/rat/db/set GEO[source_mother] material "wbls_1pct"  # This must be the same material as eos_inner
-/rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
+/rat/db/load cal/pube_source.geo
+/rat/db/set GEO[source_mother] position [-1573.0,0.0,0.0]  # outside the detector
 
 #/tracking/storeTrajectory 1
 
@@ -30,10 +29,9 @@
 ##### END EVENT LOOP #####
 
 ##### GENERATORS #################
-/generator/add combo decay0:regexfill:poisson
-/generator/vtx/set backg Cs137
-/generator/pos/set cs137
-/generator/rate/set 935
+/generator/add ambe regexfill:poisson
+/generator/pos/set pube_source
+/generator/rate/set 1700000 # 1.7 MHz
 
 ##### RUN ###########
-/run/beamOn 1000
+/run/beamOn 10000
