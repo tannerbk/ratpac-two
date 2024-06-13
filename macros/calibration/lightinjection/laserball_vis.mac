@@ -7,7 +7,7 @@
 /rat/db/set GEO[eos_inner] material "wbls_1pct"
 
 /rat/db/set LASERBALL[eos] z_position 0.0
-/rat/db/set LASERBALL[eos] intensity 100
+/rat/db/set LED[eos_laserball] intensity 100
 /rat/db/set LASERBALL[eos] sphere_radius 1.0
 
 /run/initialize
