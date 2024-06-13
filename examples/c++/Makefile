@@ -1,4 +1,4 @@
-CPPFLAGS=-g -I$(ROOTSYS)/include -std=c++14 -I $(RATROOT)/include
+CPPFLAGS=-g -I$(ROOTSYS)/include -std=c++14 -I $(RATROOT)/include -I $(RATROOT)/include/stlplus
 LDFLAGS=-g -L$(ROOTSYS)/lib -L $(RATROOT)/lib
 LDLIBS=-lRATEvent `root-config --libs --cflags` -lcurl -pthread
 
