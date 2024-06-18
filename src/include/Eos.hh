@@ -3,6 +3,7 @@
 
 #include <Config.hh>
 #include <DichroiconArrayFactory.hh>
+#include <DirSourceFactory.hh>
 #include <GeoEosFactory.hh>
 #include <HitmanProc.hh>
 #include <LaserballGenerator.hh>

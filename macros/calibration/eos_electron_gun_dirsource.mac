@@ -9,11 +9,13 @@
 
 /rat/db/load cal/dir_source.geo
 
-# This *must* be the same material as eos_inner
-/rat/db/set GEO[source_mother] material "wbls_1pct"
-
+# Position source at center of detector, pointing downwards
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0] 
 /rat/db/set GEO[source_mother] rotation [0.0,0.0,0.0]
+
+# Example of source at z=-500, pointing sideways (towards +x axis)
+#/rat/db/set GEO[source_mother] position [0.0,0.0,-500.0]
+#/rat/db/set GEO[source_mother] rotation [0.0,90.0,0.0]
 
 /run/initialize
 
@@ -28,12 +30,18 @@
 
 ##### GENERATORS #################
 # Generate downward going electrons with an 
-# opening angle of 10 degrees inside the 
-# directional source. The energy distribution
-# is flat 1 - 3 MeV. 
+# opening angle of 10 degrees inside the directional source.
+# The energy distribution is flat 1 - 3 MeV. 
 /generator/add combo gun2:regexfill:poisson
 /generator/vtx/set e- 0.0 0.0 -1.0 10.0 1.0 3.0
 /generator/pos/set dir_source
+
+# Generate sideways going electrons with an 
+# opening angle of 10 degrees inside the directional source.
+# The energy distribution is flat 1 - 3 MeV. 
+#/generator/add combo gun2:regexfill:poisson
+#/generator/vtx/set e- 1.0 0.0 0.0 10.0 1.0 3.0
+#/generator/pos/set dir_source
 
 ##### RUN ###########
 /run/beamOn 5000

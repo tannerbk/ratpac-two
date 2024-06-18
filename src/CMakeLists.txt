@@ -5,6 +5,7 @@ add_library( EOS SHARED
   HitmanProc.cc
   NtupleProc.cc
   LaserballGenerator.cc
+  DirSourceFactory.cc
 )
 
 target_include_directories( EOS PUBLIC
