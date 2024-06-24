@@ -60,15 +60,15 @@ void process(std::string filename){
         for(int iPMT = 0; iPMT < ev->GetPMTCount(); iPMT++){
 
             // Get the waveform for each PMT
-            RAT::DS::PMT* pmt = ev->GetPMT(iPMT);
-            int pmtID = pmt->GetID();
+            RAT::DS::DigitPMT* digitpmt = ev->GetDigitPMT(iPMT);
+            int pmtID = digitpmt->GetID();
             std::vector<UShort_t> waveform = digitizer.GetWaveform(pmtID);
 
-            double charge = pmt->GetDigitizedCharge();
-            int crossings = pmt->GetNCrossings();
-            double t_over_thresh = pmt->GetTimeOverThreshold();
-            double pedestal = pmt->GetPedestal();
-            double peaks = -1.0*pmt->GetPeakVoltage();
+            double charge = digitpmt->GetDigitizedCharge();
+            int crossings = digitpmt->GetNCrossings();
+            double t_over_thresh = digitpmt->GetTimeOverThreshold();
+            double pedestal = digitpmt->GetPedestal();
+            double peaks = -1.0*digitpmt->GetPeakVoltage();
 
             for(size_t sample = 0; sample < waveform.size(); sample++){
                 double time = sample*time_step;
@@ -76,6 +76,7 @@ void process(std::string filename){
                 int adc = int(waveform[sample]);
                 // Convert to voltage
                 double voltage = (adc - pedestal)*voltage_res;
+                //std::cout << adc << " " << voltage << " " << pedestal << " " << voltage_res << std::endl;
                 hwaveform->SetBinContent(sample, voltage);
             }
         }
