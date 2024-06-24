@@ -13,7 +13,7 @@
 namespace EOS {
 class DirSourceFactory : public RAT::GeoFactory {
  public:
-  DirSourceFactory() : GeoFactory("DirSource") {};
+  DirSourceFactory() : GeoFactory("DirSource"){};
   virtual G4VPhysicalVolume *Construct(RAT::DBLinkPtr table);
 };
 

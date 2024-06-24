@@ -49,7 +49,7 @@ G4VPhysicalVolume *DirSourceFactory::Construct(RAT::DBLinkPtr table) {
   } catch (RAT::DBNotFoundError &e) {
   };
   // thickness of the front window at end of borehole
-  G4double frontZ = 0.15; // default is 0.15 mm
+  G4double frontZ = 0.15;  // default is 0.15 mm
   try {
     frontZ = table->GetD("front_z");
   } catch (RAT::DBNotFoundError &e) {
