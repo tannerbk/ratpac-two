@@ -76,7 +76,6 @@ void process(std::string filename){
                 int adc = int(waveform[sample]);
                 // Convert to voltage
                 double voltage = (adc - pedestal)*voltage_res;
-                //std::cout << adc << " " << voltage << " " << pedestal << " " << voltage_res << std::endl;
                 hwaveform->SetBinContent(sample, voltage);
             }
         }
