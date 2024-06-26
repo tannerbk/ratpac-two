@@ -47,7 +47,7 @@ if __name__=='__main__':
 
     c1 = ROOT.TCanvas("c1","c1",800,600)
 
-    hnhits1.GetXaxis().SetTitle("Time (ns)")
+    hnhits1.GetXaxis().SetTitle("Nhits")
     hnhits1.SetLineColor(ROOT.kBlack)
     hnhits1.Draw("")
 

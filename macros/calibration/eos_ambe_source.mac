@@ -4,12 +4,12 @@
 # set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[eos_inner] material "wbls_1pct"
+/rat/db/set GEO[eos_inner] material "water"
 /rat/db/set NOISEPROC noise_flag 1
 
 # set the source parameters
 /rat/db/load cal/ambe_source.geo
-/rat/db/set GEO[source_mother] material "wbls_1pct"  # This must be the same material as eos_inner
+/rat/db/set GEO[source_mother] material "water"  # This must be the same material as eos_inner
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
 
 #/tracking/storeTrajectory 1
