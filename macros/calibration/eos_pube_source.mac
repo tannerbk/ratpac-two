@@ -15,7 +15,7 @@
 
 ##### BEGIN EVENT LOOP #####
 /rat/proc splitevdaq
-#/rat/procset trigger_threshold 4.0
+/rat/procset trigger_threshold 4.0
 /rat/proc noise
 /rat/proc fitcentroid
 /rat/proc count
