@@ -4,25 +4,22 @@
 # set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[eos_inner] material "wbls_1pct"
-#/rat/db/set NOISEPROC noise_flag 1
+/rat/db/set GEO[eos_inner] material "water"
+/rat/db/set NOISEPROC noise_flag 1
 
 # set the source parameters
 /rat/db/load cal/pube_source.geo
 /rat/db/set GEO[source_mother] position [-1573.0,0.0,0.0]  # outside the detector
 
-#/tracking/storeTrajectory 1
-
 /run/initialize
 
 ##### BEGIN EVENT LOOP #####
-/rat/proc simpledaq
-#/rat/proc splitevdaq
-#/rat/procset trigger_threshold 4.0
-#/rat/proc noise
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 4.0
+/rat/proc noise
 /rat/proc fitcentroid
 /rat/proc count
-/rat/procset update 100
+/rat/procset update 1000
 
 #/rat/proc outroot
 /rat/proclast eosntuple
