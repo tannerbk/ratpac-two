@@ -161,7 +161,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       std::vector<double> trigger_time_per_board;
       for (auto const &[lcn, ds_name] : dataset_names) {
         HighFive::DataSet ds = h5file.getDataSet(ds_name);
-        std::vector<uint16_t> samples;
+        std::vector<std::vector<uint16_t>> samples;
         ds.select({ievt, 0}, {1, n_samples}).read(samples);
         int pmt_id = -1;
         try {
@@ -170,7 +170,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           // FIXME: What to do?
         }
 
-        digitizer.fDigitWaveForm[pmt_id] = samples;
+        digitizer.fDigitWaveForm[pmt_id] = samples.at(0);
         bool is_trigger = (std::count(digitized_trigger_lcn.begin(), digitized_trigger_lcn.end(), lcn) > 0);
         if (is_trigger) {
           double trigger_time = waveform_analyzer.RunAnalysisOnTrigger(pmt_id, &digitizer);
