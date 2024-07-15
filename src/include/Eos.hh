@@ -6,6 +6,7 @@
 #include <DirSourceFactory.hh>
 #include <GeoEosFactory.hh>
 #include <HitmanProc.hh>
+#include <InHDF5Producer.hh>
 #include <LaserballGenerator.hh>
 #include <NtupleProc.hh>
 #include <RAT/AnyParse.hh>
