@@ -1,0 +1,12 @@
+# example macro for running the InHDF5Producer
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+
+/run/initialize
+
+/rat/proc count
+/rat/procset update 1
+/rat/proclast eosntuple
+
+/rat/inhdf5/read /data/eos_data-deployed_source-laserball-run-46.0.h5
+/rat/inhdf5/read /data/eos_data-deployed_source-laserball-run-46.1.h5
