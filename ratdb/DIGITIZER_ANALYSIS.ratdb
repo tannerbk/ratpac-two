@@ -23,5 +23,14 @@
   // Trigger analysis parameters
   trigger_voltage_threshold: 50.0,
   trigger_lookback: 80.0,
-  }
-  
+
+  // Run the lognormal fit
+  run_fitting: 1,
+  // Fit window, in ns
+  fit_window_low: 10.0,
+  fit_window_high: 15.0,
+  // Fit shape
+  lognormal_shape: 0.15,
+  lognormal_scale: 10.5,
+}
+
