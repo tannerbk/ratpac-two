@@ -163,11 +163,11 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         HighFive::DataSet ds = h5file.getDataSet(ds_name);
         std::vector<std::vector<uint16_t>> samples;
         ds.select({ievt, 0}, {1, n_samples}).read(samples);
-        int pmt_id = -1;
+        int pmt_id = -9999;
         try {
           pmt_id = lcn_to_pmt_id.at(lcn);
         } catch (const std::out_of_range &e) {
-          // FIXME: What to do?
+          pmt_id = -lcn;  // negative pmt_id means channel is not a pmt in geometry
         }
 
         digitizer.fDigitWaveForm[pmt_id] = samples.at(0);
@@ -175,6 +175,8 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         if (is_trigger) {
           double trigger_time = waveform_analyzer.RunAnalysisOnTrigger(pmt_id, &digitizer);
           trigger_time_per_board.push_back(trigger_time);
+        } else if (pmt_id < 0) {  // don't run any analysis on waveforms not in the geometry
+          continue;
         } else {
           // Add a empty DS::PMT object that mirrors the digitPMT
           RAT::DS::PMT *pmt = ev->AddNewPMT();
@@ -185,9 +187,12 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           total_charge += digitpmt->GetDigitizedTotalCharge();
         }
       }  // end loop over channels
-      double average_trigger_time = std::accumulate(trigger_time_per_board.begin(), trigger_time_per_board.end(), 0.0) /
-                                    trigger_time_per_board.size();
-      ev->SetCalibratedTriggerTime(average_trigger_time);
+      // double average_trigger_time = std::accumulate(trigger_time_per_board.begin(), trigger_time_per_board.end(),
+      // 0.0) /
+      //  trigger_time_per_board.size();
+      // ev->SetCalibratedTriggerTime(average_trigger_time);
+      // TODO: Trigger timing should be coming from the PTB. Need to determine how to save this.
+      ev->SetCalibratedTriggerTime(0);
       digitizer.DigitizeSum(ev);
       ev->SetTotalCharge(total_charge);
       mainBlock->DSEvent(dsroot);
