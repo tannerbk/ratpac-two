@@ -178,9 +178,6 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         } else if (pmt_id < 0) {  // don't run any analysis on waveforms not in the geometry
           continue;
         } else {
-          // Add a empty DS::PMT object that mirrors the digitPMT
-          RAT::DS::PMT *pmt = ev->AddNewPMT();
-          pmt->SetID(pmt_id);
           RAT::DS::DigitPMT *digitpmt = ev->AddNewDigitPMT();
           digitpmt->SetID(pmt_id);
           waveform_analyzer.RunAnalysis(digitpmt, pmt_id, &digitizer);
