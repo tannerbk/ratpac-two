@@ -187,11 +187,22 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           total_charge += digitpmt->GetDigitizedTotalCharge();
         }
       }  // end loop over channels
-      // double average_trigger_time = std::accumulate(trigger_time_per_board.begin(), trigger_time_per_board.end(),
-      // 0.0) /
-      //  trigger_time_per_board.size();
-      // ev->SetCalibratedTriggerTime(average_trigger_time);
-      // TODO: Trigger timing should be coming from the PTB. Need to determine how to save this.
+      for (size_t i_board = 0; i_board < trigger_time_per_board.size(); i_board++) {
+        double local_trigger_time = trigger_time_per_board[i_board];
+        for (int i_channel = 0; i_channel < channels_per_board; i_channel++) {
+          int lcn = board_id[i_board] * channels_per_board + i_channel;
+          int pmt_id = -9999;
+          try {
+            pmt_id = lcn_to_pmt_id.at(lcn);
+          } catch (const std::out_of_range &e) {
+            continue;
+          }  // non-PMT channels
+          bool is_trigger = (std::count(digitized_trigger_lcn.begin(), digitized_trigger_lcn.end(), lcn) > 0);
+          if (is_trigger) continue;
+          RAT::DS::DigitPMT *digitpmt = ev->GetDigitPMT(pmt_id);
+          digitpmt->SetLocalTriggerTime(local_trigger_time);
+        }
+      }
       ev->SetCalibratedTriggerTime(0);
       digitizer.DigitizeSum(ev);
       ev->SetTotalCharge(total_charge);
