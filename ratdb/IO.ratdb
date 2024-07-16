@@ -1,0 +1,21 @@
+{ 
+  // Producer to ingest HDF5 Datafiles created by Eos WblsDAQ
+  name: "IO",
+  index: "HDF5Proc",
+  valid_begin: [0, 0],
+  valid_end: [0, 0],
+
+  default_input_filename: "input.h5",
+  default_output_filename: "output.h5",
+
+  // mapping between CAEAN board IDs and their serial number
+  board_id: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+  board_sn: ["19858", "24190", "24191", "24192", "24193", "24194", "24195", "24196", "24305", "24306", "24307", "24308", "24309", "24310", "24311", "24312", "19857"]
+  channels_per_board: 16,
+  // Channels that are used to digitize the trigger
+  digitized_trigger_lcn: [15, 31, 47, 63, 79, 95, 111, 127, 143, 159, 175, 191, 207, 223, 239, 255, 271]
+  digitizer: "V1730",
+  waveform_analyzer: "Eos"
+  trigger_ns_per_tick: 8.0,
+  
+}

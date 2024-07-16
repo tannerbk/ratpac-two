@@ -6,6 +6,7 @@ add_library( EOS SHARED
   NtupleProc.cc
   LaserballGenerator.cc
   DirSourceFactory.cc
+  InHDF5Producer.cc
 )
 
 target_include_directories( EOS PUBLIC
@@ -16,7 +17,7 @@ file(COPY include/ DESTINATION ${EOS_INCLUDE_DIR})
 
 add_executable(eos eos.cpp)
 target_link_libraries(eos PUBLIC 
-  EOS ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Ratpac_LIBRARIES} ${NLOPT_LIBRARIES})
+  EOS ${ROOT_LIBRARIES} ${Geant4_LIBRARIES} ${Ratpac_LIBRARIES} ${NLOPT_LIBRARIES} ${HDF5_LIBRARIES} HighFive)
 
 set_target_properties(EOS eos
   PROPERTIES

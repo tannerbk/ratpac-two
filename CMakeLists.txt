@@ -80,6 +80,10 @@ include_directories(${Geant4_INCLUDE_DIRS})
 find_package(Threads REQUIRED)
 find_package(Ratpac REQUIRED)
 
+find_package(HDF5 COMPONENTS C CXX REQUIRED)
+include_directories(${HDF5_INCLUDE_DIRS})
+find_package(HighFive REQUIRED)
+
 ###########################################################
 # Configure header with our version information
 configure_file(${CMAKE_SOURCE_DIR}/config/Config.hh.in
