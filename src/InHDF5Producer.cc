@@ -142,6 +142,23 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     for (int i = 0; i < pmt_info->GetPMTCount(); i++) {
       lcn_to_pmt_id[pmt_info->GetChannelNumber(i)] = i;
     }
+    // Cable offset
+    std::map<int, double> cable_offset_by_pmtid;
+    try {
+      std::string cable_offset_index = lIO->GetS("cable_offset");
+      RAT::DBLinkPtr lCableOffset = RAT::DB::Get()->GetLink("CABLE_OFFSET", cable_offset_index);
+      std::vector<int> offset_lcn = lCableOffset->GetIArray("channel_number");
+      std::vector<double> offset_value = lCableOffset->GetDArray("offset");
+      RAT::Log::Assert(offset_lcn.size() == offset_value.size(), "Cable offset LCN and value size mismatch");
+      for (size_t i = 0; i < offset_lcn.size(); i++) {
+        cable_offset_by_pmtid[lcn_to_pmt_id[offset_lcn[i]]] = offset_value[i];
+      }
+    } catch (const RAT::DBNotFoundError &e) {
+      RAT::warn << "Cable offset not found in database. Using default offset of 0." << newline;
+      for (int i = 0; i < pmt_info->GetPMTCount(); i++) {
+        cable_offset_by_pmtid[i] = 0;
+      }
+    }
 
     // Read events
     uint64_t last_trigger_time_ns = (uint64_t)trigger_times[0] * trigger_ns_per_tick;
@@ -180,7 +197,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         } else {
           RAT::DS::DigitPMT *digitpmt = ev->AddNewDigitPMT();
           digitpmt->SetID(pmt_id);
-          waveform_analyzer.RunAnalysis(digitpmt, pmt_id, &digitizer);
+          waveform_analyzer.RunAnalysis(digitpmt, pmt_id, &digitizer, cable_offset_by_pmtid[pmt_id]);
           total_charge += digitpmt->GetDigitizedTotalCharge();
         }
       }  // end loop over channels
