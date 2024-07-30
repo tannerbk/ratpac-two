@@ -151,7 +151,9 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       std::vector<double> offset_value = lCableOffset->GetDArray("offset");
       RAT::Log::Assert(offset_lcn.size() == offset_value.size(), "Cable offset LCN and value size mismatch");
       for (size_t i = 0; i < offset_lcn.size(); i++) {
-        cable_offset_by_pmtid[lcn_to_pmt_id[offset_lcn[i]]] = offset_value[i];
+        if (!lcn_to_pmt_id.count(offset_lcn[i]))  // not a pmt
+          continue;
+        cable_offset_by_pmtid[lcn_to_pmt_id.at(offset_lcn[i])] = offset_value[i];
       }
     } catch (const RAT::DBNotFoundError &e) {
       RAT::warn << "Cable offset not found in database. Using default offset of 0." << newline;
