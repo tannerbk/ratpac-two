@@ -21,7 +21,7 @@
   // Offset to keep AV center at origin (0, 0, 0)
   position: [0.0, 0.0, -169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -49,7 +49,7 @@
   size_z: 149.41,
   position: [0.0, 0.0, 1456.75],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -142,7 +142,7 @@
   size_z: 6.35,
   position: [0.0, 0.0, 1012.46],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -157,7 +157,7 @@
   size_z: 6.35,
   position: [0.0, 0.0, -674.06],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -170,7 +170,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-1104.40, 0.00, 0],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -183,7 +183,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-1066.77, 285.84, 0],
   rotation: [0.0, 0.0, 15.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -196,7 +196,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-956.44, 552.20, 0],
   rotation: [0.0, 0.0, 30.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -209,7 +209,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-780.93, 780.93, 0],
   rotation: [0.0, 0.0, 45.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -222,7 +222,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-552.20, 956.44, 0],
   rotation: [0.0, 0.0, 60.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -235,7 +235,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-285.84, 1066.77, 0],
   rotation: [0.0, 0.0, 75.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -248,7 +248,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-0.00, 1104.40, 0],
   rotation: [0.0, 0.0, 90.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -261,7 +261,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [285.84, 1066.77, 0],
   rotation: [0.0, 0.0, 105.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -274,7 +274,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [552.20, 956.44, 0],
   rotation: [0.0, 0.0, 120.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -287,7 +287,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [780.93, 780.93, 0],
   rotation: [0.0, 0.0, 135.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -300,7 +300,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [956.44, 552.20, 0],
   rotation: [0.0, 0.0, 150.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -313,7 +313,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [1066.77, 285.84, 0],
   rotation: [0.0, 0.0, 165.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -326,7 +326,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [1104.40, 0.00, 0],
   rotation: [0.0, 0.0, 180.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -339,7 +339,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [1066.77, -285.84, 0],
   rotation: [0.0, 0.0, 195.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -352,7 +352,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [956.44, -552.20, 0],
   rotation: [0.0, 0.0, 210.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -365,7 +365,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [780.93, -780.93, 0],
   rotation: [0.0, 0.0, 225.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -378,7 +378,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [552.20, -956.44, 0],
   rotation: [0.0, 0.0, 240.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -391,7 +391,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [285.84, -1066.77, 0],
   rotation: [0.0, 0.0, 255.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -404,7 +404,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [0.00, -1104.40, 0],
   rotation: [0.0, 0.0, 270.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -417,7 +417,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-285.84, -1066.77, 0],
   rotation: [0.0, 0.0, 285.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -430,7 +430,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-552.20, -956.44, 0],
   rotation: [0.0, 0.0, 300.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -443,7 +443,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-780.93, -780.93, 0],
   rotation: [0.0, 0.0, 315.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -456,7 +456,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-956.44, -552.20, 0],
   rotation: [0.0, 0.0, 330.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -469,7 +469,7 @@
   size: [20.0, 20.0, 1483.45],
   position: [-1066.77, -285.84, 0],
   rotation: [0.0, 0.0, 345.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -484,7 +484,7 @@
   size_z: 836.9,
   position: [-1009.40, 0.00, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -499,7 +499,7 @@
   size_z: 836.9,
   position: [-874.17, 504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -514,7 +514,7 @@
   size_z: 836.9,
   position: [-504.70, 874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -529,7 +529,7 @@
   size_z: 836.9,
   position: [-0.00, 1009.40, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -544,7 +544,7 @@
   size_z: 836.9,
   position: [504.70, 874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -559,7 +559,7 @@
   size_z: 836.9,
   position: [874.17, 504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -574,7 +574,7 @@
   size_z: 836.9,
   position: [1009.40, 0.00, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -589,7 +589,7 @@
   size_z: 836.9,
   position: [874.17, -504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -604,7 +604,7 @@
   size_z: 836.9,
   position: [504.70, -874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -619,7 +619,7 @@
   size_z: 836.9,
   position: [0.00, -1009.40, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -634,7 +634,7 @@
   size_z: 836.9,
   position: [-504.70, -874.17, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 {
@@ -649,7 +649,7 @@
   size_z: 836.9,
   position: [-874.17, -504.70, 169.2],
   rotation: [0.0, 0.0, 0.0],
-  material: "stainless_steel",
+  material: "stainless_steel_304H",
 }
 
 
