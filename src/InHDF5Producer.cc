@@ -161,6 +161,13 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       }
     }
 
+    int calibrated_trigger_lcn = -1;
+    try {
+      calibrated_trigger_lcn = lIO->GetI("digitized_event_trigger_lcn");
+      RAT::info << "Using Channel " << calibrated_trigger_lcn << "as event trigger time" << newline;
+    } catch (const RAT::DBNotFoundError &e) {
+    }
+
     // Read events
     uint64_t last_trigger_time_ns = (uint64_t)trigger_times[0] * trigger_ns_per_tick;
     for (uint32_t ievt = 0; ievt < n_events; ievt++) {
@@ -218,7 +225,12 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           digitpmt->SetLocalTriggerTime(local_trigger_time);
         }
       }
-      ev->SetCalibratedTriggerTime(0);
+      if (calibrated_trigger_lcn != -1) {
+        double trigger_time = waveform_analyzer.RunAnalysisOnTrigger(-calibrated_trigger_lcn, &digitizer);
+        ev->SetCalibratedTriggerTime(trigger_time);
+      } else {
+        ev->SetCalibratedTriggerTime(0);
+      }
       digitizer.DigitizeSum(ev);
       ev->SetTotalCharge(total_charge);
       mainBlock->DSEvent(dsroot);
