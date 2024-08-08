@@ -2,6 +2,7 @@
   "name": "CABLE_OFFSET",
   "index": "eos_offsets",
   // Careful -- Rat uses run=1 as the default for all simulation
+  // Cable delays extract from laserball run 124
   "run_range": [2, 300],
 
   "channel_number": [
@@ -32,6 +33,7 @@
   "name": "CABLE_OFFSET",
   "index": "eos_offsets",
   // Careful -- Rat uses run=1 as the default for all simulation
+  // Cable delays extract from laserball run 330
   "run_range": [301, 19104],
 
   "channel_number": [
