@@ -145,8 +145,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     // Cable offset
     std::map<int, double> cable_offset_by_pmtid;
     try {
-      std::string cable_offset_index = lIO->GetS("cable_offset");
-      RAT::DBLinkPtr lCableOffset = RAT::DB::Get()->GetLink("CABLE_OFFSET", cable_offset_index);
+      RAT::DBLinkPtr lCableOffset = RAT::DB::Get()->GetLink("CABLE_OFFSET", "eos_offsets");
       std::vector<int> offset_lcn = lCableOffset->GetIArray("channel_number");
       std::vector<double> offset_value = lCableOffset->GetDArray("offset");
       RAT::Log::Assert(offset_lcn.size() == offset_value.size(), "Cable offset LCN and value size mismatch");
