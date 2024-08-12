@@ -1,0 +1,42 @@
+/glg4debug/glg4param omit_muon_processes  0.0
+/glg4debug/glg4param omit_hadronic_processes  0.0
+
+# set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/set GEO[eos_inner] material "water"
+/rat/db/set NOISEPROC noise_flag 1
+
+# set the source parameters
+/rat/db/load cal/th_source.geo
+/rat/db/set GEO[source_mother] material "water"  # This must be the same material as eos_inner
+/rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
+
+#/tracking/storeTrajectory 1
+
+/run/initialize
+
+##### BEGIN EVENT LOOP #####
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 6.0
+/rat/proc noise
+/rat/proc fitcentroid
+/rat/proc count
+/rat/procset update 1000
+
+#/rat/proc outroot
+/rat/proclast eosntuple
+##### END EVENT LOOP #####
+
+##### GENERATORS #################
+##### 232Th chain isotopes with gammas > 1% and E > 0.1 MeV #####
+#/generator/add decaychain 228Ac:regexfill:poisson  # beta (Q=2.08 MeV), gammas <= 2.03 MeV
+#/generator/add decaychain 224Ra:regexfill:poisson  # 5.7-MeV alpha, 0.24-MeV gamma (4.1%)
+#/generator/add decaychain 212Pb:regexfill:poisson  # beta (Q=0.57 MeV), gammas 0.24 MeV (43.6%), 0.30 MeV (3.3%)
+/generator/add decaychain 208Tl:regexfill:poisson  # beta (Q=5.0 MeV), gammas <= 2.61 MeV
+
+/generator/pos/set th_rods
+/generator/rate/set 10000
+
+##### RUN ###########
+/run/beamOn 10000
