@@ -145,7 +145,8 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     // Cable offset
     std::map<int, double> cable_offset_by_pmtid;
     try {
-      RAT::DBLinkPtr lCableOffset = RAT::DB::Get()->GetLink("CABLE_OFFSET", "eos_offsets");
+      std::string cable_offset_index = lIO->GetS("cable_offset");
+      RAT::DBLinkPtr lCableOffset = RAT::DB::Get()->GetLink("CABLE_OFFSET", cable_offset_index);
       std::vector<int> offset_lcn = lCableOffset->GetIArray("channel_number");
       std::vector<double> offset_value = lCableOffset->GetDArray("offset");
       RAT::Log::Assert(offset_lcn.size() == offset_value.size(), "Cable offset LCN and value size mismatch");
@@ -159,13 +160,6 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       for (int i = 0; i < pmt_info->GetPMTCount(); i++) {
         cable_offset_by_pmtid[i] = 0;
       }
-    }
-
-    int calibrated_trigger_lcn = -1;
-    try {
-      calibrated_trigger_lcn = lIO->GetI("digitized_event_trigger_lcn");
-      RAT::info << "Using Channel " << calibrated_trigger_lcn << "as event trigger time" << newline;
-    } catch (const RAT::DBNotFoundError &e) {
     }
 
     // Read events
@@ -225,12 +219,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           digitpmt->SetLocalTriggerTime(local_trigger_time);
         }
       }
-      if (calibrated_trigger_lcn != -1) {
-        double trigger_time = waveform_analyzer.RunAnalysisOnTrigger(-calibrated_trigger_lcn, &digitizer);
-        ev->SetCalibratedTriggerTime(trigger_time);
-      } else {
-        ev->SetCalibratedTriggerTime(0);
-      }
+      ev->SetCalibratedTriggerTime(0);
       digitizer.DigitizeSum(ev);
       ev->SetTotalCharge(total_charge);
       mainBlock->DSEvent(dsroot);

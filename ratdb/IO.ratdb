@@ -17,5 +17,6 @@
   digitizer: "V1730",
   waveform_analyzer: "Eos"
   trigger_ns_per_tick: 8.0,
+  cable_offset: "eos_offsets",
   
 }
