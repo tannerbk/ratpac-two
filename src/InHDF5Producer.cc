@@ -134,32 +134,21 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       TTimeStamp run_begin_utc(h5file.getAttribute("created_unix_timestamp").read<int32_t>());
       run->SetStartTime(run_begin_utc);
       run->SetID(run_id);
-      run->SetPMTInfo(&RAT::PMTFactoryBase::GetPMTInfo());
+      const RAT::DS::PMTInfo *pmtinfo = &RAT::PMTFactoryBase::GetPMTInfo();
+      run->SetPMTInfo(pmtinfo);
+      RAT::DS::ChannelStatus ch_status;
+      ch_status.Load(pmtinfo, lRun->GetS("channel_status"));
+      run->SetChannelStatus(ch_status);
       RAT::DS::RunStore::AddNewRun(run);
     }
     const RAT::DS::PMTInfo *pmt_info = run->GetPMTInfo();
+    const RAT::DS::ChannelStatus *ch_status = &run->GetChannelStatus();
+    if (ch_status == NULL) {
+      RAT::Log::Die("Channel status is null!");
+    }
     std::map<int, int> lcn_to_pmt_id;
     for (int i = 0; i < pmt_info->GetPMTCount(); i++) {
       lcn_to_pmt_id[pmt_info->GetChannelNumber(i)] = i;
-    }
-    // Cable offset
-    std::map<int, double> cable_offset_by_pmtid;
-    try {
-      std::string cable_offset_index = lIO->GetS("cable_offset");
-      RAT::DBLinkPtr lCableOffset = RAT::DB::Get()->GetLink("CABLE_OFFSET", cable_offset_index);
-      std::vector<int> offset_lcn = lCableOffset->GetIArray("channel_number");
-      std::vector<double> offset_value = lCableOffset->GetDArray("offset");
-      RAT::Log::Assert(offset_lcn.size() == offset_value.size(), "Cable offset LCN and value size mismatch");
-      for (size_t i = 0; i < offset_lcn.size(); i++) {
-        if (!lcn_to_pmt_id.count(offset_lcn[i]))  // not a pmt
-          continue;
-        cable_offset_by_pmtid[lcn_to_pmt_id.at(offset_lcn[i])] = offset_value[i];
-      }
-    } catch (const RAT::DBNotFoundError &e) {
-      RAT::warn << "Cable offset not found in database. Using default offset of 0." << newline;
-      for (int i = 0; i < pmt_info->GetPMTCount(); i++) {
-        cable_offset_by_pmtid[i] = 0;
-      }
     }
 
     int calibrated_trigger_lcn = -1;
@@ -186,6 +175,9 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       // retrieve trigger time from the trigger digitization given in each board
       std::vector<double> trigger_time_per_board;
       for (auto const &[lcn, ds_name] : dataset_names) {
+        if (!ch_status->GetOnlineByChannel(lcn)) {
+          continue;
+        }
         HighFive::DataSet ds = h5file.getDataSet(ds_name);
         std::vector<std::vector<uint16_t>> samples;
         ds.select({ievt, 0}, {1, n_samples}).read(samples);
@@ -206,14 +198,17 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         } else {
           RAT::DS::DigitPMT *digitpmt = ev->AddNewDigitPMT();
           digitpmt->SetID(pmt_id);
-          waveform_analyzer.RunAnalysis(digitpmt, pmt_id, &digitizer, cable_offset_by_pmtid[pmt_id]);
+          waveform_analyzer.RunAnalysis(digitpmt, pmt_id, &digitizer, ch_status->GetCableOffsetByPMTID(pmt_id));
           total_charge += digitpmt->GetDigitizedTotalCharge();
         }
       }  // end loop over channels
       for (size_t i_board = 0; i_board < trigger_time_per_board.size(); i_board++) {
-        double local_trigger_time = trigger_time_per_board[i_board];
+        double local_trigger_time = trigger_time_per_board.at(i_board);
         for (int i_channel = 0; i_channel < channels_per_board; i_channel++) {
           int lcn = board_id[i_board] * channels_per_board + i_channel;
+          if (!ch_status->GetOnlineByChannel(lcn)) {
+            continue;
+          }
           int pmt_id = -9999;
           try {
             pmt_id = lcn_to_pmt_id.at(lcn);
@@ -222,7 +217,13 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           }  // non-PMT channels
           bool is_trigger = (std::count(digitized_trigger_lcn.begin(), digitized_trigger_lcn.end(), lcn) > 0);
           if (is_trigger) continue;
-          RAT::DS::DigitPMT *digitpmt = ev->GetDigitPMT(pmt_id);
+          RAT::DS::DigitPMT *digitpmt;
+          for (int digitpmt_idx = 0; digitpmt_idx < ev->GetDigitPMTCount(); digitpmt_idx++) {
+            if (ev->GetDigitPMT(digitpmt_idx)->GetID() == pmt_id) {
+              digitpmt = ev->GetDigitPMT(digitpmt_idx);
+              break;
+            }
+          }
           digitpmt->SetLocalTriggerTime(local_trigger_time);
         }
       }
