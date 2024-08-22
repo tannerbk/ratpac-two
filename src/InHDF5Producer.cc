@@ -175,9 +175,6 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       // retrieve trigger time from the trigger digitization given in each board
       std::vector<double> trigger_time_per_board;
       for (auto const &[lcn, ds_name] : dataset_names) {
-        if (!ch_status->GetOnlineByChannel(lcn)) {
-          continue;
-        }
         HighFive::DataSet ds = h5file.getDataSet(ds_name);
         std::vector<std::vector<uint16_t>> samples;
         ds.select({ievt, 0}, {1, n_samples}).read(samples);
@@ -193,37 +190,24 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         if (is_trigger) {
           double trigger_time = waveform_analyzer.RunAnalysisOnTrigger(pmt_id, &digitizer);
           trigger_time_per_board.push_back(trigger_time);
-        } else if (pmt_id < 0) {  // don't run any analysis on waveforms not in the geometry
-          continue;
-        } else {
-          RAT::DS::DigitPMT *digitpmt = ev->AddNewDigitPMT();
-          digitpmt->SetID(pmt_id);
-          waveform_analyzer.RunAnalysis(digitpmt, pmt_id, &digitizer, ch_status->GetCableOffsetByPMTID(pmt_id));
-          total_charge += digitpmt->GetDigitizedTotalCharge();
         }
       }  // end loop over channels
       for (size_t i_board = 0; i_board < trigger_time_per_board.size(); i_board++) {
         double local_trigger_time = trigger_time_per_board.at(i_board);
         for (int i_channel = 0; i_channel < channels_per_board; i_channel++) {
           int lcn = board_id[i_board] * channels_per_board + i_channel;
-          if (!ch_status->GetOnlineByChannel(lcn)) {
-            continue;
-          }
           int pmt_id = -9999;
           try {
             pmt_id = lcn_to_pmt_id.at(lcn);
           } catch (const std::out_of_range &e) {
             continue;
           }  // non-PMT channels
+          if (!ch_status->GetOnlineByChannel(lcn)) {
+            continue;
+          }
           bool is_trigger = (std::count(digitized_trigger_lcn.begin(), digitized_trigger_lcn.end(), lcn) > 0);
           if (is_trigger) continue;
-          RAT::DS::DigitPMT *digitpmt;
-          for (int digitpmt_idx = 0; digitpmt_idx < ev->GetDigitPMTCount(); digitpmt_idx++) {
-            if (ev->GetDigitPMT(digitpmt_idx)->GetID() == pmt_id) {
-              digitpmt = ev->GetDigitPMT(digitpmt_idx);
-              break;
-            }
-          }
+          RAT::DS::DigitPMT *digitpmt = ev->GetDigitPMT(pmt_id);
           digitpmt->SetLocalTriggerTime(local_trigger_time);
         }
       }
