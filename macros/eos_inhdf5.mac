@@ -6,6 +6,10 @@
 
 /rat/proc count
 /rat/procset update 1
+/rat/proc WaveformAnalysis
+/rat/procset analyzer_name "Eos"
+/rat/procset apply_cable_offset 1
+# /rat/proclast outroot
 /rat/proclast eosntuple
 
 /rat/inhdf5/read /data/eos_data-deployed_source-laserball-run-46.0.h5
