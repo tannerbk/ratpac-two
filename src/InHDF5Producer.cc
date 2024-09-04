@@ -207,7 +207,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
           }
           bool is_trigger = (std::count(digitized_trigger_lcn.begin(), digitized_trigger_lcn.end(), lcn) > 0);
           if (is_trigger) continue;
-          RAT::DS::DigitPMT *digitpmt = ev->GetDigitPMT(pmt_id);
+          RAT::DS::DigitPMT *digitpmt = ev->GetOrCreateDigitPMT(pmt_id);
           digitpmt->SetLocalTriggerTime(local_trigger_time);
         }
       }
