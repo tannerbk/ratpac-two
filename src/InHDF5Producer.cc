@@ -171,7 +171,6 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       last_trigger_time_ns = trigger_time_ns;
       // Read waveforms
       digitizer.fDigitWaveForm.clear();
-      double total_charge = 0;
       // retrieve trigger time from the trigger digitization given in each board
       std::vector<double> trigger_time_per_board;
       for (auto const &[lcn, ds_name] : dataset_names) {
@@ -217,8 +216,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       } else {
         ev->SetCalibratedTriggerTime(0);
       }
-      digitizer.DigitizeSum(ev);
-      ev->SetTotalCharge(total_charge);
+      digitizer.WriteToEvent(ev);
       mainBlock->DSEvent(dsroot);
       delete dsroot;
 
