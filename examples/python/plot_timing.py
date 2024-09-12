@@ -32,8 +32,6 @@ def open_ntuple(filename):
         mcpey = list(tree.mcPEy)
         mcpez = list(tree.mcPEz)
 
-        print (i, len(mcpetime))
-
         # Loop over the MCPEs
         for iPE in range(len(mcpetime)):
 
