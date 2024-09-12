@@ -26,11 +26,13 @@ def open_ntuple(filename):
         mcz = tree.mcz
 
         # Here we look at truth information
-        mcpetime = list(tree.mcPEFrontEndTimeTime)
+        mcpetime = list(tree.mcPEFrontEndTime)
         mcpeprocess = list(tree.mcPEProcess)
         mcpex = list(tree.mcPEx)
         mcpey = list(tree.mcPEy)
         mcpez = list(tree.mcPEz)
+
+        print (i, len(mcpetime))
 
         # Loop over the MCPEs
         for iPE in range(len(mcpetime)):
@@ -65,9 +67,6 @@ def open_ntuple(filename):
         pmty = list(meta.pmtY)
         pmtz = list(meta.pmtZ)
 
-        # This is the time from analyzing the waveforms
-        digittime = list(tree.hitPMTDigitizedTime)
-
         # Loop over the PMT hits
         for iPMT in range(len(pmtid)):
 
@@ -83,16 +82,13 @@ def open_ntuple(filename):
 
             residuals = pmttime[iPMT] - pmtpos/SPEED_OF_LIGHT
 
-            residuals_digit = digittime[iPMT] - pmtpos/SPEED_OF_LIGHT
-
             htev.Fill(residuals)
-            htdigit.Fill(residuals_digit - 60.0) # Arb. offset
 
-    return htev, htmc, htdigit
+    return htev, htmc
 
 if __name__=='__main__':
 
-    htev, htmc, htdigit = open_ntuple(sys.argv[1])
+    htev, htmc = open_ntuple(sys.argv[1])
 
     # Draw everything
     c1 = ROOT.TCanvas("c1","c1",800,600)
@@ -105,16 +101,12 @@ if __name__=='__main__':
     htmc.SetLineColor(ROOT.kRed)
     htmc.Draw("same")
 
-    htdigit.SetLineColor(ROOT.kBlue)
-    htdigit.Draw("same")
-
     t = ROOT.TLegend(0.55, 0.55, 0.85, 0.85)
     t.SetTextFont(132)
     t.SetBorderSize(0)
     t.SetFillStyle(0)
     t.AddEntry(htev, "PMT hit time", "L")
     t.AddEntry(htmc, "PE hit time", "L")
-    t.AddEntry(htdigit, "Digit hit time", "L")
     t.Draw("")
 
     c1.Update()

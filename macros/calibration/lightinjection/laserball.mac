@@ -6,15 +6,32 @@
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 /rat/db/set GEO[eos_inner] material "wbls_1pct"
 
+# Set per PMT model noise rates
+/rat/db/set NOISEPROC noise_flag 1
+
+# Set digitizer window length
+/rat/db/set DIGITIZER[V1730] nsamples 110
+
 /rat/db/set LASERBALL[eos] z_position 0.0
 /rat/db/set LED[eos_laserball] intensity 1000
 /rat/db/set LED[eos_laserball] wavelength [440.0]
 
 /run/initialize
+
+/rat/proc noise
+
 /rat/proc splitevdaq
+/rat/procset trigger_threshold 1.0
+
+/rat/proc WaveformAnalysis
+# Run the Eos waveform analysis
+/rat/procset analyzer_name "Eos"
+/rat/procset apply_cable_offset 0
+
 /rat/proc count
 /rat/procset update 100
-/rat/proclast outntuple
+
+/rat/proclast eosntuple
 
 /generator/add laserball
 /run/beamOn 1000

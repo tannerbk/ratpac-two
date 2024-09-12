@@ -4,21 +4,34 @@
 #set the detector parameters
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
-/rat/db/set GEO[eos_inner] material "wbls_1pct"
+/rat/db/set GEO[eos_inner] material "water"
+
+# Set per PMT model noise rates
 /rat/db/set NOISEPROC noise_flag 1
+
+# Set digitizer window length
+/rat/db/set DIGITIZER[V1730] nsamples 110
 
 /rat/db/set IO[NtupleProc] include_untriggered_events false
 
 /rat/db/load cal/dir_source.geo
-
+/rat/db/set GEO[source_mother] material "water"  # This must be the same material as eos_inner
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0] 
 /rat/db/set GEO[source_mother] rotation [0.0,0.0,0.0]
 
+# BEGIN EVENT LOOP
 /run/initialize
 
-# BEGIN EVENT LOOP
-/rat/proc splitevdaq
 /rat/proc noise
+
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 4.0
+
+/rat/proc WaveformAnalysis
+# Run the Eos waveform analysis
+/rat/procset analyzer_name "Eos"
+/rat/procset apply_cable_offset 0
+
 /rat/proc count
 /rat/procset update 10000
 

@@ -13,11 +13,18 @@
 
 /run/initialize
 
-# Simulate the DAQ and waveform digitization.
-/rat/proc splitevdaq
 # Simulate the dark noise
 /rat/proc noise
+
+# Simulate the DAQ and waveform digitization.
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 4.0
+# Run the Eos waveform analysis
+/rat/procset analyzer_name "Eos"
+
+# Run the centroid fitter
 /rat/proc fitcentroid
+
 # Print the event count as the events are generated.
 /rat/proc count
 /rat/procset update 1
