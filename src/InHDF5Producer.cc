@@ -216,7 +216,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       } else {
         ev->SetCalibratedTriggerTime(0);
       }
-      digitizer.DigitizeSum(ev);
+      digitizer.WriteToEvent(ev);
       mainBlock->DSEvent(dsroot);
       delete dsroot;
 
