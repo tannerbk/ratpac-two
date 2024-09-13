@@ -6,7 +6,7 @@
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 /rat/db/set GEO[eos_inner] material "water"
 
-# Set per PMT model noise rates
+# Per PMT model noise rate
 /rat/db/set NOISEPROC noise_flag 1
 
 # Set digitizer window length
@@ -17,35 +17,74 @@
 /rat/db/set GEO[source_mother] material "water"  # This must be the same material as eos_inner
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
 
+##### BEGIN EVENT LOOP #####
 /run/initialize
 
-##### BEGIN EVENT LOOP #####
 /rat/proc noise
 
 /rat/proc splitevdaq
-/rat/procset trigger_threshold 4.0
+/rat/procset trigger_threshold 6.0
 
 /rat/proc WaveformAnalysis
 # Run the Eos waveform analysis
 /rat/procset analyzer_name "Eos"
 /rat/procset apply_cable_offset 0
 
+/rat/proc fitcentroid
+
 /rat/proc count
 /rat/procset update 1000
 
 /rat/proclast eosntuple
+##### END EVENT LOOP #####
+
+##### GENERATORS #################
+#####      232Th chain isotopes      #####
+
+##/generator/add decaychain 232Th:regexfill:poisson  # 4.0-MeV alpha, 0.14-MeV gamma (0.021%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
+
+##/generator/add decaychain 228Ra:regexfill:poisson  # beta (Q=40 keV), gammas <26.4 keV (<1.62%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
 
 /generator/add decaychain 228Ac:regexfill:poisson  # beta (Q=2.08 MeV), gammas <= 2.03 MeV
 /generator/pos/set th_rods
 /generator/rate/set 10000
 
+##/generator/add decaychain 228Th:regexfill:poisson  # 5.4-MeV alpha, gammas <= 0.993 MeV
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
+
+##/generator/add decaychain 224Ra:regexfill:poisson  # 5.7-MeV alpha, 0.24-MeV gamma (4.1%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
+
+##/generator/add decaychain 220Rn:regexfill:poisson  # 6.3-MeV alpha, 0.55-MeV gamma (0.11%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
+
+##/generator/add decaychain 216Po:regexfill:poisson  # 6.8-MeV alpha, 0.80-MeV gamma (0.002%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
+
+##/generator/add decaychain 212Pb:regexfill:poisson  # beta (Q=0.57 MeV), gammas 0.24 MeV (43.6%), 0.30 MeV (3.3%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
+
 /generator/add decaychain 212Bi:regexfill:poisson  # beta (Q=2.25 MeV), gammas <1.81 MeV (<10.82%)
 /generator/pos/set th_rods
 /generator/rate/set 10000
+
+##/generator/add decaychain 212Po:regexfill:poisson  # 11.7-MeV alpha, gammas 0.57 MeV (2.0%), 2.61 MeV (2.6%)
+##/generator/pos/set th_rods
+##/generator/rate/set 10000
 
 /generator/add decaychain 208Tl:regexfill:poisson  # beta (Q=1.8 MeV), gamma 2.61 MeV (99.75%)
 /generator/pos/set th_rods
 /generator/rate/set 10000
 
+
 ##### RUN ###########
-/run/beamOn 50000
+/run/beamOn 30000

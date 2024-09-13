@@ -17,8 +17,6 @@
 /rat/db/set GEO[source_mother] material "wbls_1pct"  # This must be the same material as eos_inner
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
 
-#/tracking/storeTrajectory 1
-
 ##### BEGIN EVENT LOOP #####
 /run/initialize
 
