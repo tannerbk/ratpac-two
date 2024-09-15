@@ -33,22 +33,29 @@ G4VPhysicalVolume *DirSourceFactory::Construct(RAT::DBLinkPtr table) {
   const std::string motherName = table->GetS("mother");
   G4VPhysicalVolume *motherPhys = FindPhysMother(motherName);
 
-  // shielding materials
-  G4Material *outerShellMaterial = G4Material::GetMaterial(table->GetS("outer_shell_material"));
-  G4Material *metalShieldMaterial = G4Material::GetMaterial(table->GetS("metal_shield_material"));
-  G4Material *plasticShieldMaterial = G4Material::GetMaterial(table->GetS("plastic_shield_material"));
-
-  // optional parameters
   // size of directional source (30mm, 20mm or 10mm)
-  G4double dirSrcSize = 30.0;
-  try {
-    dirSrcSize = table->GetD("size");
-  } catch (RAT::DBNotFoundError &e) {
-  };
+  G4double dirSrcSize = table->GetD("size");
   if (!(dirSrcSize == 30 || dirSrcSize == 20 || dirSrcSize == 10)) {
     RAT::Log::Die("Directional Source Size should be 30mm, 20mm or 10mm");
   };
   RAT::info << "DirSourceFactory : Using Directional Source (" << dirSrcSize << "mm)." << newline;
+
+  // optional parameters
+  // shielding materials
+  G4Material *outerShellMaterial = G4Material::GetMaterial("delrin_black");
+  G4Material *plasticShieldMaterial = G4Material::GetMaterial("delrin_black");
+  G4Material *metalShieldMaterial;
+  if (dirSrcSize == 30) {
+    metalShieldMaterial = G4Material::GetMaterial("brass");
+  } else {
+    metalShieldMaterial = G4Material::GetMaterial("tungsten");
+  }
+  try {
+    G4Material *outerShellMaterial = G4Material::GetMaterial(table->GetS("outer_shell_material"));
+    G4Material *metalShieldMaterial = G4Material::GetMaterial(table->GetS("metal_shield_material"));
+    G4Material *plasticShieldMaterial = G4Material::GetMaterial(table->GetS("plastic_shield_material"));
+  } catch (RAT::DBNotFoundError &e) {
+  };
   // material to fill empty space in source
   G4Material *fillMaterial = G4Material::GetMaterial("air");
   try {
