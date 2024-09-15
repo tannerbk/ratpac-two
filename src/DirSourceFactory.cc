@@ -85,10 +85,14 @@ G4VPhysicalVolume *DirSourceFactory::Construct(RAT::DBLinkPtr table) {
   const G4double bhL = 25.0;               // borehole length
   const G4double frontR = 1.5;             // source front window radius
   const G4double bhfrontR = 0.5;           // radius of front side of borehole
-  G4double activityR, fiberGatePosZ, pSfrontR1, pSfrontR2, pSfrontH, pSbackR, pSbackH;
-  G4double PCBcutoutH;
+  G4double activityR, oSmainH, oSbackH, metalFillH;
+  G4double pSfrontR1, pSfrontR2, pSfrontH, pSbackR, pSbackH;
+  G4double fiberGatePosZ, PCBcutoutH;
   if (dirSrcSize == 30) {
-    activityR = 2.5;  // radius of source activity area
+    activityR = 2.5;    // radius of source activity area
+    oSmainH = 15.0;     // length of main cylindrical part of outer shell
+    oSbackH = 10.0;     // length of back cylindrical part of outer shell
+    metalFillH = 10.0;  // length of cylindrical part of metal shield
     // inner plastic shield
     pSfrontR1 = 6.5;          // front shield smaller radius
     pSfrontR2 = 10.0;         // front shield larger radius
@@ -99,32 +103,41 @@ G4VPhysicalVolume *DirSourceFactory::Construct(RAT::DBLinkPtr table) {
     fiberGatePosZ = 7.0;  // z position of fiber gate
     PCBcutoutH = 7.0;     // PCB cutout height
   } else if (dirSrcSize == 20) {
-    activityR = 2.5;
-    pSfrontR1 = 4.0;
-    pSfrontR2 = 5.5;
-    pSfrontH = 4.0;
-    pSbackR = 5.5;
-    pSbackH = 7.0 - radSrcH;
-    fiberGatePosZ = 8.0;
-    PCBcutoutH = 7.0;
+    activityR = 2.5;    // radius of source activity area
+    oSmainH = 46.18;    // length of cylindrical part of outer shell
+    oSbackH = 15.0;     // length of back cylindrical part of outer shell
+    metalFillH = 10.0;  // length of cylindrical part of metal shield
+    // inner plastic shield
+    pSfrontR1 = 4.3;  // front shield smaller radius
+    pSfrontR2 = 6.0;  // front shield larger radius
+    pSfrontH = 5.0;   // front shield height
+    pSbackR = 6.0;    // back shield radius
+    pSbackH = 5.0;    // back shield height
+    // Fiber gate, SiPM and PCB cutouts
+    fiberGatePosZ = 8.5;  // z position of fiber gate
+    PCBcutoutH = 7.0;     // PCB cutout height
   } else if (dirSrcSize == 10) {
-    activityR = 1.5;
-    pSfrontR1 = 2.0;
-    pSfrontR2 = 3.0;
-    pSfrontH = 3.0;
-    pSbackR = 3.0;
-    pSbackH = 6.0 - radSrcH;
-    fiberGatePosZ = 17.0;
-    PCBcutoutH = 4.0;
+    activityR = 1.5;  // radius of source activity area
+    oSmainH = 50.0;   // length of main cylindrical part of outer shell
+    oSbackH = 10.0;   // length of back cylindrical part of outer shell
+    // inner plastic shield
+    pSfrontR1 = 2.0;          // front shield smaller radius
+    pSfrontR2 = 3.0;          // front shield larger radius
+    pSfrontH = 3.0;           // front shield height
+    pSbackR = 3.0;            // back shield radius
+    pSbackH = 6.0 - radSrcH;  // back shield height
+    // Fiber gate, SiPM and PCB cutouts
+    fiberGatePosZ = 17.0;  // z position of fiber gate
+    PCBcutoutH = 4.0;      // PCB cutout height
   }
-  const G4double pSfrontZ = bhL - pSfrontH;  // z where inner plastic shielding starts
+  const G4double pSfrontZ = bhL - pSfrontH;  // z where front inner plastic shielding starts
   // borehole radius where front inner plastic shielding starts
   const G4double pSbhcutR = bhfrontR + (pSfrontZ - frontZ) * (activityR - bhfrontR) / (bhL - frontZ);
 
   // ============ Build ============
   // outer plastic shell
   const G4int oS_nZP = 5;  // numZPlanes
-  const G4double oS_zPlane[oS_nZP] = {0, bhL, 40, 45, 55};
+  const G4double oS_zPlane[oS_nZP] = {0, bhL, bhL + oSmainH, bhL + oSmainH + 5, bhL + oSmainH + 5 + oSbackH};
   const G4double oS_rInner[oS_nZP] = {0, 0, 0, 0, 0};
   const G4double oS_rOuter[oS_nZP] = {frontR, srcR, srcR, srcR + 4, srcR + 4};
   G4Polycone *outerShell = new G4Polycone("outerShell", 0, CLHEP::twopi, oS_nZP, oS_zPlane, oS_rInner, oS_rOuter);
@@ -135,7 +148,7 @@ G4VPhysicalVolume *DirSourceFactory::Construct(RAT::DBLinkPtr table) {
   // vacuum/air fill inside outer shell
   // (all remaining volumes will be placed inside this)
   const G4int fill_nZP = 3;
-  const G4double fill_zPlane[fill_nZP] = {frontZ, bhL, 45};
+  const G4double fill_zPlane[fill_nZP] = {frontZ, bhL, bhL + oSmainH + 5};
   const G4double fill_rInner[fill_nZP] = {0, 0, 0};
   const G4double fill_rOuter[fill_nZP] = {bhfrontR, srcR - 1, srcR - 1};
   G4Polycone *fill = new G4Polycone("dirsource_fill", 0, CLHEP::twopi, fill_nZP, fill_zPlane, fill_rInner, fill_rOuter);
