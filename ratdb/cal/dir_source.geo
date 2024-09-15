@@ -7,14 +7,15 @@
   valid_end: [0, 0],
   mother: "eos_inner",
   type: "DirSource",
+  size: 30.0, // options: 30, 20 or 10
   position: [0.0, 0.0, -500.0],
   rotation: [0.0, 0.0, 0.0],
-  outer_shell_material: "delrin_black",
-  metal_shield_material: "brass",
-  plastic_shield_material: "delrin_black",
 
   // properties below are optional;
   // shown below are the default values if omitted.
+  // outer_shell_material: "delrin_black",
+  // metal_shield_material: "brass", // default is tungsten for 20mm and 10mm sources
+  // plastic_shield_material: "delrin_black",
   // fill: "air", // material to fill empty space inside source
   // front_z: 0.15, // borehole front window thickness
 }
