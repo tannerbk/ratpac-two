@@ -5,31 +5,40 @@
 /rat/db/set DETECTOR experiment "Eos"
 /rat/db/set DETECTOR geo_file "Eos/Eos.geo"
 /rat/db/set GEO[eos_inner] material "water"
+
+# Per PMT model noise rate
 /rat/db/set NOISEPROC noise_flag 1
+
+# Set digitizer window length
+/rat/db/set DIGITIZER[V1730] nsamples 110
 
 # set the source parameters
 /rat/db/load cal/th_source.geo
 /rat/db/set GEO[source_mother] material "water"  # This must be the same material as eos_inner
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
 
-#/tracking/storeTrajectory 1
-
+##### BEGIN EVENT LOOP #####
 /run/initialize
 
-##### BEGIN EVENT LOOP #####
+/rat/proc noise
+
 /rat/proc splitevdaq
 /rat/procset trigger_threshold 6.0
-/rat/proc noise
+
+/rat/proc WaveformAnalysis
+# Run the Eos waveform analysis
+/rat/procset analyzer_name "Eos"
+/rat/procset apply_cable_offset 0
+
 /rat/proc fitcentroid
+
 /rat/proc count
 /rat/procset update 1000
 
-#/rat/proc outroot
 /rat/proclast eosntuple
 ##### END EVENT LOOP #####
 
 ##### GENERATORS #################
-
 #####      232Th chain isotopes      #####
 
 ##/generator/add decaychain 232Th:regexfill:poisson  # 4.0-MeV alpha, 0.14-MeV gamma (0.021%)
