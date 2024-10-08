@@ -120,7 +120,16 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     // FIXME: Each board reports their own individual trigger time. Figure out what to with this.
     // For now, use the first board's trigger time
     HighFive::Group first_board_grp = h5file.getGroup(board_sn_map[first_board_id]);
-    const auto trigger_times = first_board_grp.getDataSet("timetags").read<std::vector<uint32_t>>();
+    const auto timetags = first_board_grp.getDataSet("timetags").read<std::vector<uint32_t>>();
+    const auto exttimetags = first_board_grp.getDataSet("exttimetags").read<std::vector<uint16_t>>();
+    // trigger_times
+    RAT::Log::Assert(timetags.size() == exttimetags.size(),
+                     "timetags and exttimetags fields in DAQ have different lengths!");
+    std::vector<uint64_t> trigger_times;
+    trigger_times.reserve(timetags.size());
+    for (int idx = 0; idx < timetags.size(); idx++) {
+      trigger_times.push_back(((uint64_t)exttimetags[idx] << 32) | (uint64_t)timetags[idx]);
+    }
     const auto event_ids = first_board_grp.getDataSet("counters").read<std::vector<uint32_t>>();
 
     // run information
