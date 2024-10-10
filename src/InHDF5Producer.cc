@@ -151,7 +151,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       RAT::DS::RunStore::AddNewRun(run);
     }
     const RAT::DS::PMTInfo *pmt_info = run->GetPMTInfo();
-    const RAT::DS::ChannelStatus *ch_status = &run->GetChannelStatus();
+    const RAT::DS::ChannelStatus *ch_status = run->GetChannelStatus();
     if (ch_status == NULL) {
       RAT::Log::Die("Channel status is null!");
     }
