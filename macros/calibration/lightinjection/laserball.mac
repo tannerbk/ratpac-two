@@ -26,7 +26,6 @@
 /rat/proc WaveformAnalysis
 # Run the Eos waveform analysis
 /rat/procset analyzer_name "Eos"
-/rat/procset apply_cable_offset 0
 
 /rat/proc count
 /rat/procset update 100
