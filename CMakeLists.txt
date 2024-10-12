@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11...3.14)
-project(eos VERSION 1.1.0
+project(eos VERSION 1.2.0
         DESCRIPTION "Eos Simulations"
         LANGUAGES C CXX)
 
