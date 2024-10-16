@@ -1,0 +1,23 @@
+# example macro for running the InHDF5Producer
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+
+/run/initialize
+
+/rat/proc count
+/rat/procset update 1
+# Common Waveform analysis work: Pedestal calculation, threshold crossing, peak finding, etc. 
+/rat/proc WaveformPrep
+/rat/procset analyzer_name "Eos"
+
+# In principle now this can be different for each analyzer. 
+# But for the lognormal this is probably OK since lognormal fit is the default. 
+/rat/proc WaveformAnalysisLognormal
+/rat/procset analyzer_name "Eos"
+# /rat/proclast outroot
+/rat/proclast eosntuple
+/rat/procset include_digitizerwaveforms 1
+
+/rat/inhdf5/read_default
+#/rat/inhdf5/read /data/eos_data-deployed_source-laserball-run-46.0.h5
+#/rat/inhdf5/read /data/eos_data-deployed_source-laserball-run-46.1.h5
