@@ -14,6 +14,10 @@
 
 # set the source parameters
 /rat/db/load cal/cher_source.geo
+# select which acrylic source to use
+#/rat/db/set GEO[sr_acrylic] material "acrylic_sno"  # default - uvt
+#/rat/db/set GEO[sr_acrylic] material "acrylic_uva_reynolds"
+#/rat/db/set GEO[sr_acrylic] material "acrylic_uva_polycast"
 /rat/db/set GEO[source_mother] material "water"  # This must be the same material as eos_inner
 /rat/db/set GEO[source_mother] position [0.0,0.0,0.0]
 
