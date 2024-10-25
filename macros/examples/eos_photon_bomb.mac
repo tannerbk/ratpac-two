@@ -12,8 +12,9 @@
 # BEGIN EVENT LOOP
 /rat/proc splitevdaq
 /rat/procset trigger_threshold 4.0
-# Run the Eos waveform analysis
-/rat/procset analyzer_name "Eos"
+# Run the standard Eos WaveformAnalysis chain
+/control/getEnv EOSDATA
+/control/execute {EOSDATA}/macros/snippets/waveformAnalysis.snippet
 
 /rat/proc count
 /rat/procset update 1

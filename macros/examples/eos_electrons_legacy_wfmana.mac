@@ -29,13 +29,8 @@
 /rat/proc splitevdaq
 /rat/procset trigger_threshold 4.0
 
-# Common Waveform analysis work: Pedestal calculation, threshold crossing, peak finding, etc. 
-/rat/proc WaveformPrep
-/rat/procset analyzer_name "Eos"
-
-# In principle now this can be different for each analyzer. 
-# But for the lognormal this is probably OK since lognormal fit is the default. 
-/rat/proc WaveformAnalysisLognormal
+/rat/proc WaveformAnalysis
+# Run the Eos waveform analysis
 /rat/procset analyzer_name "Eos"
 
 # Print the event count as the events are generated.
@@ -43,7 +38,7 @@
 /rat/procset update 1
 
 # Different output file formats
-/rat/proc outroot
+#/rat/proc outroot
 #/rat/proc outntuple
 /rat/proclast eosntuple
 
