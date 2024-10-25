@@ -1,0 +1,9 @@
+# Common Waveform analysis work: Pedestal calculation, threshold crossing, peak finding, etc. 
+/rat/proc WaveformPrep
+/rat/procset analyzer_name "Eos"
+
+# In principle now this can be different for each analyzer. 
+# But for the lognormal this is probably OK since lognormal fit is the default. 
+/rat/proc WaveformAnalysisLognormal
+/rat/procset analyzer_name "Eos"
+
