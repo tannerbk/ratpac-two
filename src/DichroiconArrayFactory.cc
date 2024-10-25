@@ -131,7 +131,7 @@ void DichroiconArrayFactory::ConstructDichroicons(RAT::DBLinkPtr table, const st
   const G4String gdml_file =
       std::getenv("EOSDATA") + std::string("/ratdb/") + dichroicon_model_table->GetS("gdml_file");
   //  parser.SetOverlapCheck(true);
-  parser.Read(gdml_file);
+  parser.Read(gdml_file, false);  // turn off schema validation in case server is down / no internet
   G4LogicalVolume *gdml_worldLV = parser.GetWorldVolume()->GetLogicalVolume();
   const size_t n_gdml_daughters = gdml_worldLV->GetNoDaughters();
   // absorbing filter
