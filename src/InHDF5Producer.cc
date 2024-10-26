@@ -89,7 +89,7 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       board_sn_map[board_id[i]] = board_sn[i];
     }
     int channels_per_board = lIO->GetI("channels_per_board");
-    float trigger_ns_per_tick = lIO->GetD("trigger_ns_per_tick");
+    double trigger_ns_per_tick = lIO->GetD("trigger_ns_per_tick");
     std::vector<int> digitized_trigger_lcn = lIO->GetIArray("digitized_trigger_lcn");
     // create dataset names, indexed by LCN
     std::map<int, std::string> dataset_names;
@@ -168,16 +168,16 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     }
 
     // Read events
-    uint64_t last_trigger_time_ns = (uint64_t)trigger_times[0] * trigger_ns_per_tick;
+    uint64_t last_trigger_time = (uint64_t)trigger_times[0];
     for (uint32_t ievt = 0; ievt < n_events; ievt++) {
       RAT::DS::Root *dsroot = new RAT::DS::Root();
       dsroot->SetRunID(run_id);
       dsroot->SetRatVersion(RAT::RATVERSION);
       RAT::DS::EV *ev = dsroot->AddNewEV();
       ev->SetID(event_ids[ievt]);
-      uint64_t trigger_time_ns = (uint64_t)trigger_times[ievt] * trigger_ns_per_tick;
-      ev->SetDeltaT(trigger_time_ns - last_trigger_time_ns);
-      last_trigger_time_ns = trigger_time_ns;
+      uint64_t trigger_time = (uint64_t)trigger_times[ievt];
+      ev->SetDeltaT((trigger_time - last_trigger_time) * trigger_ns_per_tick);
+      last_trigger_time = trigger_time;
       // Read waveforms
       digitizer.fDigitWaveForm.clear();
       // retrieve trigger time from the trigger digitization given in each board
@@ -196,8 +196,8 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
         digitizer.fDigitWaveForm[pmt_id] = samples.at(0);
         bool is_trigger = (std::count(digitized_trigger_lcn.begin(), digitized_trigger_lcn.end(), lcn) > 0);
         if (is_trigger) {
-          double trigger_time = waveform_analyzer.RunAnalysisOnTrigger(pmt_id, &digitizer);
-          trigger_time_per_board.push_back(trigger_time);
+          double local_trigger_time = waveform_analyzer.RunAnalysisOnTrigger(pmt_id, &digitizer);
+          trigger_time_per_board.push_back(local_trigger_time);
         }
       }  // end loop over channels
       for (size_t i_board = 0; i_board < trigger_time_per_board.size(); i_board++) {
