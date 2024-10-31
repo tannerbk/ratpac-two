@@ -6,9 +6,9 @@
 
 /rat/proc count
 /rat/procset update 1
-# Run the standard Eos WaveformAnalysis chain
-/control/getEnv EOSDATA
-/control/execute {EOSDATA}/macros/snippets/waveformAnalysis.snippet
+/rat/proc WaveformAnalysis
+/rat/procset analyzer_name "Eos"
+/rat/procset apply_cable_offset 1
 # /rat/proclast outroot
 /rat/proclast eosntuple
 

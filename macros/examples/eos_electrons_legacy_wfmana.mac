@@ -29,16 +29,16 @@
 /rat/proc splitevdaq
 /rat/procset trigger_threshold 4.0
 
-# Run the standard Eos WaveformAnalysis chain
-/control/getEnv EOSDATA
-/control/execute {EOSDATA}/macros/snippets/waveformAnalysis.snippet
+/rat/proc WaveformAnalysis
+# Run the Eos waveform analysis
+/rat/procset analyzer_name "Eos"
 
 # Print the event count as the events are generated.
 /rat/proc count
 /rat/procset update 1
 
 # Different output file formats
-/rat/proc outroot
+#/rat/proc outroot
 #/rat/proc outntuple
 /rat/proclast eosntuple
 
