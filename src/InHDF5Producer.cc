@@ -83,10 +83,18 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     RAT::DBLinkPtr lIO = RAT::DB::Get()->GetLink("IO", "HDF5Proc");
     std::vector<std::string> board_sn = lIO->GetSArray("board_sn");
     std::vector<int> board_id = lIO->GetIArray("board_id");
+    int builder_file = lIO->GetI("builder_file");
     int first_board_id = *std::min_element(board_id.begin(), board_id.end());
     std::map<int, std::string> board_sn_map;
+    std::string builder_naming = "";
+    try {
+      HighFive::Group test_grp = h5file.getGroup("event/caen/" + board_sn[0]);
+      builder_naming = "event/caen/";
+    } catch (const HighFive::Exception &e) {
+      builder_file = 0;
+    }
     for (int i = 0; i < board_sn.size(); i++) {
-      board_sn_map[board_id[i]] = board_sn[i];
+      board_sn_map[board_id[i]] = builder_naming + board_sn[i];
     }
     int channels_per_board = lIO->GetI("channels_per_board");
     double trigger_ns_per_tick = lIO->GetD("trigger_ns_per_tick");
@@ -117,31 +125,45 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
     digitizer.fNSamples = n_samples;
     RAT::WaveformAnalysis waveform_analyzer(lIO->GetS("waveform_analyzer"));
 
-    // FIXME: Each board reports their own individual trigger time. Figure out what to with this.
-    // For now, use the first board's trigger time
-    HighFive::Group first_board_grp = h5file.getGroup(board_sn_map[first_board_id]);
-    const auto timetags = first_board_grp.getDataSet("timetags").read<std::vector<uint32_t>>();
-    const auto exttimetags = first_board_grp.getDataSet("exttimetags").read<std::vector<uint16_t>>();
-    // trigger_times
-    RAT::Log::Assert(timetags.size() == exttimetags.size(),
-                     "timetags and exttimetags fields in DAQ have different lengths!");
     std::vector<uint64_t> trigger_times;
-    trigger_times.reserve(timetags.size());
-    for (int idx = 0; idx < timetags.size(); idx++) {
-      trigger_times.push_back(((uint64_t)exttimetags[idx] << 32) | (uint64_t)timetags[idx]);
+    std::vector<uint32_t> event_ids;
+    int run_id = 0;
+    int run_type = 0;
+
+    if (builder_file) {
+      HighFive::Group ptb = h5file.getGroup("event/ptb");
+      HighFive::Group meta = h5file.getGroup("meta");
+      trigger_times = ptb.getDataSet("timestamp").read<std::vector<uint64_t>>(); 
+      run_id = meta.getAttribute("run_number").read<int>();
+      run_type = meta.getAttribute("run_type").read<int>();
     }
-    const auto event_ids = first_board_grp.getDataSet("counters").read<std::vector<uint32_t>>();
+    else {
+      // Each board reports their own individual trigger time through WbLSdaq.
+      HighFive::Group first_board_grp = h5file.getGroup(board_sn_map[first_board_id]);
+      const auto timetags = first_board_grp.getDataSet("timetags").read<std::vector<uint32_t>>();
+      const auto exttimetags = first_board_grp.getDataSet("exttimetags").read<std::vector<uint16_t>>();
+      // trigger_times
+      RAT::Log::Assert(timetags.size() == exttimetags.size(),
+                       "timetags and exttimetags fields in DAQ have different lengths!");
+      trigger_times.reserve(timetags.size());
+      for (int idx = 0; idx < timetags.size(); idx++) {
+        trigger_times.push_back(((uint64_t)exttimetags[idx] << 32) | (uint64_t)timetags[idx]);
+      }
+      event_ids = first_board_grp.getDataSet("counters").read<std::vector<uint32_t>>();
+    }
 
     // run information
-    int run_id = RAT::DB::Get()->GetDefaultRun();
+    if (!builder_file) {
+      run_id = RAT::DB::Get()->GetDefaultRun();
+    }
     RAT::DS::Run *run = RAT::DS::RunStore::GetRun(run_id);
     if (!run) {
       RAT::DBLinkPtr lRun = RAT::DB::Get()->GetLink("RUN", "", run_id);
       run = new RAT::DS::Run();
-      run->SetType((uint64_t)lRun->GetI("runtype"));
+      run->SetType(run_type);
       // assuming run is created for the first file in the run
-      TTimeStamp run_begin_utc(h5file.getAttribute("created_unix_timestamp").read<int32_t>());
-      run->SetStartTime(run_begin_utc);
+      //TTimeStamp run_begin_utc(h5file.getAttribute("created_unix_timestamp").read<int32_t>());
+      //run->SetStartTime(run_begin_utc);
       run->SetID(run_id);
       const RAT::DS::PMTInfo *pmtinfo = &RAT::PMTFactoryBase::GetPMTInfo();
       run->SetPMTInfo(pmtinfo);
@@ -174,7 +196,13 @@ bool InHDF5Producer::ReadEvents(G4String filename) {
       dsroot->SetRunID(run_id);
       dsroot->SetRatVersion(RAT::RATVERSION);
       RAT::DS::EV *ev = dsroot->AddNewEV();
-      ev->SetID(event_ids[ievt]);
+      // FIXME, no GTIDs in the builder file for now
+      if (builder_file) {
+        ev->SetID(0);
+      }
+      else { 
+        ev->SetID(event_ids[ievt]);
+      }
       uint64_t trigger_time = (uint64_t)trigger_times[ievt];
       ev->SetDeltaT((trigger_time - last_trigger_time) * trigger_ns_per_tick);
       last_trigger_time = trigger_time;
