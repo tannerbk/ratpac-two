@@ -58,8 +58,10 @@ class ChannelStatus : public TObject {
     default_offset = lCableOffset->GetD("default_value");
     DBLinkPtr lChannelOnline = DB::Get()->GetLink("channel_online", index);
     default_is_online = lChannelOnline->GetD("default_value");
-    DBLinkPtr lChargeScale = DB::Get()->GetLink("charge_scale", index);
-    default_charge_scale = lChannelOnline->GetD("default_value");
+    DBLinkPtr lChargeScaleIndex = DB::Get()->GetLink("charge_scale", "selected_charge_scale");
+    ChargeScaleIndex = lChargeScaleIndex->GetS("selection");
+    DBLinkPtr lChargeScale = DB::Get()->GetLink("charge_scale", ChargeScaleIndex);
+    default_charge_scale = lChargeScale->GetD("default_value");
     for (int pmtid = 0; pmtid < pmtinfo->GetPMTCount(); pmtid++) {
       int lcn = pmtinfo->GetChannelNumber(pmtid);
       LinkPMT(pmtid, lcn);
@@ -137,6 +139,7 @@ class ChannelStatus : public TObject {
   double default_offset;
   int default_is_online;
   double default_charge_scale;
+  std::string ChargeScaleIndex;
 };
 
 }  // namespace DS
