@@ -66,6 +66,8 @@ class ChannelStatus : public TObject {
     ChargeScaleIndex = lChargeScaleIndex->GetS("selection");
     DBLinkPtr lChargeScale = DB::Get()->GetLink("charge_scale", ChargeScaleIndex);
     default_charge_scale = lChargeScale->GetD("default_value");
+    DBLinkPtr lPulseWidthScale = DB::Get()->GetLink("pulse_width_scale", index);
+    default_pulse_width_scale = lPulseWidthScale->GetD("default_value");
     for (int pmtid = 0; pmtid < pmtinfo->GetPMTCount(); pmtid++) {
       int lcn = pmtinfo->GetChannelNumber(pmtid);
       LinkPMT(pmtid, lcn);
